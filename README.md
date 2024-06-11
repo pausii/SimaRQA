@@ -1,16 +1,21 @@
-# sima_rqa
 
-A new Flutter project.
+npm v9.8.1
+node v18.18.2
 
-## Getting Started
+# ** API SPECIFICATION FOR SIMARQA **
 
-This project is a starting point for a Flutter application.
+BASE URL: localhost:3000
 
-A few resources to get you started if this is your first Flutter project:
+## **Login**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Request** :
+- Method : POST
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Endpoint : `(base-url)/auth/login`
+
+- Header :
+    - Content-Type : applcation/json
+    - Accept : application/json
+       
+- Body :
+```json
