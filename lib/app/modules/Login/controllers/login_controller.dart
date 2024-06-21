@@ -1,6 +1,9 @@
 // login_controller.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:dio/dio.dart';
+
+final dio = Dio();
 
 class LoginController extends GetxController {
   final textController1 = TextEditingController();
@@ -16,5 +19,10 @@ class LoginController extends GetxController {
     textController2.dispose();
     textFieldFocusNode2.dispose();
     super.onClose();
+  }
+
+  void login() async {
+    final response = await dio.get('https://example.com');
+    print(response);
   }
 }
