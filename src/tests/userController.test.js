@@ -55,6 +55,13 @@ describe('User Controller', () => {
                 error: 'All fields are required'
             });
         });
+        it('should handle errors gracefully', async () => {
+            const req = httpMocks.createRequest({
+                body: { ...mockUser, password: 'plainpassword'}
+            });
+
+            
+        })
     });
 
     describe('deleteUser', () => {
