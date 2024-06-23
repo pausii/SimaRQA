@@ -1441,6 +1441,328 @@ base-url: localhost:3000
 
 > :warning: **Under Process**: Bagian dibawah ini sedang dalam proses pembuatan.
 
-# **Transaksi Pemeliharaan Aset**
+# **Transaksi Pemeliharaan Asset**
 
-## 
+## **Get All Transaksi Pemeliharaan Asset (administrator & division)**
+
+**Request** : 
+
+- Method    : GET
+- Endpoint  : `(base-url/maintenance/)`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+
+**Response** :
+
+```json
+{
+    "message": "Get All Transaksi Pemeliharaan Asset Successfully!",
+    "data": {
+        "maintenance_id": "integer",
+        "maintenance_asset_code": "string",
+        "maintenance_asset_name": "string",
+        "maintenance_date": "date",
+        "maintenance_asset_condition": "enum",
+        "price_maintenance": "integer",
+        "details_maintenance": "text",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+## **Get Transaksi Pemeliharaan Asset By Id (administrator & division)**
+
+**Request** : 
+
+- Method    : GET
+- Endpoint  : `(base-url/maintenance/report/:id)`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+
+**Response** :
+
+```json
+{
+    "message": "Get Transaksi Pemeliharaan Asset Successfully By ID:id !",
+    "data": {
+        "maintenance_id": "integer",
+        "maintenance_asset_code": "string",
+        "maintenance_asset_name": "string",
+        "maintenance_date": "date",
+        "maintenance_asset_condition": "enum",
+        "price_maintenance": "integer",
+        "details_maintenance": "text",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+
+## **Create Transaksi Pemeliharaan Asset (administrator && division)**
+
+**Request** : 
+- Method    : POST
+- Endpoint  : `(base-url)/maintenance/`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+- Body      :
+
+```json
+{
+    "maintenance_asset_code": "enum (string)",
+    "maintenance_asset_name": "string",
+    "maintenance_date": "date",
+    "maintenance_asset_condition": "enum",
+    "price_maintenance": "integer",
+    "details_maintenance": "text",
+}
+```
+
+**Response** :
+
+```json
+{
+    "message": "Create Transaksi Pemeliharaan Asset Successfully!",
+    "data": {
+        "maintenance_asset_code": "enum (string)",
+        "maintenance_asset_name": "string",
+        "maintenance_date": "date",
+        "maintenance_asset_condition": "enum",
+        "price_maintenance": "integer",
+        "details_maintenance": "text",
+    }
+}
+```
+
+## **Update Transaksi Pemeliharaan Asset (administrator && division)**
+
+**Request** : 
+- Method    : PUT
+- Endpoint  : `(base-url)/maintenance/:id`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+- Body      :
+
+```json
+{
+    "maintenance_asset_code": "enum (string)",
+    "maintenance_asset_name": "string",
+    "maintenance_date": "date",
+    "maintenance_asset_condition": "enum",
+    "price_maintenance": "integer",
+    "details_maintenance": "text",
+}
+```
+
+**Response** :
+
+```json
+{
+    "message": "Update Transaksi Pemeliharaan Asset Successfully at ID:id !",
+    "data": {
+        "maintenance_asset_code": "enum (string)",
+        "maintenance_asset_name": "string",
+        "maintenance_date": "date",
+        "maintenance_asset_condition": "enum",
+        "price_maintenance": "integer",
+        "details_maintenance": "text",
+    }
+}
+```
+
+## **Export Transaksi Pemeliharaan Asset (administrator & division)**
+
+**Request** : 
+
+- Method    : GET
+- Endpoint  : `(base-url/maintenance/export/excel)`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+
+**Response** :
+
+```json
+{
+    "data": {
+        "Export Excel Downloading"
+    }
+}
+```
+
+# **Transaksi Peminjaman dan Pengembalian Asset**
+
+## **Get All Peminjaman dan Pengembalian Asset (administrator & division)**
+
+**Request** : 
+
+- Method    : GET
+- Endpoint  : `(base-url/borrowed-return/)`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+
+**Response** :
+
+```json
+{
+    "message": "Get All Peminjaman dan Pengembalian Asset Successfully!",
+    "data": {
+        "borrowed_id": "integer",
+        "borrowed_asset_code": "string",
+        "borrowed_asset_name": "string",
+        "borrowed_name": "string",
+        "used_by_program": "enum",
+        "borrowed_date": "date",
+        "due_date": "date",
+        "return_date": "date",
+        "status": "enum",
+        "notes": "text",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+## **Get Transaksi Peminjaman dan Pengembalian Asset By Id (administrator & division)**
+
+**Request** : 
+
+- Method    : GET
+- Endpoint  : `(base-url/borrowed-return/:id)`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+
+**Response** :
+
+```json
+{
+    "message": "Get Transaksi Peminjaman dan Pengembalian Asset Successfully By ID:id !",
+    "data": {
+        "borrowed_id": "integer",
+        "borrowed_asset_code": "string",
+        "borrowed_asset_name": "string",
+        "borrowed_name": "string",
+        "used_by_program": "enum",
+        "borrowed_date": "date",
+        "due_date": "date",
+        "return_date": "date",
+        "status": "enum",
+        "notes": "text",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+
+## **Create Transaksi Peminjaman dan Pengembalian Asset (administrator && division)**
+
+**Request** : 
+- Method    : POST
+- Endpoint  : `(base-url)/borrowed-return/`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+- Body      :
+
+```json
+{
+    "borrowed_asset_code": "enum (string)",
+    "borrowed_name": "string",
+    "used_by_program": "enum",
+    "borrowed_date": "date",
+    "due_date": "date",
+    "status": "enum",
+    "notes": "text",
+}
+```
+
+**Response** :
+
+```json
+{
+    "message": "Create Transaksi Peminjaman dan Pengembalian Asset Successfully!",
+    "data": {
+        "borrowed_id": "integer",
+        "borrowed_asset_code": "string",
+        "borrowed_asset_name": "string",
+        "borrowed_name": "string",
+        "used_by_program": "enum",
+        "borrowed_date": "date",
+        "due_date": "date",
+        "return_date": "date",
+        "status": "enum",
+        "notes": "text",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+
+## **Update Transaksi Peminjaman dan Pengembalian Asset (administrator && division)**
+
+**Request** : 
+- Method    : PUT
+- Endpoint  : `(base-url)/borrowed-return/:id`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+- Body      :
+
+```json
+{
+    "borrowed_name": "string",
+    "used_by_program": "enum",
+    "borrowed_date": "date",
+    "due_date": "date",
+    "return_date": "date",
+    "status": "enum",
+    "notes": "text",
+}
+```
+
+**Response** :
+
+```json
+{
+    "message": "Update Transaksi Pemeliharaan Asset Successfully at ID:id !",
+    "data": {
+        "borrowed_id": "integer",
+        "borrowed_asset_code": "string",
+        "borrowed_asset_name": "string",
+        "borrowed_name": "string",
+        "used_by_program": "enum",
+        "borrowed_date": "date",
+        "due_date": "date",
+        "return_date": "date",
+        "status": "enum",
+        "notes": "text",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+
+## **Export Transaksi Peminjaman dan Pengembalian Asset (administrator & division)**
+
+**Request** : 
+
+- Method    : GET
+- Endpoint  : `(base-url/borrowed-return/export/excel)`
+- Header    : 
+    - Content-Type  : application/json
+    - Accept        : application/json
+
+**Response** :
+
+```json
+{
+    "data": {
+        "Export Excel Downloading"
+    }
+}
+```
