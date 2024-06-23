@@ -9,7 +9,7 @@
     "test": {
       "username": "root",
       "password": "16072001",
-      "database": "database_simarqa",
+      "database": "database_simarqa_test",
       "host": "127.0.0.1",
       "dialect": "mysql"
     },

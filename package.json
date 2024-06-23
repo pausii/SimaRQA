@@ -5,8 +5,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "test": "NODE_ENV=test jest",
     "reset": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "reset-test": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate --env test"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "node-mocks-http": "^1.15.0",
     "sequelize-cli": "^6.6.2",
     "supertest": "^7.0.0"
   },

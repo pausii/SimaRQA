@@ -71,6 +71,10 @@ const createBorrowedReturnTransaction = async (req, res) => {
           return res.status(404).json({ message: "Asset not found" });
       }
 
+      if (asset.asset_type = 'Tidak Dapat Dipindahkan') {
+        return res.status(400).json({ message: "Asset Tidak Dapat Dipinjam" });
+      }
+
       const borrowed_asset_name = asset.asset_name;
       const transaction = await PeminjamanPengembalianAsset.create({
           borrowed_asset_code, 
@@ -101,6 +105,7 @@ const updateBorrowedReturnTransaction = async (req, res) => {
           used_by_program, 
           borrowed_date,
           due_date,
+          return_date,
           status,
           notes 
       } = req.body;
@@ -119,6 +124,7 @@ const updateBorrowedReturnTransaction = async (req, res) => {
           used_by_program, 
           borrowed_date,
           due_date,
+          return_date,
           status,
           notes 
       });
