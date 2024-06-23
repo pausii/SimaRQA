@@ -17,7 +17,7 @@ const reportAssetPerpustakaanRoutes = require('./reportAssetPerpustakaanRoutes')
 const reportAssetUtilitasRoutes = require('./reportAssetUtilitasRoutes');
 
 const maintenanceTransactionRoutes = require('./maintenanceTransactionRoutes');
-
+const borrowedReturnTransactionRoutes = require('./borrowedReturnTransactionRoutes');
 
 route.use('/api/auth', authLogin);
 
@@ -36,5 +36,6 @@ route.use('/api/perpustakaan', reportAssetPerpustakaanRoutes);
 route.use('/api/utilitas', reportAssetUtilitasRoutes);
 
 route.use('/api/maintenance', maintenanceTransactionRoutes);
+route.use('/api/borrowed-return/', borrowedReturnTransactionRoutes);
 
 module.exports = route;
