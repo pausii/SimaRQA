@@ -6,8 +6,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "NODE_ENV=test jest",
-    "reset": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
-    "reset-test": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate --env test"
+    "reset": "npx sequelize-cli db:migrate:undo:all && npx sequelize db:migrate",
+    "reset-test": "npx sequelize-cli db:migrate:undo:all --env test && npx sequelize db:migrate --env test"
   },
   "keywords": [],
   "author": "",
