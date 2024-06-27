@@ -8,9 +8,9 @@ const login = async (req, res) => {
         let { username, password } = req.body;
         
         // check is user exist
-        const user = await Users.findOne({ username: username });
+        const user = await Users.findOne({ where: { username: username }});
         if (user === null) {
-            return res.status(404).json({ message: 'User tidak ditemukan'});
+            return res.status(404).json({ message: 'User tidak ditemukan, mohon cek kembali'});
         }
 
         const passwordChecked = bcrypt.compareSync(
@@ -18,14 +18,20 @@ const login = async (req, res) => {
             user.password
         );
 
+        if (username === false) {
+            return res.status(401).json({
+                message: 'Username Anda Salah, Mohon Cek Kembali'
+            });
+        }
+
         if (passwordChecked === false) {
             return res.status(401).json({
-                message: 'Password Anda Salah'
+                message: 'Password Anda Salah, Mohon Cek Kembali'
             });
         }
 
         const token = {
-            _id: user._id,
+            user_id: user.user_id,
             role: user.role,
         };
 
@@ -34,7 +40,7 @@ const login = async (req, res) => {
         const data = {
             message: 'Login Success',
             body: {
-                _id: user.id,
+                user_id: user.user_id,
                 token: tokenCreated,
                 username: user.username,
                 password: user.password,

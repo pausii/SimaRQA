@@ -1,4 +1,4 @@
-const { RuangAsetAuditorium } = require('../models');
+const { RuangAsetAuditorium, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
 const generateAssetCode = require('../services/generateAssetCode');
 const fs = require('fs');
@@ -37,7 +37,14 @@ const createAuditoriumAsset = async (req, res) => {
 
 const getAllAuditoriumAssets = async (req, res) => {
     try {
-        const auditoriumAssets = await RuangAsetAuditorium.findAll();
+        const auditoriumAssets = await RuangAsetAuditorium.findAll({
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        });
         res.status(200).json({
             message: 'Get all Asset auditorium successfully',
             data: auditoriumAssets
@@ -50,7 +57,14 @@ const getAllAuditoriumAssets = async (req, res) => {
 const getAuditoriumAssetById = async (req, res) => {
     try {
         const { id } = req.params;
-        const auditorium = await RuangAsetAuditorium.findByPk(id);
+        const auditorium = await RuangAsetAuditorium.findByPk(id, ({
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        }));
         if (!auditorium) {
             return res.status(404).json({ message: 'Asset not found'});
         }
@@ -116,6 +130,13 @@ const generateQRCode = async (req, res) => {
         const auditorium = await RuangAsetAuditorium.findByPk(req.params.id);
         if (!auditorium) {
             return res.status(404).json({ message: 'Asset not found'});
+        }
+
+        const structuredData = {
+            "ID Aset": auditorium.asset_id,
+            "Kode Aset": auditorium.asset_code,
+            "Nama Aset": auditorium.asset_name,
+            "Kategori": auditorium.category_id
         }
         
         // Generate QR Code to a buffer

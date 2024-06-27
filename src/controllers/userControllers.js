@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Users } = require('../models');
 const bcrypt = require('bcryptjs');
 
@@ -113,50 +114,37 @@ const deleteUser = async (req, res) => {
     }
 };
 
+
+/**
+ * Fungsi untuk mencari pengguna berdasarkan atribut.
+ * @param {Object} req - Objek request dari Express.
+ * @param {Object} res - Objek response dari Express.
+ */
+
 const searchUser = async (req, res) => {
-    const { query } = req;
+    const { 
+        username,
+        role,
+        first_name,
+        last_name,
+        phone_number,
+        address
+     } = req.query;
 
-    try {
-        const users = await Users.findAll();
+    const filters = {};
+    if (username) filters.username = { [Op.like]: `${username}`};
+    if (role) filters.role = { [Op.like]: `${role}`};
+    if (first_name) filters.first_name = { [Op.like]: `${first_name}`};
+    if (last_name) filters.last_name = { [Op.like]: `${last_name}`};
+    if (phone_number) filters.phone_number = { [Op.like]: `${phone_number}`};
+    if (address) filters.address = { [Op.like]: `${address}`};
 
-        let filteredUsers = users;
+    const users = await Users.findAll({
+        where: filters
+    });
 
-        if (query.username) {
-            const searchTerm = query.username.toLowerCase();
-            filteredUsers = filteredUsers.filter(user => user.username.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.role) {
-            const searchTerm = query.role.toLowerCase();
-            filteredUsers = filteredUsers.filter(user => user.role.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.first_name) {
-            const searchTerm = query.first_name.toLowerCase();
-            filteredUsers = filteredUsers.filter(user => user.first_name.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.last_name) {
-            const searchTerm = query.last_name.toLowerCase();
-            filteredUsers = filteredUsers.filter(user => user.last_name.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.phone_number) {
-            const searchTerm = query.phone_number.toLowerCase();
-            filteredUsers = filteredUsers.filter(user => user.phone_number.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.address) {
-            const searchTerm = query.address.toLowerCase();
-            filteredUsers = filteredUsers.filter(user => user.address.toLowerCase().includes(searchTerm));
-        }
-
-        res.status(200).json(filteredUsers);
-    } catch (error) {
-        console.error('Error Pencarian: ', error);
-        res.status(500).json({ message: 'Internal server error'});
-    }
-}
+    res.status(200).json(users);
+};
 
 module.exports = {
     getAllUsers,

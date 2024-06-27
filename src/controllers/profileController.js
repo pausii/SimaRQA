@@ -1,105 +1,80 @@
 const { Users } = require('../models');
-const { tokenReturned } = require('../middlewares/token');
 const bcrypt = require('bcryptjs');
-const { validateUserProfileData } = require('../services/validateUserProfileData');
+const saltRounds = 10;
 
-const getUserProfile = async (req, res) => {
-    try {
-        const { data } = tokenReturned(req, res);
-        const currentUser = await Users.findById(data.user_id);
-        if (!currentUser) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        const { password, ...userWithoutPassword } =
-            currentUser.toObject();
-        return res.status(200).json({
-            message: 'Success',
-            profile: userWithoutPassword
+module.exports = {
+    getUserProfile: async (req, res) => {
+      try {
+        const userId = req.user.user_id;
+        const user = await Users.findByPk(userId, {
+          attributes: { exclude: ['password'] },
         });
-    } catch (error) {
-        res.status(500).json({ message: 'Server Error' });
-    }
-}
-
-const editUserProfile = async (req, res) => {
-    try {
-
-        const { data } = tokenReturned(req, res);
-
-        // Get new data from the request
-        const { username, role, first_name, last_name, phone_number, address } = req.body;
-
-        if (!validateUserProfileData(req.body)) {
-            return res.status(400),json({ message: 'Invalid user profile data'});
+        console.log(user);
+        if (user) {
+          res.status(200).json(user);
+        } else {
+          res.status(404).json({ message: 'User not found' });
         }
-
-        const currentUser = await Users.findById(data.user_id);
-        if (!currentUser) {
-            return res.status(404).json({ message: 'User not found' });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    },
+  
+    updateUserProfile: async (req, res) => {
+      try {
+        const userId = req.user.user_id;
+        const { first_name, last_name, phone_number, address } = req.body;
+  
+        const user = await Users.findByPk(userId);
+        if (user) {
+          user.first_name = first_name || user.first_name;
+          user.last_name = last_name || user.last_name;
+          user.phone_number = phone_number || user.phone_number;
+          user.address = address || user.address;
+  
+          await user.save();
+          res.status(200).json({ message: 'Profile updated successfully' });
+        } else {
+          res.status(404).json({ message: 'User not found' });
         }
-
-        currentUser.username = username;
-        currentUser.role = role;
-        currentUser.first_name = first_name;
-        currentUser.last_name = last_name;
-        currentUser.phone_number = phone_number;
-        currentUser.address = address;
-
-        await currentUser.save();
-
-        const { password, ...updateUser } = currentUser.toObject();
-        return res.status(200).json({
-            message: 'Profile updated successfully',
-            changeSuccess: updateUser
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server Error'});
-    }
-};
-
-const changeUserPassword = async (req, res) => {
-    try {
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    },
+  
+    changeUserPassword: async (req, res) => {
+      try {
+        const userId = req.user.user_id;
         const { currentPassword, newPassword, confirmPassword } = req.body;
-        const { data } = tokenReturned(req, res);
-        const currentUser = await Users.findById(data.user_id);
-
-        if (!currentUser) {
-            return res.status(404).json({ message: 'User not found'});
+  
+        const user = await Users.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User tidak ditemukan'});
         }
 
-        const isMatch = await bcrypt.compare(
-            currentPassword,
-            currentUser.password
-        );
-
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Incorrent current password'});
+            return res.status(400).json({ message: 'Kesalahan password sekarang'});
         }
 
         if (newPassword !== confirmPassword) {
-            return res.status(400).json({ message: 'New password do not match' });
+            return res.status(400).json({ message: 'Password baru tidak sama'});
         }
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        currentPassword.password = hashedPassword;
-        await currentPassword.save();
+        user.password = hashedPassword;
+        await user.save();
 
-        const { password, ...userWithoutPassword } = currentPassword.toObject();
-        res.status.json({
-            message: 'Password updated successfully',
-            changeSuccess: userWithoutPassword,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server Error'});
-    }
-};
-
-module.exports = {
-    getUserProfile,
-    editUserProfile,
-    changeUserPassword
-}
+        const {password, ...userWithoutPassword } = user.toJSON();
+        
+        res.status(200).json({
+            message: 'Update Password Sukses',
+            updatedUser: userWithoutPassword
+        })
+      } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+      }
+    },
+  };
+  
