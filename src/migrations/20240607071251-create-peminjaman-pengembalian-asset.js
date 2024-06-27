@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('peminjaman__pengembalian_asset', {
+    await queryInterface.createTable('peminjaman_pengembalian_asset', {
       borrowed_id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -46,6 +46,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('peminjaman__pengembalian_asset');
+    await queryInterface.dropTable('peminjaman_pengembalian_asset');
   }
 };

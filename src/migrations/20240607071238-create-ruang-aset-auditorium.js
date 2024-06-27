@@ -20,12 +20,6 @@ module.exports = {
       category_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'category_assets',
-          key: 'category_id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
       asset_price: {
         type: Sequelize.INTEGER,
