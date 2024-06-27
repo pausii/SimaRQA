@@ -12,10 +12,12 @@ module.exports = {
 
     tokenVerified: (req, res, next) => {
         try {
-            const token = req.headers.authorization;
+            const token = req.headers.authorization.split(' ')[1];
             console.log('Received token', token);
-            const verified = jwt.verify(token.split(' ')[1], JWT_SECRET);
+            const verified = jwt.verify(token, JWT_SECRET);
             console.log('Verified token:', verified);
+            req.user = verified.data;
+
             if (verified) {
                 next();
             }
@@ -34,7 +36,7 @@ module.exports = {
             if (verified.data.role === 'administrator') {
                 next();
             } else {
-                res.status(401).send('Unauthorized, forbidden');
+                res.status(403).send('Access forbidden: Administrator onlu');
                 res.end();
             }
         } catch (error) {
@@ -45,18 +47,6 @@ module.exports = {
         }
     },
 
-    tokenReturned: (req, res) => {
-        try {
-            const token = req.headers.authorization;
-            const verified = jwt.verify(token.split(' ')[1], JWT_SECRET);
-            return verified;
-        } catch (error) {
-            res.status(401).send({
-                error: error.message
-            });
-            console.info('token is invalid');
-        }
-    },
 
     forDivision: (req, res, next) => {
         try {
@@ -92,7 +82,7 @@ module.exports = {
             }
         } catch (error) {
             res.status(401).send({
-                error: error.message
+                error: 'Unauthorized access'
             });
             res.end();
         }
