@@ -1,9 +1,7 @@
 const validateUserProfileData = (data) => {
-    const { username, role, first_name, last_name, phone_number, address } = data;
+    const { first_name, last_name, phone_number, address } = data;
 
     if (
-        !username ||
-        !role ||
         !first_name ||
         !last_name ||
         !phone_number ||
