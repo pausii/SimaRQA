@@ -3,7 +3,14 @@ const XLSX = require('xlsx-style', 'xlsx');
 
 const getReportMushollaAssets = async (req, res) => {
     try {
-        const mushollaAssets = await RuangAsetMusholla.findAll();
+        const mushollaAssets = await RuangAsetMusholla.findAll({
+          include: [
+            {
+              model: "CategoryAsset",
+              as: "asset_category"
+            }
+          ]
+        });
         res.status(200).json({
             message: 'Get Report Asset Musholla successfully',
             data: mushollaAssets
@@ -15,7 +22,15 @@ const getReportMushollaAssets = async (req, res) => {
 
 const getReportMushollaAssetById = async (req, res) => {
     try {
-        const musholla = await RuangAsetMusholla.findByPk(req.params.id);
+        const { id } = req.params;
+        const musholla = await RuangAsetMusholla.findByPk(id, {
+          include: [
+            {
+              model: "CategoryAsset",
+              as: "asset_category"
+            }
+          ]
+        });
         if (!musholla) {
             return res.status(404).json({ message: 'Asset not found'});
         }
@@ -52,15 +67,15 @@ const exportRuangAsetMushollaToExcel = async (req, res) => {
   
       // Prepare data for export
       const formattedData = data.map((asset) => ({
-        'Asset ID': asset.asset_id,
-        'Asset Code': asset.asset_code,
-        'Asset Name': asset.asset_name,
-        'Category ID': asset.category_id, // Include category_id for potential future use
-        'Asset Price': asset.asset_price,
-        'Purchase Date': asset.purchase_date.toLocaleDateString(), // Use localized date format
-        'Asset Condition': asset.asset_condition,
-        'Asset Type': asset.asset_type,
-        'Last Maintenance Date': asset.last_maintenance_date?.toLocaleDateString(), // Handle potential null value
+        'ID Aset': asset.asset_id,
+        'Kode Aset': asset.asset_code,
+        'Nama Aset': asset.asset_name,
+        'Kategori Aset': asset.category_id, // Include category_id for potential future use
+        'Harga Aset': asset.asset_price,
+        'Tanggal Pembelian': asset.purchase_date.toISOString().split('T')[0], // Use localized date format
+        'Kondisi Aset': asset.asset_condition,
+        'Tipe Aset': asset.asset_type,
+        'Tanggal Terakhir Pemeliharaan': asset.last_maintenance_date ? musholla.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata' // Handle potential null value
       }));
   
       // Choose and execute the desired export method (Excel only in this case)

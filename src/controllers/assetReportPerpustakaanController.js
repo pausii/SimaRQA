@@ -1,9 +1,17 @@
 const { RuangAsetPerpustakaan } = require('../models');
 const XLSX = require('xlsx', 'xlsx-style');
+const ExcelJS = require('exceljs');
 
 const getReportPerpustakaanAssets = async (req, res) => {
     try {
-        const perpustakaanAssets = await RuangAsetPerpustakaan.findAll();
+        const perpustakaanAssets = await RuangAsetPerpustakaan.findAll({
+          include: [
+            {
+              model: "CategoryAsset",
+              as: "asset_category"
+            }
+          ]
+        });
         res.status(200).json({
             message: 'Get all Asset perpustakaan successfully',
             data: perpustakaanAssets
@@ -15,7 +23,15 @@ const getReportPerpustakaanAssets = async (req, res) => {
 
 const getReportPerpustakaanAssetById = async (req, res) => {
     try {
-        const perpustakaan = await RuangAsetPerpustakaan.findByPk(req.params.id);
+        const { id } = req.params;
+        const perpustakaan = await RuangAsetPerpustakaan.findByPk(id, {
+          include: [
+            {
+              model: "CategoryAsset",
+              as: "asset_category"
+            }
+          ]
+        });
         if (!perpustakaan) {
             return res.status(404).json({ message: 'Asset not found'});
         }
@@ -28,107 +44,115 @@ const getReportPerpustakaanAssetById = async (req, res) => {
     }
 };
 
-
 const exportRuangAsetPerpustakaanToExcel = async (req, res) => {
     const setExportHeaders = (contentType, filename) => {
-      res.setHeader('Content-Type', contentType);
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     };
-  
+
     try {
-      // Fetch data from the database
-      const data = await RuangAsetPerpustakaan.findAll({
-        attributes: [
-          'asset_id',
-          'asset_code',
-          'asset_name',
-          'category_id', // Include category_id for potential future use in export
-          'asset_price',
-          'purchase_date',
-          'asset_condition',
-          'asset_type',
-          'last_maintenance_date',
-        ],
-      });
-  
-      // Prepare data for export
-      const formattedData = data.map((asset) => ({
-        'Asset ID': asset.asset_id,
-        'Asset Code': asset.asset_code,
-        'Asset Name': asset.asset_name,
-        'Category ID': asset.category_id, // Include category_id for potential future use
-        'Asset Price': asset.asset_price,
-        'Purchase Date': asset.purchase_date.toLocaleDateString(), // Use localized date format
-        'Asset Condition': asset.asset_condition,
-        'Asset Type': asset.asset_type,
-        'Last Maintenance Date': asset.last_maintenance_date?.toLocaleDateString(), // Handle potential null value
-      }));
-  
-      // Choose and execute the desired export method (Excel only in this case)
-      const exportExcel = async () => {
-        const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        // Fetch data from the database
+        const data = await RuangAsetPerpustakaan.findAll({
+            attributes: [
+                'asset_id',
+                'asset_code',
+                'asset_name',
+                'category_id', // Include category_id for potential future use in export
+                'asset_price',
+                'purchase_date',
+                'asset_condition',
+                'asset_type',
+                'last_maintenance_date',
+            ],
+        });
 
-        // define style
-        const headerStyle = {
-          font: { bold: true, color: { rgb: 'FFFFFF'}},
-          fill: { fgColor: { rgb: '4F81BD'}},
-          border: {
-            top: { style: 'thin', color: { rgb: '000000' }},
-            bottom: { style: 'thin', color: { rgb: '000000' }},
-            left: { style: 'thin', color: { rgb: '000000' }},
-            right: { style: 'thin', color: { rgb: '000000' }},
-          }
-        };
+        // Prepare data for export
+        const formattedData = data.map((asset) => ({
+            'ID Aset': asset.asset_id,
+            'Kode Aset': asset.asset_code,
+            'Nama Aset': asset.asset_name,
+            'Kategori Aset': asset.category_id, // Include category_id for potential future use
+            'Harga Aset': asset.asset_price,
+            'Tanggal Pembelian': asset.purchase_date.toISOString().split('T')[0], // Use localized date format
+            'Kondisi Aset': asset.asset_condition,
+            'Tipe Aset': asset.asset_type,
+            'Tanggal Terakhir Pemeliharaan': asset.last_maintenance_date ? asset.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata' // Handle potential null value
+        }));
 
-        const cellStyle = {
-          font: { color: { rgb: '000000' }},
-          border: {
-            top: { style: 'thin', color: { rgb: '000000' }},
-            bottom: { style: 'thin', color: { rgb: '000000' }},
-            left: { style: 'thin', color: { rgb: '000000' }},
-            right: { style: 'thin', color: { rgb: '000000' }},
-          }
-        }
+        // Create a new workbook and worksheet
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Ruang Aset Perpustakaan');
 
-        // apply style to header
-        const range = XLSX.utils.decode_range(worksheet['!ref']);
-        for (let C = range.s.c; C <= range.e.c; ++C) {
-          const address = XLSX.utils.encode_cell({ c: C, r: 0 });
-          if (!worksheet[address]) continue;
-          worksheet[address].s = headerStyle;
-        }
+        // Add title and date
+        worksheet.mergeCells('A1:I1');
+        worksheet.getCell('A1').value = 'Laporan Data Aset Ruang Perpustakaan';
+        worksheet.getCell('A1').font = { bold: true, size: 16 };
+        worksheet.getCell('A1').alignment = { horizontal: 'center' };
 
-        // Apply styles to cells
-        for (let R = range.s.r + 1; R <= range.e.r; ++R) {
-          for (let C = range.s.c; C <= range.e.c; ++C) {
-            const address = XLSX.utils.encode_cell({ c: C, r: R });
-            if (!worksheet[address]) continue;
-            worksheet[address].s = cellStyle;
-          }
-        }
+        worksheet.mergeCells('A2:I2');
+        worksheet.getCell('A2').value = `Tanggal: ${new Date().toISOString().split('T')[0]}`;
+        worksheet.getCell('A2').alignment = { horizontal: 'center' };
 
+        // Add header row with styling
+        const headerRow = worksheet.addRow(Object.keys(formattedData[0]));
+        headerRow.eachCell((cell, colNumber) => {
+            cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+            cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: '4F81BD' }
+            };
+            cell.border = {
+                top: { style: 'thin', color: { argb: '000000' } },
+                bottom: { style: 'thin', color: { argb: '000000' } },
+                left: { style: 'thin', color: { argb: '000000' } },
+                right: { style: 'thin', color: { argb: '000000' } },
+            };
+        });
 
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Ruang Aset Perpustakaan');
-        const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
-  
+        // Add data rows with styling
+        formattedData.forEach(asset => {
+            const row = worksheet.addRow(Object.values(asset));
+            row.eachCell((cell, colNumber) => {
+                cell.font = { color: { argb: '000000' } };
+                cell.border = {
+                    top: { style: 'thin', color: { argb: '000000' } },
+                    bottom: { style: 'thin', color: { argb: '000000' } },
+                    left: { style: 'thin', color: { argb: '000000' } },
+                    right: { style: 'thin', color: { argb: '000000' } },
+                };
+            });
+        });
+
+        // Auto filter for the header
+        worksheet.autoFilter = 'A3:I3';
+
+        // Auto fit column width
+        worksheet.columns.forEach(column => {
+            let maxLength = 0;
+            column.eachCell({ includeEmpty: true }, cell => {
+                const cellLength = cell.value ? cell.value.toString().length : 10;
+                if (cellLength > maxLength) {
+                    maxLength = cellLength;
+                }
+            });
+            column.width = maxLength < 10 ? 10 : maxLength;
+        });
+
         // Generate a unique filename with extension for clarity
         const filename = `ruang_aset_perpustakaan_${Date.now()}.xlsx`;
-  
-        // Directly send the buffer as response (improvement)
+
+        // Write workbook to buffer and send it as response
+        const buffer = await workbook.xlsx.writeBuffer();
         setExportHeaders('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', filename);
         res.send(buffer);
-      };
-  
-      await exportExcel(); // Execute the export
-  
+
     } catch (error) {
-      console.error('Error exporting data:', error);
-      res.status(500).send('Error exporting data. Please check logs for details.');
-    } finally {
-      // No cleanup needed since temporary file is not used
+        console.error('Error exporting data:', error);
+        res.status(500).send('Error exporting data. Please check logs for details.');
     }
-  };
+};
+
 
   const searchReportAsset = async (req, res) => {
     const { query } = req;

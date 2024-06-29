@@ -1,21 +1,37 @@
-const { RuangAsetAuditorium } = require('../models');
+const { RuangAsetAuditorium, CategoryAsset } = require('../models');
 const XLSX = require('xlsx', 'xlsx-style');
 
-const getReportAuditoriumAssets = async (req, res) => {
-    try {
-        const auditoriumAssets = await RuangAsetAuditorium.findAll();
-        res.status(200).json({
-            message: 'Get Report Asset auditorium successfully',
-            data: auditoriumAssets
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+const getAllReportAuditoriumAssets = async (req, res) => {
+  try {
+      const auditorium = await RuangAsetAuditorium.findAll({
+          include: [
+              {
+                  model: CategoryAsset,
+                  as: "asset_category"
+              }
+          ]
+      });
+      console.log(auditorium);
+      res.status(200).json({
+          message: 'Get All Report auditorium successfully',
+          data: auditorium
+      });
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
 };
 
 const getReportAuditoriumAssetById = async (req, res) => {
     try {
-        const auditorium = await RuangAsetAuditorium.findByPk(req.params.id);
+        const { id } = req.params;
+        const auditorium = await RuangAsetAuditorium.findByPk(id, {
+          include: [
+            {
+              model: CategoryAsset,
+              as: "asset_category"
+            }
+          ]
+        });
         if (!auditorium) {
             return res.status(404).json({ message: 'Asset not found'});
         }
@@ -52,15 +68,15 @@ const exportRuangAsetAuditoriumToExcel = async (req, res) => {
   
       // Prepare data for export
       const formattedData = data.map((asset) => ({
-        'Asset ID': asset.asset_id,
-        'Asset Code': asset.asset_code,
-        'Asset Name': asset.asset_name,
-        'Category ID': asset.category_id, // Include category_id for potential future use
-        'Asset Price': asset.asset_price,
-        'Purchase Date': asset.purchase_date.toLocaleDateString(), // Use localized date format
-        'Asset Condition': asset.asset_condition,
-        'Asset Type': asset.asset_type,
-        'Last Maintenance Date': asset.last_maintenance_date?.toLocaleDateString(), // Handle potential null value
+        'ID Aset': asset.asset_id,
+        'Kode Aset': asset.asset_code,
+        'Nama Aset': asset.asset_name,
+        'Kategori Aset': asset.category_id, // Include category_id for potential future use
+        'Harga Aset': asset.asset_price,
+        'Tanggal Pembelian': asset.purchase_date.toISOString().split('T')[0], // Use localized date format
+        'Kondisi Aset': asset.asset_condition,
+        'Tipe Aset': asset.asset_type,
+        'Tanggal Terakhir Pemeliharaan': asset.last_maintenance_date ? asset.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata' // Handle potential null value
       }));
   
       // Choose and execute the desired export method (Excel only in this case)
@@ -165,7 +181,7 @@ const searchReportAsset = async (req, res) => {
 
 
 module.exports = {
-    getReportAuditoriumAssets,
+    getAllReportAuditoriumAssets,
     getReportAuditoriumAssetById,
     exportRuangAsetAuditoriumToExcel,
     searchReportAsset

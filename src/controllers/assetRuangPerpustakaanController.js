@@ -1,4 +1,4 @@
-const { RuangAsetPerpustakaan } = require('../models');
+const { RuangAsetPerpustakaan, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
 const generateAssetCode = require('../services/generateAssetCode');
 const fs = require('fs');
@@ -37,7 +37,14 @@ const createPerpustakaanAsset = async (req, res) => {
 
 const getAllPerpustakaanAssets = async (req, res) => {
     try {
-        const perpustakaanAssets = await RuangAsetPerpustakaan.findAll();
+        const perpustakaanAssets = await RuangAsetPerpustakaan.findAll({
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        });
         res.status(200).json({
             message: 'Get all Asset perpustakaan successfully',
             data: perpustakaanAssets
@@ -49,7 +56,15 @@ const getAllPerpustakaanAssets = async (req, res) => {
 
 const getPerpustakaanAssetById = async (req, res) => {
     try {
-        const perpustakaan = await RuangAsetPerpustakaan.findByPk(req.params.id);
+        const { id } = req.params;
+        const perpustakaan = await RuangAsetPerpustakaan.findByPk(id, {
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        });
         if (!perpustakaan) {
             return res.status(404).json({ message: 'Asset not found'});
         }
@@ -117,13 +132,52 @@ const generateQRCode = async (req, res) => {
         if (!perpustakaan) {
             return res.status(404).json({ message: 'Asset not found'});
         }
-        
-        // Generate QR Code to a buffer
-        const qrCodeBuffer = await QRCode.toBuffer(JSON.stringify(perpustakaan));
+
+        // Data struktur yang lebih rapi menggunakan handlebars
+        const template = `
+            Data Asset Ruang Perpustakaan dengan ID {{asset_id}}
+            Kode Aset: {{asset_code}}
+            Nama Aset: {{asset_name}}
+            Kategori: {{category_id}}
+            Harga Aset: Rp {{asset_price}}
+            Tanggal Pembelian: {{purchase_date}}
+            Kondisi Aset: {{asset_type}}
+            Tanggal Terakhir Pemeliharaan: {{last_maintenance_date}}
+        `;
+        const compiledTemplate = handlebars.compile(template);
+        const structuredData = compiledTemplate({
+            asset_id: perpustakaan.asset_id,
+            asset_code: perpustakaan.asset_code,
+            asset_name: perpustakaan.asset_name,
+            category_id: perpustakaan.category_id,
+            asset_price: perpustakaan.asset_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            purchase_date: perpustakaan.purchase_date.toISOString().split('T')[0],
+            asset_type: perpustakaan.asset_type,
+            last_maintenance_date: perpustakaan.last_maintenance_date ? perpustakaan.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata'
+        });
+
+        // Opsi tambahan untuk QR Code
+        const options = {
+            errorCorrectionLevel: 'H', // Error correction level: L, M, Q, H
+            type: 'image/png',
+            quality: 0.92,
+            margin: 2,
+            color: {
+                dark: '#000000',  // Warna foreground
+                light: '#FFFFFF'  // Warna background
+            }
+        };
+
+        // Generate QR Code to a buffer with options
+        const qrCodeBuffer = await QRCode.toBuffer(structuredData, options);
+
+        // Menentukan nama file yang aman
+        const safeAssetName = perpustakaan.asset_name.replace(/[^a-zA-Z0-9]/g, '_');
+        const filename = `${safeAssetName}_qr_code.png`;
 
         // Set response headers
         res.setHeader('Content-Type', 'image/png');
-        res.setHeader('Content-Disposition', `attachment; filename="${perpustakaan.asset_name}_qr_code.png`);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}`);
 
         // Send the QR Code buffer as response
         res.send(qrCodeBuffer);
@@ -148,16 +202,6 @@ const searchAsset = async (req, res) => {
         if (query.asset_name) {
             const searchTerm = query.asset_name.toLowerCase();
             filteredAssetPerpustakaan.filteredAssetPerpustakaan.filter(asset => asset.asset_name.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.category_id) {
-            const searchTerm = query.category_id.toLowerCase();
-            filteredAssetPerpustakaan.filteredAssetPerpustakaan.filter(asset => asset.category_id.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.asset_condition) {
-            const searchTerm = query.asset_condition.toLowerCase();
-            filteredAssetPerpustakaan.filteredAssetPerpustakaan.filter(asset => asset.asset_condition.toLowerCase().includes(searchTerm));
         }
 
         res.status(200).json(filteredAssetPerpustakaan);

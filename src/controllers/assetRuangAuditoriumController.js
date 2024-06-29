@@ -1,8 +1,7 @@
 const { RuangAsetAuditorium, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
 const generateAssetCode = require('../services/generateAssetCode');
-const fs = require('fs');
-const path = require('path');
+const handlebars = require('handlebars');
 
 const createAuditoriumAsset = async (req, res) => {
     try {
@@ -132,19 +131,51 @@ const generateQRCode = async (req, res) => {
             return res.status(404).json({ message: 'Asset not found'});
         }
 
-        const structuredData = {
-            "ID Aset": auditorium.asset_id,
-            "Kode Aset": auditorium.asset_code,
-            "Nama Aset": auditorium.asset_name,
-            "Kategori": auditorium.category_id
-        }
-        
-        // Generate QR Code to a buffer
-        const qrCodeBuffer = await QRCode.toBuffer(JSON.stringify(auditorium));
+        // Data struktur yang lebih rapi menggunakan handlebars
+        const template = `
+            Data Asset Ruang Auditorium dengan ID {{asset_id}}
+            Kode Aset: {{asset_code}}
+            Nama Aset: {{asset_name}}
+            Kategori: {{category_id}}
+            Harga Aset: Rp {{asset_price}}
+            Tanggal Pembelian: {{purchase_date}}
+            Kondisi Aset: {{asset_type}}
+            Tanggal Terakhir Pemeliharaan: {{last_maintenance_date}}
+        `;
+        const compiledTemplate = handlebars.compile(template);
+        const structuredData = compiledTemplate({
+            asset_id: auditorium.asset_id,
+            asset_code: auditorium.asset_code,
+            asset_name: auditorium.asset_name,
+            category_id: auditorium.category_id,
+            asset_price: auditorium.asset_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            purchase_date: auditorium.purchase_date.toISOString().split('T')[0],
+            asset_type: auditorium.asset_type,
+            last_maintenance_date: auditorium.last_maintenance_date ? auditorium.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata'
+        });
+
+        // Opsi tambahan untuk QR Code
+        const options = {
+            errorCorrectionLevel: 'H', // Error correction level: L, M, Q, H
+            type: 'image/png',
+            quality: 0.92,
+            margin: 2,
+            color: {
+                dark: '#000000',  // Warna foreground
+                light: '#FFFFFF'  // Warna background
+            }
+        };
+
+        // Generate QR Code to a buffer with options
+        const qrCodeBuffer = await QRCode.toBuffer(structuredData, options);
+
+        // Menentukan nama file yang aman
+        const safeAssetName = auditorium.asset_name.replace(/[^a-zA-Z0-9]/g, '_');
+        const filename = `${safeAssetName}_qr_code.png`;
 
         // Set response headers
         res.setHeader('Content-Type', 'image/png');
-        res.setHeader('Content-Disposition', `attachment; filename="${auditorium.asset_name}_qr_code.png`);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}`);
 
         // Send the QR Code buffer as response
         res.send(qrCodeBuffer);
@@ -169,16 +200,6 @@ const searchAsset = async (req, res) => {
         if (query.asset_name) {
             const searchTerm = query.asset_name.toLowerCase();
             filteredAssetAuditorium.filteredAssetAuditorium.filter(asset => asset.asset_name.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.category_id) {
-            const searchTerm = query.category_id.toLowerCase();
-            filteredAssetAuditorium.filteredAssetAuditorium.filter(asset => asset.category_id.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.asset_condition) {
-            const searchTerm = query.asset_condition.toLowerCase();
-            filteredAssetAuditorium.filteredAssetAuditorium.filter(asset => asset.asset_condition.toLowerCase().includes(searchTerm));
         }
 
         res.status(200).json(filteredAssetAuditorium);

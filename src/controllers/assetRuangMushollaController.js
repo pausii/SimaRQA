@@ -1,8 +1,7 @@
-const { RuangAsetMusholla } = require('../models');
+const { RuangAsetMusholla, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
 const generateAssetCode = require('../services/generateAssetCode');
-const fs = require('fs');
-const path = require('path');
+const handlebars = require('handlebars');
 
 const createMushollaAsset = async (req, res) => {
     try {
@@ -37,7 +36,14 @@ const createMushollaAsset = async (req, res) => {
 
 const getAllMushollaAssets = async (req, res) => {
     try {
-        const mushollaAssets = await RuangAsetMusholla.findAll();
+        const mushollaAssets = await RuangAsetMusholla.findAll({
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        });
         res.status(200).json({
             message: 'Get all Asset Musholla successfully',
             data: mushollaAssets
@@ -49,7 +55,15 @@ const getAllMushollaAssets = async (req, res) => {
 
 const getMushollaAssetById = async (req, res) => {
     try {
-        const musholla = await RuangAsetMusholla.findByPk(req.params.id);
+        const { id } = req.params;
+        const musholla = await RuangAsetMusholla.findByPk(id, {
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        });
         if (!musholla) {
             return res.status(404).json({ message: 'Asset not found'});
         }
@@ -118,14 +132,53 @@ const generateQRCode = async (req, res) => {
         if (!musholla) {
             return res.status(404).json({ message: 'Asset not found'});
         }
-        
-        // Generate QR Code to a buffer
-        const qrCodeBuffer = await QRCode.toBuffer(JSON.stringify(musholla));
+
+        // Data struktur yang lebih rapi menggunakan handlebars
+        const template = `
+            Data Asset Ruang Musholla dengan ID {{asset_id}}
+            Kode Aset: {{asset_code}}
+            Nama Aset: {{asset_name}}
+            Kategori: {{category_id}}
+            Harga Aset: Rp {{asset_price}}
+            Tanggal Pembelian: {{purchase_date}}
+            Kondisi Aset: {{asset_type}}
+            Tanggal Terakhir Pemeliharaan: {{last_maintenance_date}}
+        `;
+        const compiledTemplate = handlebars.compile(template);
+        const structuredData = compiledTemplate({
+            asset_id: musholla.asset_id,
+            asset_code: musholla.asset_code,
+            asset_name: musholla.asset_name,
+            category_id: musholla.category_id,
+            asset_price: musholla.asset_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            purchase_date: musholla.purchase_date.toISOString().split('T')[0],
+            asset_type: musholla.asset_type,
+            last_maintenance_date: musholla.last_maintenance_date ? musholla.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata'
+        });
+
+        // Opsi tambahan untuk QR Code
+        const options = {
+            errorCorrectionLevel: 'H', // Error correction level: L, M, Q, H
+            type: 'image/png',
+            quality: 0.92,
+            margin: 2,
+            color: {
+                dark: '#000000',  // Warna foreground
+                light: '#FFFFFF'  // Warna background
+            }
+        };
+
+        // Generate QR Code to a buffer with options
+        const qrCodeBuffer = await QRCode.toBuffer(structuredData, options);
+
+        // Menentukan nama file yang aman
+        const safeAssetName = musholla.asset_name.replace(/[^a-zA-Z0-9]/g, '_');
+        const filename = `${safeAssetName}_qr_code.png`;
 
         // Set response headers
         res.setHeader('Content-Type', 'image/png');
-        res.setHeader('Content-Disposition', `attachment; filename="${musholla.asset_name}_qr_code.png`);
-
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}`);
+        
         // Send the QR Code buffer as response
         res.send(qrCodeBuffer);
     } catch (error) {
@@ -149,16 +202,6 @@ const searchAsset = async (req, res) => {
         if (query.asset_name) {
             const searchTerm = query.asset_name.toLowerCase();
             filteredAssetMusholla.filteredAssetMusholla.filter(asset => asset.asset_name.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.category_id) {
-            const searchTerm = query.category_id.toLowerCase();
-            filteredAssetMusholla.filteredAssetMusholla.filter(asset => asset.category_id.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.asset_condition) {
-            const searchTerm = query.asset_condition.toLowerCase();
-            filteredAssetMusholla.filteredAssetMusholla.filter(asset => asset.asset_condition.toLowerCase().includes(searchTerm));
         }
 
         res.status(200).json(filteredAssetMusholla);
