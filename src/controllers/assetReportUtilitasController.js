@@ -75,7 +75,7 @@ const exportRuangAsetUtilitasToExcel = async (req, res) => {
         'Tanggal Pembelian': asset.purchase_date.toISOString().split('T')[0], // Use localized date format
         'Kondisi Aset': asset.asset_condition,
         'Tipe Aset': asset.asset_type,
-        'Tanggal Terakhir Pemeliharaan': asset.last_maintenance_date ? musholla.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata' // Handle potential null value
+        'Tanggal Terakhir Pemeliharaan': asset.last_maintenance_date ? asset.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata' // Handle potential null value
       }));
   
       // Choose and execute the desired export method (Excel only in this case)
