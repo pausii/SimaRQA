@@ -12,7 +12,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      borrowed__asset_name: {
+      borrowed_asset_name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      borrowed_name: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -41,6 +45,16 @@ module.exports = {
       notes: {
         type: Sequelize.TEXT,
         allowNull: true
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
       }
     });
   },
