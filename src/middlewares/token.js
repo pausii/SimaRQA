@@ -36,7 +36,7 @@ module.exports = {
             if (verified.data.role === 'administrator') {
                 next();
             } else {
-                res.status(403).send('Access forbidden: Administrator onlu');
+                res.status(403).send('Access forbidden: Administrator only');
                 res.end();
             }
         } catch (error) {
