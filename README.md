@@ -11,7 +11,7 @@ base-url: localhost:3000
 **Request** :
 - Method : POST
 
-- Endpoint : `(base-url)/auth/login`
+- Endpoint : `(base-url)/api/auth/login`
 
 - Header :
     - Content-Type : applcation/json
@@ -50,7 +50,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/users/)`
+- Endpoint  : `(base-url/api/users/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -78,7 +78,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/user/:id)`
+- Endpoint  : `(base-url/api/user/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -105,7 +105,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : POST
-- Endpoint  : `(base-url)/users/`
+- Endpoint  : `(base-url)/api/users/`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -145,7 +145,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : PUT
-- Endpoint  : `(base-url)/user/:id`
+- Endpoint  : `(base-url)/api/user/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -185,7 +185,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : DELETE
-- Endpoint  : `(base-url)/user/:id`
+- Endpoint  : `(base-url)/api/user/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -215,7 +215,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/categorys/)`
+- Endpoint  : `(base-url/api/category/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -237,7 +237,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/category/:id)`
+- Endpoint  : `(base-url/api/category/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -258,7 +258,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : POST
-- Endpoint  : `(base-url)/category/`
+- Endpoint  : `(base-url)/api/category/`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -286,7 +286,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : PUT
-- Endpoint  : `(base-url)/category/:id`
+- Endpoint  : `(base-url)/api/category/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -314,7 +314,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : DELETE
-- Endpoint  : `(base-url)/category/:id`
+- Endpoint  : `(base-url)/api/category/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -339,7 +339,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/musholla/)`
+- Endpoint  : `(base-url/api/musholla/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -352,7 +352,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -370,7 +370,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/musholla/:id)`
+- Endpoint  : `(base-url/api/musholla/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -383,7 +383,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -400,7 +400,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : POST
-- Endpoint  : `(base-url)/musholla/`
+- Endpoint  : `(base-url)/api/musholla/`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -426,7 +426,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -443,7 +443,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : PUT
-- Endpoint  : `(base-url)/musholla/:id`
+- Endpoint  : `(base-url)/api/musholla/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -469,7 +469,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -486,7 +486,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : DELETE
-- Endpoint  : `(base-url)/musholla/:id`
+- Endpoint  : `(base-url)/api/musholla/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -499,7 +499,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -519,7 +519,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/auditorium/)`
+- Endpoint  : `(base-url/api/auditorium/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -532,7 +532,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -550,7 +550,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/auditorium/:id)`
+- Endpoint  : `(base-url/api/auditorium/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -563,7 +563,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -580,7 +580,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : POST
-- Endpoint  : `(base-url)/auditorium/`
+- Endpoint  : `(base-url)/api/auditorium/`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -606,7 +606,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -623,7 +623,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : PUT
-- Endpoint  : `(base-url)/auditorium/:id`
+- Endpoint  : `(base-url)/api/auditorium/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -649,7 +649,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -666,7 +666,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : DELETE
-- Endpoint  : `(base-url)/auditorium/:id`
+- Endpoint  : `(base-url)/api/auditorium/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -679,7 +679,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -699,7 +699,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/perpustakaan/)`
+- Endpoint  : `(base-url/api/perpustakaan/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -712,7 +712,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -730,7 +730,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/perpustakaan/:id)`
+- Endpoint  : `(base-url/api/perpustakaan/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -743,7 +743,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -760,7 +760,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : POST
-- Endpoint  : `(base-url)/perpustakaan/`
+- Endpoint  : `(base-url)/api/perpustakaan/`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -786,7 +786,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -803,7 +803,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : PUT
-- Endpoint  : `(base-url)/perpustakaan/:id`
+- Endpoint  : `(base-url)/api/perpustakaan/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -816,8 +816,7 @@ base-url: localhost:3000
     "asset_stock": "integer",
     "asset_price": "integer",
     "purchase_date": "datetime",
-    "asset_condition": "enum",
-    "last_maintenance_date": null
+    "asset_condition": "enum"
 }
 ```
 
@@ -829,7 +828,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -846,7 +845,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : DELETE
-- Endpoint  : `(base-url)/perpustakaan/:id`
+- Endpoint  : `(base-url)/api/perpustakaan/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -859,7 +858,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -879,7 +878,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/utilitas/)`
+- Endpoint  : `(base-url/api/utilitas/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -892,7 +891,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -910,7 +909,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/utilitas/:id)`
+- Endpoint  : `(base-url/api/utilitas/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -923,7 +922,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -940,7 +939,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : POST
-- Endpoint  : `(base-url)/utilitas/`
+- Endpoint  : `(base-url)/api/utilitas/`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -966,7 +965,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -983,7 +982,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : PUT
-- Endpoint  : `(base-url)/utilitas/:id`
+- Endpoint  : `(base-url)/api/utilitas/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1009,7 +1008,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1026,7 +1025,7 @@ base-url: localhost:3000
 
 **Request** : 
 - Method    : DELETE
-- Endpoint  : `(base-url)/utilitas/:id`
+- Endpoint  : `(base-url)/api/utilitas/:id`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1039,7 +1038,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1055,12 +1054,12 @@ base-url: localhost:3000
 
 # **Report Ruang Asset Musholla**
 
-## **Get All Reports Musholla (administrator & division)**
+## **Get All Reports Musholla (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/musholla/report/)`
+- Endpoint  : `(base-url/musholla-reports/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1073,7 +1072,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1086,12 +1085,12 @@ base-url: localhost:3000
 }
 ```
 
-## **Get Report Asset Musholla By Id (administrator & division)**
+## **Get Report Asset Musholla By Id (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/musholla/report/:id)`
+- Endpoint  : `(base-url/musholla-reports/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1104,7 +1103,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1117,12 +1116,12 @@ base-url: localhost:3000
 }
 ```
 
-## **Print PDF Report Ruang Asset Musholla (administrator & division)**
+## **Export Excel Report Ruang Asset Musholla (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/musholla/report/:id/print)`
+- Endpoint  : `(base-url/musholla-reports/export/excel)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1131,32 +1130,19 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Get Report Asset Musholla Successfully By ID:id !",
-    "data": {
-        "asset_id": "integer",
-        "asset_name": "string",
-        "category": {
-            "category_id": "integer",
-            "category_name": "string"
-        },
-        "asset_stock": "integer",
-        "asset_price": "integer",
-        "purchase_date": "datetime",
-        "asset_condition": "enum",
-        "last_maintenance_date": "datetime"
-    }
+    "Export Excel Downloading"
 }
 ```
 
 
 # **Report Ruang Asset Auditorium**
 
-## **Get All Report Auditorium (administrator & division)**
+## **Get All Report Auditorium (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/auditorium/report/)`
+- Endpoint  : `(base-url/auditorium-reports/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1169,7 +1155,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1182,12 +1168,12 @@ base-url: localhost:3000
 }
 ```
 
-## **Get Report Asset Auditorium By Id (administrator & division)**
+## **Get Report Asset Auditorium By Id (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/auditorium/report/:id)`
+- Endpoint  : `(base-url/auditorium-reports/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1200,7 +1186,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1213,12 +1199,12 @@ base-url: localhost:3000
 }
 ```
 
-## **Print PDF Report Ruang Asset Musholla (administrator & division)**
+## **Export Excel Report Ruang Asset Auditorium (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/auditorium/report/:id/print)`
+- Endpoint  : `(base-url/auditorium-reports/export/excel)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1227,32 +1213,19 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Get Report Asset Auditorium Successfully By ID:id !",
-    "data": {
-        "asset_id": "integer",
-        "asset_name": "string",
-        "category": {
-            "category_id": "integer",
-            "category_name": "string"
-        },
-        "asset_stock": "integer",
-        "asset_price": "integer",
-        "purchase_date": "datetime",
-        "asset_condition": "enum",
-        "last_maintenance_date": "datetime"
-    }
+    "Export Excel Downloading"
 }
 ```
 
 
 # **Report Ruang Asset Perpustakaan**
 
-## **Get All Report Assets Perpustakaan (administrator & division)**
+## **Get All Report Assets Perpustakaan (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/perpustakaan/report/)`
+- Endpoint  : `(base-url/perpustakaan-reports/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1265,7 +1238,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1278,12 +1251,12 @@ base-url: localhost:3000
 }
 ```
 
-## **Get Report Asset Perpustakaan By Id (administrator & division)**
+## **Get Report Asset Perpustakaan By Id (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/perpustakaan/report/:id)`
+- Endpoint  : `(base-url/perpustakaan-reports/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1296,7 +1269,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1309,12 +1282,12 @@ base-url: localhost:3000
 }
 ```
 
-## **Print PDF Report Ruang Asset Auditorium (administrator & division)**
+## **Export Excel Report Ruang Asset Perpustakaan (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/auditorium/report/:id/print)`
+- Endpoint  : `(base-url/perpustakaan-reports/export/excel)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1323,34 +1296,18 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Get Report Asset Auditorium Successfully By ID:id !",
-    "data": {
-        "asset_id": "integer",
-        "asset_name": "string",
-        "category": {
-            "category_id": "integer",
-            "category_name": "string"
-        },
-        "asset_stock": "integer",
-        "asset_price": "integer",
-        "purchase_date": "datetime",
-        "asset_condition": "enum",
-        "last_maintenance_date": "datetime"
-    }
+    "Export Excel Downloading"
 }
 ```
 
-
-
-
 # **Report Ruang Asset Utilitas**
 
-## **Get All Report Assets Utilitas (administrator & division)**
+## **Get All Report Assets Utilitas (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/utilitas/report/)`
+- Endpoint  : `(base-url/utilitas-reports/)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1363,7 +1320,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1376,12 +1333,12 @@ base-url: localhost:3000
 }
 ```
 
-## **Get Report Asset Utilitas By Id (administrator & division)**
+## **Get Report Asset Utilitas By Id (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/utilitas/report/:id)`
+- Endpoint  : `(base-url/utilitas-reports/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1394,7 +1351,7 @@ base-url: localhost:3000
     "data": {
         "asset_id": "integer",
         "asset_name": "string",
-        "category": {
+        "asset_category": {
             "category_id": "integer",
             "category_name": "string"
         },
@@ -1408,12 +1365,12 @@ base-url: localhost:3000
 ```
 
 
-## **Print PDF Report Ruang Asset Utilitas (administrator & division)**
+## **Export Excel Report Ruang Asset Utilitas (administrator)**
 
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/utilitas/report/:id/print)`
+- Endpoint  : `(base-url/utilitas-reports/export/excel)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1422,24 +1379,9 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Get Report Asset Utilitas Successfully By ID:id !",
-    "data": {
-        "asset_id": "integer",
-        "asset_name": "string",
-        "category": {
-            "category_id": "integer",
-            "category_name": "string"
-        },
-        "asset_stock": "integer",
-        "asset_price": "integer",
-        "purchase_date": "datetime",
-        "asset_condition": "enum",
-        "last_maintenance_date": "datetime"
-    }
+    "Export Excel Downloading"
 }
 ```
-
-> :warning: **Under Process**: Bagian dibawah ini sedang dalam proses pembuatan.
 
 # **Transaksi Pemeliharaan Asset**
 
@@ -1476,7 +1418,7 @@ base-url: localhost:3000
 **Request** : 
 
 - Method    : GET
-- Endpoint  : `(base-url/maintenance/report/:id)`
+- Endpoint  : `(base-url/maintenance/:id)`
 - Header    : 
     - Content-Type  : application/json
     - Accept        : application/json
@@ -1528,7 +1470,6 @@ base-url: localhost:3000
     "message": "Create Transaksi Pemeliharaan Asset Successfully!",
     "data": {
         "maintenance_asset_code": "enum (string)",
-        "maintenance_asset_name": "string",
         "maintenance_date": "date",
         "maintenance_asset_condition": "enum",
         "price_maintenance": "integer",
@@ -1550,7 +1491,6 @@ base-url: localhost:3000
 ```json
 {
     "maintenance_asset_code": "enum (string)",
-    "maintenance_asset_name": "string",
     "maintenance_date": "date",
     "maintenance_asset_condition": "enum",
     "price_maintenance": "integer",
@@ -1659,7 +1599,7 @@ base-url: localhost:3000
 }
 ```
 
-## **Create Transaksi Peminjaman dan Pengembalian Asset (administrator && division)**
+## **Tambah Transaksi Peminjaman Asset (administrator && division)**
 
 **Request** : 
 - Method    : POST
@@ -1703,7 +1643,7 @@ base-url: localhost:3000
 }
 ```
 
-## **Update Transaksi Peminjaman dan Pengembalian Asset (administrator && division)**
+## **Transaksi Pengembalian Asset (administrator && division)**
 
 **Request** : 
 - Method    : PUT
@@ -1716,11 +1656,7 @@ base-url: localhost:3000
 ```json
 {
     "borrowed_name": "string",
-    "used_by_program": "enum",
-    "borrowed_date": "date",
-    "due_date": "date",
     "return_date": "date",
-    "status": "enum",
     "notes": "text",
 }
 ```
