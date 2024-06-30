@@ -30,12 +30,12 @@ route.use('/api/auditorium', assetAuditoriumRoutes);
 route.use('/api/perpustakaan', assetPerpustakaanRoutes);
 route.use('/api/utilitas', assetUtilitasRoutes);
 
-route.use('/api/musholla', reportAssetMushollaRoutes);
-route.use('/api/auditorium', reportAssetAuditoriumRoutes);
-route.use('/api/perpustakaan', reportAssetPerpustakaanRoutes);
-route.use('/api/utilitas', reportAssetUtilitasRoutes);
+route.use('/api/musholla-reports', reportAssetMushollaRoutes);
+route.use('/api/auditorium-reports', reportAssetAuditoriumRoutes);
+route.use('/api/perpustakaan-reports', reportAssetPerpustakaanRoutes);
+route.use('/api/utilitas-reports', reportAssetUtilitasRoutes);
 
 route.use('/api/maintenance', maintenanceTransactionRoutes);
-route.use('/api/borrowed-return/', borrowedReturnTransactionRoutes);
+route.use('/api/borrowed-return', borrowedReturnTransactionRoutes);
 
 module.exports = route;

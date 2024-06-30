@@ -5,9 +5,9 @@ const { tokenVerified, onlyAdmin } = require('../middlewares/token');
 
 const route = express.Router();
 
-route.get('/reports/', [tokenVerified, onlyAdmin], getAllReportAuditoriumAssets);
-route.get('/reports/search', [tokenVerified, onlyAdmin], searchReportAsset);
-route.get('/reports/:id', [tokenVerified, onlyAdmin], getReportAuditoriumAssetById);
-route.get('/reports/export/excel', [tokenVerified, onlyAdmin], exportRuangAsetAuditoriumToExcel);
+route.get('/', [tokenVerified, onlyAdmin], getAllReportAuditoriumAssets);
+route.get('/search', [tokenVerified, onlyAdmin], searchReportAsset);
+route.get('/:id', [tokenVerified, onlyAdmin], getReportAuditoriumAssetById);
+route.get('/export/excel', [tokenVerified, onlyAdmin], exportRuangAsetAuditoriumToExcel);
 
 module.exports = route;
