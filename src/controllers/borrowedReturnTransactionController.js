@@ -1,8 +1,5 @@
 const { PeminjamanPengembalianAsset, RuangAsetMusholla, RuangAsetAuditorium, RuangAsetPerpustakaan, RuangAsetUtilitas } = require('../models');
-
-const fs = require('fs');
-const path = require('path');
-const XLSX = require('xlsx');
+const ExcelJS = require('exceljs');
 
 const sendErrorResponse = (res, statusCode, message, error = null) => {
   res.status(statusCode).json({ message, error: error?.message });
@@ -39,7 +36,7 @@ const getAllBorrowedReturnTransaction = async (req, res) => {
 const getBorrowedReturnTransactionById = async (req, res) => {
   try {
     const { id } = req.params;
-    const borrowedReturn = await PeminjamanPengembalianAsset.findAll(id);
+    const borrowedReturn = await PeminjamanPengembalianAsset.findByPk(id);
     if (!borrowedReturn) {
       return res.status(404).json({ message: 'Borrowed & Return transaction not found' });
     }
@@ -52,7 +49,7 @@ const getBorrowedReturnTransactionById = async (req, res) => {
   }
 }
 
-const createBorrowedReturnTransaction = async (req, res) => {
+const tambahPeminjamanAsset = async (req, res) => {
   try {
       const { 
           borrowed_asset_code, 
@@ -71,72 +68,80 @@ const createBorrowedReturnTransaction = async (req, res) => {
           return res.status(404).json({ message: "Asset not found" });
       }
 
-      if (asset.asset_type = 'Tidak Dapat Dipindahkan') {
+      if (asset.asset_type === 'Tidak Dapat Dipindahkan') {
         return res.status(400).json({ message: "Asset Tidak Dapat Dipinjam" });
       }
 
-      const borrowed_asset_name = asset.asset_name;
-      const transaction = await PeminjamanPengembalianAsset.create({
-          borrowed_asset_code, 
-          borrowed_asset_name,
-          borrowed_name, 
-          used_by_program, 
-          borrowed_date,
-          due_date,
-          status,
-          notes
-      });
+      if (asset.asset_type === 'Dapat Dipindahkan') {
+        const borrowed_asset_name = asset.asset_name;
+        const transaction = await PeminjamanPengembalianAsset.create({
+            borrowed_asset_code, 
+            borrowed_asset_name,
+            borrowed_name, 
+            used_by_program, 
+            borrowed_date,
+            due_date,
+            status,
+            notes
+        });
 
-      res.status(201).json({
+        res.status(201).json({
           message: "Create Peminjaman Asset Successfully",
           data: transaction
-      });
+        });
+      } else {
+        return res.status(400).json({ message: "Asset tidak dapat dipinjam karena jenis yang tidak dikenal"})
+      }
   } catch (error) {
-      sendErrorResponse(res, 500, "Failed to create maintenance", error);
+      sendErrorResponse(res, 500, "Failed to create borrowed", error);
   }
 };
 
 
-const updateBorrowedReturnTransaction = async (req, res) => {
+const pengembalianAsset = async (req, res) => {
   try {
-      const { id } = req.params;
-      const { 
-          borrowed_name, 
-          used_by_program, 
-          borrowed_date,
-          due_date,
-          return_date,
-          status,
-          notes 
-      } = req.body;
+    const { 
+      borrowed_asset_code, 
+      return_date, 
+      notes 
+    } = req.body;
 
-      const transaction = await PeminjamanPengembalianAsset.findByPk(id);
+    // Ambil model aset berdasarkan kode aset yang dipinjam
+    const assetModel = getAssetModelByCode(borrowed_asset_code);
+    const asset = await assetModel.findOne({ where: { asset_code: borrowed_asset_code } });
 
-      if (!transaction) {
-          return res.status(404).json({ message: "Borrowed Return Transaction not found" });
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found" });
+    }
+
+    // Cek apakah ada transaksi peminjaman yang sedang berlangsung untuk aset ini
+    const transaction = await PeminjamanPengembalianAsset.findOne({
+      where: {
+        borrowed_asset_code,
+        status: 'Dipinjam'
       }
+    });
 
-      if (!asset) {
-          return res.status(404).json({ message: "Asset not found" });
-      }
-      await transaction.update({
-          borrowed_name, 
-          used_by_program, 
-          borrowed_date,
-          due_date,
-          return_date,
-          status,
-          notes 
-      });
+    if (!transaction) {
+      return res.status(400).json({ message: "Tidak ditemukan asset yang sedang dipinjam" });
+    }
 
-      res.status(200).json({
-          message: "Update Borrowed Return successfully",
-          data: transaction
-      });
+    // Update transaksi peminjaman menjadi status 'Returned'
+    transaction.status = 'Dikembalikan';
+    transaction.return_date = return_date;
+    transaction.notes = notes;
+    await transaction.save();
+
+    res.status(200).json({
+      message: "Asset Dikembalikan successfully",
+      data: transaction
+    });
+
   } catch (error) {
-      sendErrorResponse(res, 500, "Failed to update borrowed return", error);
+    sendErrorResponse(res, 500, "Failed to return asset", error);
   }
 };
+
 
 const exportBorrowedReturnTransactionToExcel = async (req, res) => {
   const setExportHeaders = (contentType, filename) => {
@@ -156,7 +161,7 @@ const exportBorrowedReturnTransactionToExcel = async (req, res) => {
       'borrowed_date',
       'due_date',
       'return_date',
-      'status_date',
+      'status',
       'notes'
     ],
   });
@@ -170,27 +175,78 @@ const exportBorrowedReturnTransactionToExcel = async (req, res) => {
     'Used By Program': asset.used_by_program,
     'Borrowed Date': asset.borrowed_date.toLocaleDateString(), // Use localized date format
     'Due Date': asset.due_date.toLocaleDateString(),
-    'Return Date': asset.return_date.toLocaleDateString(),
+    'Return Date': asset.return_date ? asset.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata',
     'Status': asset.status,
     'Notes': asset.notes
   }));
 
-  // Choose and execute the desired export method (Excel only in this case)
-  const exportExcel = async () => {
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.json_to_sheet(formattedData);
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Peminjaman dan Pengembalian Asset');
-    const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+  // Create a new workbook and worksheet
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Peminjaman dan Pengembalian Aset');
 
-    // Generate a unique filename with extension for clarity
-    const filename = `peminjaman_pengembalian_asset_${Date.now()}.xlsx`;
+  // Add title and date
+  worksheet.mergeCells('A1:I1');
+  worksheet.getCell('A1').value = 'Laporan Data Transaksi Peminjaman dan Pengembalian Aset';
+  worksheet.getCell('A1').font = { bold: true, size: 16 };
+  worksheet.getCell('A1').alignment = { horizontal: 'center' };
 
-    // **Improvement:** Directly send the buffer as response instead of writing to a temp file
-    setExportHeaders('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', filename);
-    res.send(buffer);
-  };
+  worksheet.mergeCells('A2:I2');
+  worksheet.getCell('A2').value = `Tanggal: ${new Date().toISOString().split('T')[0]}`;
+  worksheet.getCell('A2').alignment = { horizontal: 'center' };
 
-  await exportExcel(); // Execute the export
+  // Add header row with styling
+  const headerRow = worksheet.addRow(Object.keys(formattedData[0]));
+  headerRow.eachCell((cell, colNumber) => {
+      cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: '4F81BD' }
+      };
+      cell.border = {
+          top: { style: 'thin', color: { argb: '000000' } },
+          bottom: { style: 'thin', color: { argb: '000000' } },
+          left: { style: 'thin', color: { argb: '000000' } },
+          right: { style: 'thin', color: { argb: '000000' } },
+      };
+  });
+
+  // Add data rows with styling
+  formattedData.forEach(asset => {
+      const row = worksheet.addRow(Object.values(asset));
+      row.eachCell((cell, colNumber) => {
+          cell.font = { color: { argb: '000000' } };
+          cell.border = {
+              top: { style: 'thin', color: { argb: '000000' } },
+              bottom: { style: 'thin', color: { argb: '000000' } },
+              left: { style: 'thin', color: { argb: '000000' } },
+              right: { style: 'thin', color: { argb: '000000' } },
+          };
+      });
+  });
+
+  // Auto filter for the header
+  worksheet.autoFilter = 'A3:I3';
+
+  // Auto fit column width
+  worksheet.columns.forEach(column => {
+      let maxLength = 0;
+      column.eachCell({ includeEmpty: true }, cell => {
+          const cellLength = cell.value ? cell.value.toString().length : 10;
+          if (cellLength > maxLength) {
+              maxLength = cellLength;
+          }
+      });
+      column.width = maxLength < 10 ? 10 : maxLength;
+  });
+
+  // Generate a unique filename with extension for clarity
+  const filename = `transaksi_peminjaman_pengembalian__asset_${Date.now()}.xlsx`;
+
+  // Write workbook to buffer and send it as response
+  const buffer = await workbook.xlsx.writeBuffer();
+  setExportHeaders('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', filename);
+  res.send(buffer);
 
 } catch (error) {
   console.error('Error exporting data:', error);
@@ -294,8 +350,8 @@ const searchPeminjamanPengembalianAsset = async (req, res) => {
 module.exports = {
   getAllBorrowedReturnTransaction,
   getBorrowedReturnTransactionById,
-  createBorrowedReturnTransaction,
-  updateBorrowedReturnTransaction,
+  tambahPeminjamanAsset,
+  pengembalianAsset,
   exportBorrowedReturnTransactionToExcel,
   searchPeminjamanPengembalianAsset
 }

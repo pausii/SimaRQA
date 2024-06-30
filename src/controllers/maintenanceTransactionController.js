@@ -8,6 +8,7 @@ const {
 const fs = require('fs');
 const path = require('path');
 const XLSX = require('xlsx')
+const ExcelJS = require('exceljs');
 
 // Fungsi bantu untuk mengirimkan pesan kesalahan
 const sendErrorResponse = (res, statusCode, message, error = null) => {
@@ -132,7 +133,6 @@ const updateMaintenanceTransaction = async (req, res) => {
         const maintenance_asset_name = asset.asset_name;
         await transaction.update({
             maintenance_asset_code,
-            maintenance_asset_name,
             maintenance_date,
             maintenance_asset_condition,
             price_maintenance,
@@ -185,63 +185,73 @@ const exportMaintenanceTransactionToExcel = async (req, res) => {
       'Maintenance Details': asset.details_maintenance,
     }));
 
-    // Choose and execute the desired export method (Excel only in this case)
-    const exportExcel = async () => {
-      const workbook = XLSX.utils.book_new();
-      const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    // Create a new workbook and worksheet
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Pemeliharaan Aset');
 
-      // define style
-      const headerStyle = {
-        font: { bold: true, color: { rgb: 'FFFFFF'}},
-        fill: { fgColor: { rgb: '4F81BD'}},
-        border: {
-          top: { style: 'thin', color: { rgb: '000000' }},
-          bottom: { style: 'thin', color: { rgb: '000000' }},
-          left: { style: 'thin', color: { rgb: '000000' }},
-          right: { style: 'thin', color: { rgb: '000000' }},
-        }
-      };
+    // Add title and date
+    worksheet.mergeCells('A1:I1');
+    worksheet.getCell('A1').value = 'Laporan Data Transaksi Pemeliharaan Aset';
+    worksheet.getCell('A1').font = { bold: true, size: 16 };
+    worksheet.getCell('A1').alignment = { horizontal: 'center' };
 
-      const cellStyle = {
-        font: { color: { rgb: '000000' }},
-        border: {
-          top: { style: 'thin', color: { rgb: '000000' }},
-          bottom: { style: 'thin', color: { rgb: '000000' }},
-          left: { style: 'thin', color: { rgb: '000000' }},
-          right: { style: 'thin', color: { rgb: '000000' }},
-        }
-      }
+    worksheet.mergeCells('A2:I2');
+    worksheet.getCell('A2').value = `Tanggal: ${new Date().toISOString().split('T')[0]}`;
+    worksheet.getCell('A2').alignment = { horizontal: 'center' };
 
-      // apply style to header
-      const range = XLSX.utils.decode_range(worksheet['!ref']);
-      for (let C = range.s.c; C <= range.e.c; ++C) {
-        const address = XLSX.utils.encode_cell({ c: C, r: 0 });
-        if (!worksheet[address]) continue;
-        worksheet[address].s = headerStyle;
-      }
+    // Add header row with styling
+    const headerRow = worksheet.addRow(Object.keys(formattedData[0]));
+    headerRow.eachCell((cell, colNumber) => {
+        cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+        cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: '4F81BD' }
+        };
+        cell.border = {
+            top: { style: 'thin', color: { argb: '000000' } },
+            bottom: { style: 'thin', color: { argb: '000000' } },
+            left: { style: 'thin', color: { argb: '000000' } },
+            right: { style: 'thin', color: { argb: '000000' } },
+        };
+    });
 
-      // Apply styles to cells
-      for (let R = range.s.r + 1; R <= range.e.r; ++R) {
-        for (let C = range.s.c; C <= range.e.c; ++C) {
-          const address = XLSX.utils.encode_cell({ c: C, r: R });
-          if (!worksheet[address]) continue;
-          worksheet[address].s = cellStyle;
-        }
-      }
+    // Add data rows with styling
+    formattedData.forEach(asset => {
+        const row = worksheet.addRow(Object.values(asset));
+        row.eachCell((cell, colNumber) => {
+            cell.font = { color: { argb: '000000' } };
+            cell.border = {
+                top: { style: 'thin', color: { argb: '000000' } },
+                bottom: { style: 'thin', color: { argb: '000000' } },
+                left: { style: 'thin', color: { argb: '000000' } },
+                right: { style: 'thin', color: { argb: '000000' } },
+            };
+        });
+    });
 
+    // Auto filter for the header
+    worksheet.autoFilter = 'A3:I3';
 
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Pemeliharaan Asset');
-      const buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    // Auto fit column width
+    worksheet.columns.forEach(column => {
+        let maxLength = 0;
+        column.eachCell({ includeEmpty: true }, cell => {
+            const cellLength = cell.value ? cell.value.toString().length : 10;
+            if (cellLength > maxLength) {
+                maxLength = cellLength;
+            }
+        });
+        column.width = maxLength < 10 ? 10 : maxLength;
+    });
 
-      // Generate a unique filename with extension for clarity
-      const filename = `pemeliharaan_asset_${Date.now()}.xlsx`;
+    // Generate a unique filename with extension for clarity
+    const filename = `transaksi_pemeliharaan_asset_${Date.now()}.xlsx`;
 
-      // **Improvement:** Directly send the buffer as response instead of writing to a temp file
-      setExportHeaders('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', filename);
-      res.send(buffer);
-    };
-
-    await exportExcel(); // Execute the export
+    // Write workbook to buffer and send it as response
+    const buffer = await workbook.xlsx.writeBuffer();
+    setExportHeaders('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', filename);
+    res.send(buffer);
 
   } catch (error) {
     console.error('Error exporting data:', error);

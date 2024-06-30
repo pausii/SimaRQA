@@ -1,5 +1,6 @@
 const { RuangAsetUtilitas, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
+const generateAssetCode = require('../services/generateAssetCode');
 const fs = require('fs');
 const path = require('path');
 

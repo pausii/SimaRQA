@@ -1,5 +1,4 @@
-const { RuangAsetPerpustakaan } = require('../models');
-const XLSX = require('xlsx', 'xlsx-style');
+const { RuangAsetPerpustakaan, CategoryAsset } = require('../models');
 const ExcelJS = require('exceljs');
 
 const getReportPerpustakaanAssets = async (req, res) => {
@@ -7,7 +6,7 @@ const getReportPerpustakaanAssets = async (req, res) => {
         const perpustakaanAssets = await RuangAsetPerpustakaan.findAll({
           include: [
             {
-              model: "CategoryAsset",
+              model: CategoryAsset,
               as: "asset_category"
             }
           ]
@@ -27,7 +26,7 @@ const getReportPerpustakaanAssetById = async (req, res) => {
         const perpustakaan = await RuangAsetPerpustakaan.findByPk(id, {
           include: [
             {
-              model: "CategoryAsset",
+              model: CategoryAsset,
               as: "asset_category"
             }
           ]
@@ -63,7 +62,13 @@ const exportRuangAsetPerpustakaanToExcel = async (req, res) => {
                 'asset_condition',
                 'asset_type',
                 'last_maintenance_date',
-            ],
+            ], 
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                  }
+            ]
         });
 
         // Prepare data for export
@@ -71,7 +76,7 @@ const exportRuangAsetPerpustakaanToExcel = async (req, res) => {
             'ID Aset': asset.asset_id,
             'Kode Aset': asset.asset_code,
             'Nama Aset': asset.asset_name,
-            'Kategori Aset': asset.category_id, // Include category_id for potential future use
+            'Kategori Aset': asset.asset_category.category_name, // Include category_id for potential future use
             'Harga Aset': asset.asset_price,
             'Tanggal Pembelian': asset.purchase_date.toISOString().split('T')[0], // Use localized date format
             'Kondisi Aset': asset.asset_condition,
