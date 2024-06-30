@@ -1,3 +1,66 @@
+## Backend For SIMARQ
+
+This program is a project 3 management asset with have Data Master, Transaction and Report
+
+
+## Before use API Spesification down there, you need install some preperation that needed, there is: 
+
+- NodeJS v20 or latest
+- NPM v10 or latest
+- MySQL
+- PHPMYADMIN or Anything source management tool that support MySQL
+- Browser (Anything you want to choose)
+- Postman or API Platform alternative
+
+## Instalation
+1. Clone this repository to your computer: 
+    ```bash
+    Backend: git clone https://github.com/pausii/SimaRQA.git
+
+2. Open your repository with this command: 
+    
+    ```bash
+    cd name_repository
+
+3. Install package module with this command:
+    ```bash
+    npm install
+
+4. Make new file with name `.env` then settings with program and your database
+
+    ```bash
+    DB_PORT=3000 or your number port want to use it (*disclaimer you need check index.js for that port) 
+    JWT_SECRET=.......
+
+    DEVELOPMENT_USERNAME=.....
+    DEVELOPMENT_PASSWORD=.....
+    DEVELOPMENT_DATABASE=......
+    DEVELOPMENT_HOST=......
+
+    TEST_USERNAME=.....
+    TEST_PASSWORD=.....
+    TEST_DATABASE=......_test
+    TEST_HOST=......
+
+    PRODUCTION_USERNAME=.....
+    PRODUCTION_PASSWORD=.....
+    PRODUCTION_DATABASE=......
+    PRODUCTION_HOST=......
+    ```
+
+5. Do migration and seeder data to your database : 
+
+    ```bash
+    npm run reset
+
+    (* that command will migration migration data to your database)
+
+    npm run seeder
+
+    (* that command will migration migration seed data to your database)
+
+6. Finish Process, that you can use API Platform and using down there API Spesification
+
 
 npm v9.8.1
 node v18.18.2
