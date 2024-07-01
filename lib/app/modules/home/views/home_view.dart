@@ -25,8 +25,32 @@ class HomeView extends GetView<HomeController> {
             onPressed: () {
               Get.toNamed('/login');
             },
-            child: Text('Go to Profile'),
-          )
+            child: const Text('Go to Login Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/dashboard');
+            },
+            child: const Text('Go to dashboard Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/onboarding-screen');
+            },
+            child: const Text('Go to asset Onboarding Screen Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/assets');
+            },
+            child: const Text('Go to assets Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/assets-add');
+            },
+            child: const Text('Go to assets add Page'),
+          ),
         ],
       ),
     );
