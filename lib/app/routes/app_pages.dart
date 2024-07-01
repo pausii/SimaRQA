@@ -1,11 +1,15 @@
 import 'package:get/get.dart';
 
-import '../modules/AssetMusholla/bindings/asset_musholla_binding.dart';
-import '../modules/AssetMusholla/views/asset_musholla_view.dart';
+import '../modules/Assets/bindings/assets_binding.dart';
+import '../modules/Assets/views/assets_view.dart';
+import '../modules/AssetsAdd/bindings/assets_add_binding.dart';
+import '../modules/AssetsAdd/views/assets_add_view.dart';
 import '../modules/Dashboard/bindings/dashboard_binding.dart';
 import '../modules/Dashboard/views/dashboard_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
+import '../modules/OnboardingScreen/bindings/onboarding_screen_binding.dart';
+import '../modules/OnboardingScreen/views/onboarding_screen_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -33,9 +37,19 @@ class AppPages {
       binding: DashboardBinding(),
     ),
     GetPage(
-      name: _Paths.ASSET_MUSHOLLA,
-      page: () => const AssetMushollaView(),
-      binding: AssetMushollaBinding(),
+      name: _Paths.ONBOARDING_SCREEN,
+      page: () => const OnboardingScreenView(),
+      binding: OnboardingScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.ASSETS,
+      page: () => const AssetsView(),
+      binding: AssetsBinding(),
+    ),
+    GetPage(
+      name: _Paths.ASSETS_ADD,
+      page: () => const AssetsAddView(),
+      binding: AssetsAddBinding(),
     ),
   ];
 }
