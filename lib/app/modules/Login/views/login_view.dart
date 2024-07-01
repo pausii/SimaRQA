@@ -212,6 +212,7 @@ class LoginView extends GetView<LoginController> {
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
+                    controller.login();
                   },
                   text: 'Masuk',
                   options: FFButtonOptions(
