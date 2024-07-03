@@ -29,12 +29,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         used_by_program: {
             type: DataTypes.ENUM,
-            values: ['MIQA', 'ATA', 'Sedekah Sampah', 'Tahsin', 'TPQ'],
+            values: ['MIQA', 'ATA', 'Sedekah Sampah', 'Tahsin', 'TPQ', 'Aqsyanna Mulia', 'RTK', 'RTA'],
             allowNull: null
         },
         borrowed_date: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
+            
         },
         due_date: {
             type: DataTypes.DATE,
