@@ -22,12 +22,13 @@ module.exports = {
       },
       used_by_program: {
         type: Sequelize.ENUM,
-        values: ['MIQA', 'ATA', 'Sedekah Sampah', 'Tahsin', 'TPQ'],
+        values: ['MIQA', 'ATA', 'Sedekah Sampah', 'Tahsin', 'TPQ', 'Aqsyanna Mulia', 'RTK', 'RTA'],
         allowNull: false
       },
       borrowed_date: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       due_date: {
         type: Sequelize.DATE,
@@ -40,6 +41,7 @@ module.exports = {
       status: {
         type: Sequelize.ENUM,
         values: ['Dipinjam', 'Dikembalikan'],
+        defaultValue: 'Dipinjam',
         allowNull: false
       },
       notes: {
