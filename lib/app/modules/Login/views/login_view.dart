@@ -22,7 +22,7 @@ class LoginView extends GetView<LoginController> {
           color: FlutterFlowTheme.of(context).secondaryBackground,
           image: const DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('images/bg.png'),
+            image: AssetImage('images/bg2.jpg'),
           ),
         ),
         child: Container(
@@ -41,7 +41,7 @@ class LoginView extends GetView<LoginController> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
@@ -53,7 +53,7 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 10),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 10),
                 child: Text(
                   'Masuk',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -84,8 +84,8 @@ class LoginView extends GetView<LoginController> {
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                     child: TextFormField(
-                      // controller: _model.textController1,
-                      // focusNode: _model.textFieldFocusNode1,
+                      controller: controller.username,
+                      focusNode: controller.textFieldFocusNode1,
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -152,10 +152,10 @@ class LoginView extends GetView<LoginController> {
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                     child: TextFormField(
-                      // controller: _model.textController2,
-                      // focusNode: _model.textFieldFocusNode2,
+                      controller: controller.password,
+                      focusNode: controller.textFieldFocusNode2,
                       autofocus: true,
-                      obscureText: false,
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle:

@@ -2,27 +2,51 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
-
-final dio = Dio();
+import '../../../utils/alert.dart';
+import '../../../utils/storage.dart';
+import '../../../config/app_config.dart';
+// final dio = Dio();
 
 class LoginController extends GetxController {
-  final textController1 = TextEditingController();
+  final username = TextEditingController();
   final textFieldFocusNode1 = FocusNode();
-  
-  final textController2 = TextEditingController();
+
+  final password = TextEditingController();
   final textFieldFocusNode2 = FocusNode();
 
   @override
   void onClose() {
-    textController1.dispose();
+    username.dispose();
     textFieldFocusNode1.dispose();
-    textController2.dispose();
+    password.dispose();
     textFieldFocusNode2.dispose();
     super.onClose();
   }
 
   void login() async {
-    final response = await dio.get('https://example.com');
-    print(response);
+    try {
+      Dio dio = Dio();
+      final response = await dio.post(
+        '${AppConfig.baseUrl}/api/auth/login',
+        data: {"username": username.text, "password": password.text},
+      );
+
+      if(response.statusCode == 200){
+        Alert.success("Login Success", response.data['message']);
+        await Future.delayed(const Duration(seconds: 1));
+        Storage.write("authToken", "${response.data['body']['token']}");
+        Get.toNamed('/dashboard');
+      }
+    } catch (e) {
+      if (e is DioException) {
+        if (e.response?.statusCode == 404 || e.response?.statusCode == 401) {
+          Alert.error("Login Failed", e.response?.data['message']??"Error PS1");
+        }else{
+          print("ExceptionPS2: $e");
+        }
+      }else{
+        print("ExceptionPS3: $e");
+      }
+    }
   }
 }
