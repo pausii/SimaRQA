@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 
 class Sidebar extends StatelessWidget {
@@ -81,18 +81,26 @@ class Sidebar extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 0, 0),
-                                child: Text(
-                                  'Ruang Aset Mushola',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        letterSpacing: 0,
-                                      ),
+                            GestureDetector(
+                              onTap: () {
+                                // Fungsi yang ingin dijalankan ketika teks diklik
+                                // ccc();
+                                // print("Pressed");
+                                Get.toNamed('/assets?name=musholla');
+                              },
+                              child: Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
+                                  child: Text(
+                                    'Ruang Aset Mushola',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0,
+                                        ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -113,7 +121,8 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -150,7 +159,8 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -187,13 +197,15 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
                                   child: Text(
                                     'Ruang Aset Utilitas',
                                     style: FlutterFlowTheme.of(context)
@@ -225,8 +237,8 @@ class Sidebar extends StatelessWidget {
                             size: 24,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(12, 12, 0, 8),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 12, 0, 8),
                             child: Text(
                               'Teansaksi Aset',
                               textAlign: TextAlign.start,
@@ -254,13 +266,15 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
                                   child: Text(
                                     'Pemeliharaan Aset',
                                     style: FlutterFlowTheme.of(context)
@@ -290,13 +304,15 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
                                   child: Text(
                                     'Peminjaman Aset',
                                     style: FlutterFlowTheme.of(context)
@@ -326,13 +342,15 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
                                   child: Text(
                                     'Pengembalian Aset',
                                     style: FlutterFlowTheme.of(context)
@@ -364,8 +382,8 @@ class Sidebar extends StatelessWidget {
                             size: 24,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(12, 12, 0, 8),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 12, 0, 8),
                             child: Text(
                               'Laporan',
                               textAlign: TextAlign.start,
@@ -393,13 +411,15 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 0, 0),
                                   child: Text(
                                     'Laporan Aset Mushola',
                                     style: FlutterFlowTheme.of(context)
@@ -429,7 +449,8 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -466,7 +487,8 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -503,7 +525,8 @@ class Sidebar extends StatelessWidget {
                         //       : FlutterFlowTheme.of(context).secondaryBackground,
                         // ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -542,8 +565,8 @@ class Sidebar extends StatelessWidget {
                             size: 24,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(12, 12, 0, 8),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 12, 0, 8),
                             child: Text(
                               'Pengaturan',
                               textAlign: TextAlign.start,
@@ -564,14 +587,15 @@ class Sidebar extends StatelessWidget {
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
                                 child: Text(
                                   'Data Profile',
                                   style: FlutterFlowTheme.of(context)
@@ -593,14 +617,15 @@ class Sidebar extends StatelessWidget {
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
                                 child: Text(
                                   'Ubah Password',
                                   style: FlutterFlowTheme.of(context)
@@ -622,14 +647,15 @@ class Sidebar extends StatelessWidget {
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
                                 child: Text(
                                   'Mengelola Data User',
                                   style: FlutterFlowTheme.of(context)
