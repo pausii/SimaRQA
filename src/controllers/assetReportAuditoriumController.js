@@ -13,7 +13,7 @@ const getAllReportAuditoriumAssets = async (req, res) => {
       });
       console.log(auditorium);
       res.status(200).json({
-          message: 'Get All Report auditorium successfully',
+          message: 'Mendapatkan Semua Laporan Auditorium Sukses',
           data: auditorium
       });
   } catch (error) {
@@ -33,10 +33,10 @@ const getReportAuditoriumAssetById = async (req, res) => {
           ]
         });
         if (!auditorium) {
-            return res.status(404).json({ message: 'Asset not found'});
+            return res.status(404).json({ message: 'Aset Tidak Ditemukan!'});
         }
         res.status(200).json({
-            message: `Get Report Asset Auditorium Successfully at ID: ${id}`,
+            message: `Mendapatkan Laporan Aset Auditorium Sukses di ID: ${id}`,
             data: auditorium
         });
     } catch (error) {

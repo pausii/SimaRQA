@@ -12,7 +12,7 @@ const getReportMushollaAssets = async (req, res) => {
           ]
         });
         res.status(200).json({
-            message: 'Get Report Asset Musholla successfully',
+            message: 'Mendapatkan Semua Laporan Aset Musholla Sukses',
             data: mushollaAssets
         });
     } catch (error) {
@@ -32,10 +32,10 @@ const getReportMushollaAssetById = async (req, res) => {
           ]
         });
         if (!musholla) {
-            return res.status(404).json({ message: 'Asset not found'});
+            return res.status(404).json({ message: 'Aset Tidak Ditemukan!'});
         }
         res.status(200).json({
-            message: `Get Report Asset Musholla Successfully at ID: ${id}`,
+            message: `Mendapatkan Laporan Aset Musholla Sukses di ID: ${id}`,
             data: musholla
         });
     } catch (error) {
@@ -191,7 +191,7 @@ const searchReportAsset = async (req, res) => {
       res.status(200).json(filteredAssetMusholla);
   } catch (error) {
       console.error('Error Pencarian: ', error);
-      res.status(500).json({ message: 'Internal Server error'});
+      res.status(500).json({ message: "Server Error", error });
   }
 };
 
