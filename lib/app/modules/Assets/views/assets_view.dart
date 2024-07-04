@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sima_rqa/app/utils/alerts.dart';
 import '../controllers/assets_controller.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import '../../../widgets/sidebar.dart';
@@ -206,7 +205,7 @@ class AssetsView extends GetView<AssetsController> {
                                   DateTime purchaseDate = DateTime.parse(controller.assetsList[index]["purchase_date"]);
                                   String formattedDate = DateFormat('dd MMMM yyyy').format(purchaseDate);
 
-                                  NumberFormat priceFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+                                  NumberFormat priceFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
                                   String formattedPrice = priceFormat.format(controller.assetsList[index]["asset_price"]);
                                   return Padding(
                                       padding: const EdgeInsets.only(bottom: 4),
@@ -314,7 +313,7 @@ class AssetsView extends GetView<AssetsController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      ': Alat',
+                                                      ': ${controller.assetsList[index]["asset_category"]["category_name"]}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)

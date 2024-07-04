@@ -28,7 +28,7 @@ class AssetsAddView extends GetView<AssetsAddController> {
         backgroundColor: const Color(0xFF0B2EAE),
         automaticallyImplyLeading: true,
         title: Text(
-          'Tambah Aset Musholla',
+          'Tambah Aset ${controller.asset.name.capitalize}',
           style: FlutterFlowTheme.of(context).bodyMedium.override(
                 fontFamily: 'Poppins',
                 color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -216,6 +216,65 @@ class AssetsAddView extends GetView<AssetsAddController> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                   child: TextFormField(
+                    controller: controller.inputPrice,
+                    // focusNode: _model.textFieldFocusNode1,
+                    autofocus: true,
+                    obscureText: false,
+                    readOnly: controller.readonly,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Harga Aset',
+                      labelStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Readex Pro',
+                                letterSpacing: 0,
+                              ),
+                      hintStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Readex Pro',
+                                letterSpacing: 0,
+                              ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 16, 49, 97),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color(0xFF3D77D2),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).error,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).error,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0,
+                        ),
+                    // validator:
+                    //     _model.textController1Validator.asValidator(context),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                  child: TextFormField(
                     controller: controller.inputPurchaseDate,
                     // focusNode: _model.textFieldFocusNode3,
                     autofocus: true,
@@ -378,7 +437,6 @@ class AssetsAddView extends GetView<AssetsAddController> {
                         autofocus: true,
                         obscureText: false,
                         readOnly: controller.readonly,
-                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Tanggal terkhir maintenance',
                           labelStyle:

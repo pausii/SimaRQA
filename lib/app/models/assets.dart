@@ -14,3 +14,24 @@ class AssetsMushollaModel extends AssetsModel {
     apiPath = "musholla";
   }
 }
+
+class AssetsAuditoriumModel extends AssetsModel {
+  AssetsAuditoriumModel() {
+    name = "auditorium";
+    apiPath = "auditorium";
+  }
+}
+
+class AssetsPerpustakaanModel extends AssetsModel {
+  AssetsPerpustakaanModel() {
+    name = "perpustakaan";
+    apiPath = "perpustakaan";
+  }
+}
+
+class AssetsUtilitasModel extends AssetsModel {
+  AssetsUtilitasModel() {
+    name = "utilitas";
+    apiPath = "utilitas";
+  }
+}

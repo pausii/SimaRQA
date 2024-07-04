@@ -33,6 +33,12 @@ class AssetsAddController extends GetxController {
     // print('Asset found: $name');
     if (name == 'musholla') {
       asset = AssetsMushollaModel();
+    } else if (name == 'auditorium') {
+      asset = AssetsAuditoriumModel();
+    } else if (name == 'perpustakaan') {
+      asset = AssetsPerpustakaanModel();
+    } else if (name == 'utilitas') {
+      asset = AssetsUtilitasModel();
     }
 
     action = parameters['action'] ?? '';
