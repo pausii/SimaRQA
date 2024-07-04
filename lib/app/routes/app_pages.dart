@@ -4,6 +4,10 @@ import '../modules/Assets/bindings/assets_binding.dart';
 import '../modules/Assets/views/assets_view.dart';
 import '../modules/AssetsAdd/bindings/assets_add_binding.dart';
 import '../modules/AssetsAdd/views/assets_add_view.dart';
+import '../modules/AssetsCategory/bindings/assets_category_binding.dart';
+import '../modules/AssetsCategory/views/assets_category_view.dart';
+import '../modules/AssetsCategoryAdd/bindings/assets_category_add_binding.dart';
+import '../modules/AssetsCategoryAdd/views/assets_category_add_view.dart';
 import '../modules/Dashboard/bindings/dashboard_binding.dart';
 import '../modules/Dashboard/views/dashboard_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
@@ -64,6 +68,16 @@ class AppPages {
       name: _Paths.USERS_ADD,
       page: () => const UsersAddView(),
       binding: UsersAddBinding(),
+    ),
+    GetPage(
+      name: _Paths.ASSETS_CATEGORY,
+      page: () => const AssetsCategoryView(),
+      binding: AssetsCategoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.ASSETS_CATEGORY_ADD,
+      page: () => const AssetsCategoryAddView(),
+      binding: AssetsCategoryAddBinding(),
     ),
   ];
 }
