@@ -11,6 +11,8 @@ abstract class Routes {
   static const ONBOARDING_SCREEN = _Paths.ONBOARDING_SCREEN;
   static const ASSETS = _Paths.ASSETS;
   static const ASSETS_ADD = _Paths.ASSETS_ADD;
+  static const USERS = _Paths.USERS;
+  static const USERS_ADD = _Paths.USERS_ADD;
 }
 
 abstract class _Paths {
@@ -23,4 +25,6 @@ abstract class _Paths {
   static const ONBOARDING_SCREEN = '/onboarding-screen';
   static const ASSETS = '/assets';
   static const ASSETS_ADD = '/assets-add';
+  static const USERS = '/users';
+  static const USERS_ADD = '/users-add';
 }

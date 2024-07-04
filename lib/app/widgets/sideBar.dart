@@ -213,7 +213,8 @@ class Sidebar extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Get.offNamed('/assets?name=utilitas', preventDuplicates: true);
+                                  Get.offNamed('/assets?name=utilitas',
+                                      preventDuplicates: true);
                                 },
                                 child: Expanded(
                                   child: Padding(
@@ -667,21 +668,26 @@ class Sidebar extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 0, 0),
-                                child: Text(
-                                  'Mengelola Data User',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        letterSpacing: 0,
-                                      ),
-                                ),
-                              ),
-                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Get.offNamed('/users');
+                                },
+                                child: Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 0, 0),
+                                    child: Text(
+                                      'Mengelola Data User',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
+                                  ),
+                                )),
                           ],
                         ),
                       ),
