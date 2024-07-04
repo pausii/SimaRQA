@@ -25,7 +25,7 @@ module.exports = {
           key: 'category_id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'RESTRICT'
       },
       asset_price: {
         type: Sequelize.INTEGER,
