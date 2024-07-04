@@ -1,4 +1,4 @@
-const { CategoryAsset } = require('../models');
+const { CategoryAsset, RuangAsetAuditorium, RuangAsetMusholla, RuangAsetPerpustakaan, RuangAsetUtilitas } = require('../models');
 
 // Utility function to handle errors
 const handleError = (res, error, message = 'Internal Server Error', status = 500) => {
@@ -92,6 +92,23 @@ const deleteCategory = async (req, res) => {
 
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
+        }
+
+        const childTable = [
+            { model: RuangAsetAuditorium, message: 'Data Ruang Aset Auditorium' },
+            { model: RuangAsetMusholla, message: 'Data Ruang Aset Musholla' },
+            { model: RuangAsetPerpustakaan, message: 'Data Ruang Aset Perpustakaan' },
+            { model: RuangAsetUtilitas, message: 'Data Ruang Aset Utilitas' },
+        ];
+
+        // Periksa relasi di setiap tabel anak
+        for (const table of childTable) {
+            const relasiAset = await table.model.findAll({ where: { category_id: id }});
+            if (relasiAset.length > 0) {
+                return res.status(400).json({ 
+                    message: `Kategori tidak dapat dihapus karena memiliki relasi dengan satu atau lebih aset di ${table.message}`
+                });
+            }
         }
 
         await category.destroy();
