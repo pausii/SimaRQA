@@ -313,7 +313,7 @@ class AssetsView extends GetView<AssetsController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      ': ${controller.assetsList[index]["asset_category"]["category_name"]}',
+                                                      ': ${controller.assetsList[index]["asset_category"]?["category_name"]??''}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
