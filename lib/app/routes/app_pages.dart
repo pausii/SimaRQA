@@ -12,6 +12,12 @@ import '../modules/Dashboard/bindings/dashboard_binding.dart';
 import '../modules/Dashboard/views/dashboard_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
+import '../modules/Maintenance/bindings/maintenance_binding.dart';
+import '../modules/Maintenance/views/maintenance_view.dart';
+import '../modules/MaintenanceAdd/bindings/maintenance_add_binding.dart';
+import '../modules/MaintenanceAdd/views/maintenance_add_view.dart';
+import '../modules/MaintenanceAssetList/bindings/maintenance_asset_list_binding.dart';
+import '../modules/MaintenanceAssetList/views/maintenance_asset_list_view.dart';
 import '../modules/OnboardingScreen/bindings/onboarding_screen_binding.dart';
 import '../modules/OnboardingScreen/views/onboarding_screen_view.dart';
 import '../modules/Users/bindings/users_binding.dart';
@@ -78,6 +84,21 @@ class AppPages {
       name: _Paths.ASSETS_CATEGORY_ADD,
       page: () => const AssetsCategoryAddView(),
       binding: AssetsCategoryAddBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAINTENANCE,
+      page: () => const MaintenanceView(),
+      binding: MaintenanceBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAINTENANCE_ADD,
+      page: () => const MaintenanceAddView(),
+      binding: MaintenanceAddBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAINTENANCE_ASSET_LIST,
+      page: () => const MaintenanceAssetListView(),
+      binding: MaintenanceAssetListBinding(),
     ),
   ];
 }

@@ -9,6 +9,7 @@ class AssetsModel {
 }
 
 class AssetsMushollaModel extends AssetsModel {
+  static String code = "MUS";
   AssetsMushollaModel() {
     name = "musholla";
     apiPath = "musholla";
@@ -16,6 +17,7 @@ class AssetsMushollaModel extends AssetsModel {
 }
 
 class AssetsAuditoriumModel extends AssetsModel {
+  static String code = "AUD";
   AssetsAuditoriumModel() {
     name = "auditorium";
     apiPath = "auditorium";
@@ -23,6 +25,7 @@ class AssetsAuditoriumModel extends AssetsModel {
 }
 
 class AssetsPerpustakaanModel extends AssetsModel {
+  static String code = "LIB";
   AssetsPerpustakaanModel() {
     name = "perpustakaan";
     apiPath = "perpustakaan";
@@ -30,6 +33,7 @@ class AssetsPerpustakaanModel extends AssetsModel {
 }
 
 class AssetsUtilitasModel extends AssetsModel {
+  static String code = "UTI";
   AssetsUtilitasModel() {
     name = "utilitas";
     apiPath = "utilitas";

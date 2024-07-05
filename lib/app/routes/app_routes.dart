@@ -15,6 +15,9 @@ abstract class Routes {
   static const USERS_ADD = _Paths.USERS_ADD;
   static const ASSETS_CATEGORY = _Paths.ASSETS_CATEGORY;
   static const ASSETS_CATEGORY_ADD = _Paths.ASSETS_CATEGORY_ADD;
+  static const MAINTENANCE = _Paths.MAINTENANCE;
+  static const MAINTENANCE_ADD = _Paths.MAINTENANCE_ADD;
+  static const MAINTENANCE_ASSET_LIST = _Paths.MAINTENANCE_ASSET_LIST;
 }
 
 abstract class _Paths {
@@ -31,4 +34,7 @@ abstract class _Paths {
   static const USERS_ADD = '/users-add';
   static const ASSETS_CATEGORY = '/assets-category';
   static const ASSETS_CATEGORY_ADD = '/assets-category-add';
+  static const MAINTENANCE = '/maintenance';
+  static const MAINTENANCE_ADD = '/maintenance-add';
+  static const MAINTENANCE_ASSET_LIST = '/maintenance-asset-list';
 }

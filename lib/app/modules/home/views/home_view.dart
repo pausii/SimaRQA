@@ -57,6 +57,18 @@ class HomeView extends GetView<HomeController> {
             },
             child: const Text('Go to assets category Page'),
           ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/maintenance?name=musholla');
+            },
+            child: const Text('Go to maintenance Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/maintenance-add?name=musholla');
+            },
+            child: const Text('Go to mainntenance add Page'),
+          ),
         ],
       ),
     );
