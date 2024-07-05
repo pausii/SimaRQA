@@ -1,5 +1,13 @@
 const express = require('express');
-const { getAllPerpustakaanAssets, getPerpustakaanAssetById, createPerpustakaanAsset, updatePerpustakaanAsset, deletePerpustakaanAsset, generateQRCode, searchAsset } = require('../controllers/assetRuangPerpustakaanController');
+const { 
+    createPerpustakaanAsset,
+    getAllPerpustakaanAssets,
+    getPerpustakaanAssetById,
+    updatePerpustakaanAsset,
+    deletePerpustakaanAsset,
+    generateQRCode,
+    searchAsset
+ } = require('../controllers/assetRuangPerpustakaanController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 

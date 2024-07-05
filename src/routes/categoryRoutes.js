@@ -1,5 +1,12 @@
 const express = require('express');
-const { getAllCategory, getCategoryById, createCategory, updateCategory, deleteCategory, searchCategory } = require('../controllers/categoryController');
+const { 
+    createCategory,
+    getAllCategory,
+    getCategoryById,
+    updateCategory,
+    deleteCategory,
+    searchCategory 
+} = require('../controllers/categoryController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 

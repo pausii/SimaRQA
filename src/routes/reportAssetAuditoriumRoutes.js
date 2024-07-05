@@ -1,5 +1,10 @@
 const express = require('express');
-const { getAllReportAuditoriumAssets, getReportAuditoriumAssetById, exportRuangAsetAuditoriumToExcel, searchReportAsset } = require('../controllers/assetReportAuditoriumController');
+const { 
+    getAllReportAuditoriumAssets,
+    getReportAuditoriumAssetById,
+    exportRuangAsetAuditoriumToExcel,
+    searchReportAsset
+ } = require('../controllers/assetReportAuditoriumController');
 
 const { tokenVerified, onlyAdmin } = require('../middlewares/token');
 

@@ -1,5 +1,13 @@
 const express = require('express');
-const { getAllAuditoriumAssets, getAuditoriumAssetById, createAuditoriumAsset, updateAuditoriumAsset, deleteAuditoriumAsset, generateQRCode, searchAsset } = require('../controllers/assetRuangAuditoriumController');
+const { 
+    createAuditoriumAsset,
+    getAllAuditoriumAssets,
+    getAuditoriumAssetById,
+    updateAuditoriumAsset,
+    deleteAuditoriumAsset,
+    generateQRCode,
+    searchAsset
+ } = require('../controllers/assetRuangAuditoriumController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 

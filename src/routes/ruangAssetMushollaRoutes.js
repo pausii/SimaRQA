@@ -1,5 +1,13 @@
 const express = require('express');
-const { getAllMushollaAssets, getMushollaAssetById, createMushollaAsset, updateMushollaAsset, deleteMushollaAsset, generateQRCode, searchAsset } = require('../controllers/assetRuangMushollaController');
+const { 
+    createMushollaAsset,
+    getAllMushollaAssets,
+    getMushollaAssetById,
+    updateMushollaAsset,
+    deleteMushollaAsset,
+    generateQRCode,
+    searchAsset
+ } = require('../controllers/assetRuangMushollaController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 

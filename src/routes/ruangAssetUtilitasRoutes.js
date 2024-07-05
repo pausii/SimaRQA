@@ -1,5 +1,13 @@
 const express = require('express');
-const { getAllUtilitasAssets, getUtilitasAssetById, createUtilitasAsset, updateUtilitasAsset, deleteUtilitasAsset, generateQRCode, searchAsset } = require('../controllers/assetRuangUtilitasController');
+const { 
+    createUtilitasAsset,
+    getAllUtilitasAssets,
+    getUtilitasAssetById,
+    updateUtilitasAsset,
+    deleteUtilitasAsset,
+    generateQRCode,
+    searchAsset
+ } = require('../controllers/assetRuangUtilitasController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 

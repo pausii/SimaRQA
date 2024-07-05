@@ -1,5 +1,12 @@
 const express = require('express');
-const { getAllUsers, getUserById, createUser, updateUser, deleteUser, searchUser } = require('../controllers/userControllers');
+const { 
+    getAllUsers,
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser,
+    searchUser
+ } = require('../controllers/userControllers');
 const { tokenVerified, onlyAdmin } = require('../middlewares/token');
 const userRoute = express.Router();
 

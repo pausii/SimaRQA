@@ -1,6 +1,13 @@
 const express = require('express');
 
-const { getAllMaintenanceTransaction, getMaintenanceTransactionById, createMaintenanceTransaction, updateMaintenanceTransaction, exportMaintenanceTransactionToExcel, searchMaintenanceTransaction} = require('../controllers/maintenanceTransactionController');
+const { 
+    getAllMaintenanceTransaction,
+    getMaintenanceTransactionById,
+    createMaintenanceTransaction,
+    updateMaintenanceTransaction,
+    exportMaintenanceTransactionToExcel,
+    searchMaintenanceTransaction,
+} = require('../controllers/maintenanceTransactionController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 
@@ -11,7 +18,6 @@ route.get('/search', [tokenVerified, adminOrDivision], searchMaintenanceTransact
 route.get('/:id', [tokenVerified, adminOrDivision], getMaintenanceTransactionById);
 route.post('/', [tokenVerified, adminOrDivision], createMaintenanceTransaction);
 route.put('/:id', [tokenVerified, adminOrDivision], updateMaintenanceTransaction);
-// route.get('/export/pdf', [tokenVerified, adminOrDivision], printAllMaintenanceReports);
 route.get('/export/excel', exportMaintenanceTransactionToExcel);
 
 module.exports = route;

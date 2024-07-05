@@ -1,6 +1,13 @@
 const express = require('express');
 
-const { getAllBorrowedReturnTransaction, getBorrowedReturnTransactionById, searchPeminjamanPengembalianAsset, tambahPeminjamanAsset, pengembalianAsset, exportBorrowedReturnTransactionToExcel, searchMainten, tambahPeminjamanAsseta, pengembalianAssetnceTransaction} = require('../controllers/borrowedReturnTransactionController');
+const { 
+    getAllBorrowedReturnTransaction,
+    getBorrowedReturnTransactionById,
+    tambahPeminjamanAsset,
+    pengembalianAsset,
+    exportBorrowedReturnTransactionToExcel,
+    searchPeminjamanPengembalianAsset
+} = require('../controllers/borrowedReturnTransactionController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 
@@ -11,7 +18,6 @@ route.get('/search', [tokenVerified, adminOrDivision], searchPeminjamanPengembal
 route.get('/:id', [tokenVerified, adminOrDivision], getBorrowedReturnTransactionById);
 route.post('/', [tokenVerified, adminOrDivision], tambahPeminjamanAsset);
 route.put('/:id', [tokenVerified, adminOrDivision], pengembalianAsset);
-// route.get('/export/pdf', [tokenVerified, adminOrDivision], printAllMaintenanceReports);
 route.get('/export/excel', [tokenVerified, adminOrDivision], exportBorrowedReturnTransactionToExcel);
 
 module.exports = route;
