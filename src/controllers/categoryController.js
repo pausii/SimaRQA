@@ -10,7 +10,7 @@ const { Op } = require('sequelize');
 // Fungsi utility untuk menangani kesalahan
 const handleError = (res, error, message = 'Terjadi kesalahan pada server', status = 500) => {
     console.error(error);
-    res.status(status).json({ pesan: message });
+    res.status(status).json({ message: message });
 };
 
 // Fungsi untuk memvalidasi input kategori
@@ -25,12 +25,12 @@ const createCategory = async (req, res) => {
         const { category_name } = req.body;
 
         if (!validateCategoryInput(req.body)) {
-            return res.status(400).json({ pesan: 'Nama kategori harus diisi' });
+            return res.status(400).json({ message: 'Nama kategori harus diisi' });
         }
 
         const newCategory = await CategoryAsset.create({ category_name });
         res.status(201).json({ 
-            pesan: "Kategori berhasil dibuat", 
+            message: "Kategori berhasil dibuat", 
             data: newCategory 
         });
     } catch (error) {
@@ -43,7 +43,7 @@ const getAllCategory = async (req, res) => {
     try {
         const categories = await CategoryAsset.findAll();
         res.status(200).json({
-            pesan: "Berhasil mendapatkan semua kategori",
+            message: "Berhasil mendapatkan semua kategori",
             data: categories
         });
     } catch (error) {
@@ -58,11 +58,11 @@ const getCategoryById = async (req, res) => {
         const category = await CategoryAsset.findByPk(id);
 
         if (!category) {
-            return res.status(404).json({ pesan: "Kategori tidak ditemukan" });
+            return res.status(404).json({ message: "Kategori tidak ditemukan" });
         }
 
         res.status(200).json({
-            pesan: "Berhasil mendapatkan kategori berdasarkan ID",
+            message: "Berhasil mendapatkan kategori berdasarkan ID",
             data: category
         });
     } catch (error) {
@@ -77,20 +77,20 @@ const updateCategory = async (req, res) => {
         const { category_name } = req.body;
 
         if (!validateCategoryInput(req.body)) {
-            return res.status(400).json({ pesan: 'Nama kategori harus diisi' });
+            return res.status(400).json({ message: 'Nama kategori harus diisi' });
         }
 
         const existingCategory = await CategoryAsset.findByPk(id);
 
         if (!existingCategory) {
-            return res.status(404).json({ pesan: 'Kategori tidak ditemukan' });
+            return res.status(404).json({ message: 'Kategori tidak ditemukan' });
         }
 
         existingCategory.category_name = category_name;
         await existingCategory.save();
 
         res.status(200).json({
-            pesan: 'Kategori berhasil diperbarui',
+            message: 'Kategori berhasil diperbarui',
             data: existingCategory
         });
     } catch (error) {
@@ -105,14 +105,14 @@ const deleteCategory = async (req, res) => {
         const category = await CategoryAsset.findByPk(id);
 
         if (!category) {
-            return res.status(404).json({ pesan: 'Kategori tidak ditemukan' });
+            return res.status(404).json({ message: 'Kategori tidak ditemukan' });
         }
 
         const childTables = [
-            { model: RuangAsetAuditorium, pesan: 'Data Ruang Aset Auditorium' },
-            { model: RuangAsetMusholla, pesan: 'Data Ruang Aset Musholla' },
-            { model: RuangAsetPerpustakaan, pesan: 'Data Ruang Aset Perpustakaan' },
-            { model: RuangAsetUtilitas, pesan: 'Data Ruang Aset Utilitas' },
+            { model: RuangAsetAuditorium, message: 'Data Ruang Aset Auditorium' },
+            { model: RuangAsetMusholla, message: 'Data Ruang Aset Musholla' },
+            { model: RuangAsetPerpustakaan, message: 'Data Ruang Aset Perpustakaan' },
+            { model: RuangAsetUtilitas, message: 'Data Ruang Aset Utilitas' },
         ];
 
         // Periksa relasi di setiap tabel anak
@@ -120,13 +120,13 @@ const deleteCategory = async (req, res) => {
             const relatedAssets = await table.model.findAll({ where: { category_id: id }});
             if (relatedAssets.length > 0) {
                 return res.status(400).json({ 
-                    pesan: `Kategori tidak dapat dihapus karena memiliki relasi dengan satu atau lebih aset di ${table.pesan}`
+                    message: `Kategori tidak dapat dihapus karena memiliki relasi dengan satu atau lebih aset di ${table.message}`
                 });
             }
         }
 
         await category.destroy();
-        res.status(200).json({ pesan: 'Kategori berhasil dihapus' });
+        res.status(200).json({ message: 'Kategori berhasil dihapus' });
     } catch (error) {
         handleError(res, error);
     }
@@ -145,11 +145,11 @@ const searchCategory = async (req, res) => {
         const category = await CategoryAsset.findAll({ where: filters });
 
         if (category.length === 0) {
-            return res.status(404).json({ pesan: 'Tidak ada pengguna yang cocok dengan kriteria pencarian' });
+            return res.status(404).json({ message: 'Tidak ada pengguna yang cocok dengan kriteria pencarian' });
         }
 
         res.status(200).json({
-            pesan: 'Berhasil menemukan kategori',
+            message: 'Berhasil menemukan kategori',
             data: category
         });
     } catch (error) {

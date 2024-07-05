@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 // Fungsi utilitas untuk menangani kesalahan
 const handleError = (res, error, message = 'Kesalahan Server Internal', status = 500) => {
     console.error(error);
-    res.status(status).json({ pesan: message });
+    res.status(status).json({ message: message });
 };
 
 // Fungsi untuk memvalidasi input pengguna
@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
         const { username, password, role, first_name, last_name, phone_number, address } = req.body;
 
         if (!validateUserInput(req.body)) {
-            return res.status(400).json({ pesan: 'Semua kolom wajib diisi' });
+            return res.status(400).json({ message: 'Semua kolom wajib diisi' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,7 +34,7 @@ const createUser = async (req, res) => {
             address
         });
 
-        res.status(201).json({ pesan: "Registrasi berhasil", data: newUser });
+        res.status(201).json({ message: "Registrasi berhasil", data: newUser });
     } catch (error) {
         handleError(res, error);
     }
@@ -45,7 +45,7 @@ const getAllUsers = async (req, res) => {
     try {
         const users = await Users.findAll();
         res.status(200).json({
-            pesan: "Berhasil mendapatkan semua pengguna",
+            message: "Berhasil mendapatkan semua pengguna",
             data: users
         });
     } catch (error) {
@@ -60,11 +60,11 @@ const getUserById = async (req, res) => {
         const user = await Users.findByPk(id);
 
         if (!user) {
-            return res.status(404).json({ pesan: "Pengguna tidak ditemukan" });
+            return res.status(404).json({ message: "Pengguna tidak ditemukan" });
         }
 
         res.status(200).json({
-            pesan: "Berhasil mendapatkan pengguna berdasarkan ID",
+            message: "Berhasil mendapatkan pengguna berdasarkan ID",
             data: user
         });
     } catch (error) {
@@ -80,7 +80,7 @@ const updateUser = async (req, res) => {
 
         const existingUser = await Users.findByPk(id);
         if (!existingUser) {
-            return res.status(404).json({ pesan: "Pengguna tidak ditemukan" });
+            return res.status(404).json({ message: "Pengguna tidak ditemukan" });
         }
 
         // Perbarui field jika disediakan
@@ -91,7 +91,7 @@ const updateUser = async (req, res) => {
         }
 
         await existingUser.update(updateData);
-        res.status(200).json({ pesan: "Pengguna berhasil diperbarui", data: existingUser });
+        res.status(200).json({ message: "Pengguna berhasil diperbarui", data: existingUser });
     } catch (error) {
         handleError(res, error);
     }
@@ -104,11 +104,11 @@ const deleteUser = async (req, res) => {
         const user = await Users.findByPk(id);
 
         if (!user) {
-            return res.status(404).json({ pesan: 'Pengguna tidak ditemukan' });
+            return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
         }
 
         await user.destroy();
-        res.status(200).json({ pesan: 'Pengguna berhasil dihapus' });
+        res.status(200).json({ message: 'Pengguna berhasil dihapus' });
     } catch (error) {
         handleError(res, error);
     }
@@ -137,11 +137,11 @@ const searchUser = async (req, res) => {
         const users = await Users.findAll({ where: filters });
 
         if (users.length === 0) {
-            return res.status(404).json({ pesan: 'Tidak ada pengguna yang cocok dengan kriteria pencarian' });
+            return res.status(404).json({ message: 'Tidak ada pengguna yang cocok dengan kriteria pencarian' });
         }
 
         res.status(200).json({
-            pesan: 'Berhasil menemukan pengguna',
+            message: 'Berhasil menemukan pengguna',
             data: users
         });
     } catch (error) {

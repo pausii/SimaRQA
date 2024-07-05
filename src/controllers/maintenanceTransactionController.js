@@ -7,10 +7,10 @@ const {
 } = require('../models');
 const ExcelJS = require('exceljs');
 
-// Fungsi bantu untuk mengirimkan pesan kesalahan
+// Fungsi bantu untuk mengirimkan message kesalahan
 const sendErrorResponse = (res, statusCode, message, error = null) => {
     console.error(error);
-    res.status(statusCode).json({ pesan: message, kesalahan: error?.message });
+    res.status(statusCode).json({ message: message, kesalahan: error?.message });
 };
 
 // Fungsi bantu untuk mendapatkan model aset berdasarkan kode
@@ -35,7 +35,7 @@ const getAllMaintenanceTransaction = async (req, res) => {
     try {
         const transactions = await PemeliharaanAsset.findAll();
         res.status(200).json({
-            pesan: 'Berhasil mendapatkan semua transaksi pemeliharaan',
+            message: 'Berhasil mendapatkan semua transaksi pemeliharaan',
             data: transactions
         });
     } catch (error) {
@@ -49,10 +49,10 @@ const getMaintenanceTransactionById = async (req, res) => {
         const { id } = req.params;
         const transaction = await PemeliharaanAsset.findByPk(id);
         if (!transaction) {
-            return res.status(404).json({ pesan: 'Transaksi pemeliharaan tidak ditemukan' });
+            return res.status(404).json({ message: 'Transaksi pemeliharaan tidak ditemukan' });
         }
         res.status(200).json({
-            pesan: `Berhasil mendapatkan transaksi pemeliharaan dengan ID: ${id}`,
+            message: `Berhasil mendapatkan transaksi pemeliharaan dengan ID: ${id}`,
             data: transaction
         });
     } catch (error) {
@@ -75,7 +75,7 @@ const createMaintenanceTransaction = async (req, res) => {
         const asset = await assetModel.findOne({ where: { asset_code: maintenance_asset_code } });
 
         if (!asset) {
-            return res.status(404).json({ pesan: "Aset tidak ditemukan" });
+            return res.status(404).json({ message: "Aset tidak ditemukan" });
         }
 
         const maintenance_asset_name = asset.asset_name;
@@ -94,7 +94,7 @@ const createMaintenanceTransaction = async (req, res) => {
         });
 
         res.status(201).json({
-            pesan: "Berhasil membuat transaksi pemeliharaan",
+            message: "Berhasil membuat transaksi pemeliharaan",
             data: transaction
         });
     } catch (error) {
@@ -117,14 +117,14 @@ const updateMaintenanceTransaction = async (req, res) => {
         const transaction = await PemeliharaanAsset.findByPk(id);
 
         if (!transaction) {
-            return res.status(404).json({ pesan: "Transaksi pemeliharaan tidak ditemukan" });
+            return res.status(404).json({ message: "Transaksi pemeliharaan tidak ditemukan" });
         }
 
         const assetModel = getAssetModelByCode(maintenance_asset_code);
         const asset = await assetModel.findOne({ where: { asset_code: maintenance_asset_code } });
 
         if (!asset) {
-            return res.status(404).json({ pesan: "Aset tidak ditemukan" });
+            return res.status(404).json({ message: "Aset tidak ditemukan" });
         }
 
         const maintenance_asset_name = asset.asset_name;
@@ -142,7 +142,7 @@ const updateMaintenanceTransaction = async (req, res) => {
         });
 
         res.status(200).json({
-            pesan: "Berhasil memperbarui transaksi pemeliharaan",
+            message: "Berhasil memperbarui transaksi pemeliharaan",
             data: transaction
         });
     } catch (error) {
@@ -300,7 +300,7 @@ const searchMaintenanceTransaction = async (req, res) => {
         }
 
         res.status(200).json({
-            pesan: 'Berhasil mencari transaksi pemeliharaan',
+            message: 'Berhasil mencari transaksi pemeliharaan',
             data: filteredMaintenanceAssets
         });
     } catch (error) {
