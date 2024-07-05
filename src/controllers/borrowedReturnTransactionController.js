@@ -25,11 +25,11 @@ const getAllBorrowedReturnTransaction = async (req, res) => {
   try {
     const borrowedReturn = await PeminjamanPengembalianAsset.findAll();
     res.status(200).json({
-      message: 'Get All Borrowed & Return Transaction successfully',
+      message: 'Berhasil Mendapatkan Semua Transaksi Peminjaman & Pengembalian Aset',
       data: borrowedReturn      
     })
   } catch (error) {
-    sendErrorResponse(res, 500, "Failed to get borrowed & return transactions", error);
+    sendErrorResponse(res, 500, "Gagal mendapatkan transaksi peminjaman & pengembalian aset", error);
   }
 };
 
@@ -38,14 +38,14 @@ const getBorrowedReturnTransactionById = async (req, res) => {
     const { id } = req.params;
     const borrowedReturn = await PeminjamanPengembalianAsset.findByPk(id);
     if (!borrowedReturn) {
-      return res.status(404).json({ message: 'Borrowed & Return transaction not found' });
+      return res.status(404).json({ message: 'Peminjaman & pengembalian aset tidak ditemukan' });
     }
     res.status(200).json({
-      message: `Get Borrowed & Return Transaction successfully for ID: ${id}`,
+      message: `Berhasil Mendapatkan Transaksi Peminjaman & Pengembalian Aset di ID: ${id}`,
       data: borrowedReturn
     });
   } catch (error) {
-    sendErrorResponse(res, 500, "Failed to get borrowed & return transaction")
+    sendErrorResponse(res, 500, "Gagal mendapatkan transaksi peminjaman & pengembalian aset")
   }
 }
 
@@ -65,7 +65,7 @@ const tambahPeminjamanAsset = async (req, res) => {
       const asset = await assetModel.findOne({ where: { asset_code: borrowed_asset_code } });
 
       if (!asset) {
-          return res.status(404).json({ message: "Asset not found" });
+          return res.status(404).json({ message: "Aset Tidak Ditemukan." });
       }
 
       if (asset.asset_type === 'Tidak Dapat Dipindahkan') {
@@ -86,14 +86,14 @@ const tambahPeminjamanAsset = async (req, res) => {
         });
 
         res.status(201).json({
-          message: "Create Peminjaman Asset Successfully",
+          message: "Peminjaman Aset Berhasil Ditambahkan.",
           data: transaction
         });
       } else {
         return res.status(400).json({ message: "Asset tidak dapat dipinjam karena jenis yang tidak dikenal"})
       }
   } catch (error) {
-      sendErrorResponse(res, 500, "Failed to create borrowed", error);
+      sendErrorResponse(res, 500, "Gagal menambahkan peminjaman aset", error);
   }
 };
 
@@ -111,7 +111,7 @@ const pengembalianAsset = async (req, res) => {
     const asset = await assetModel.findOne({ where: { asset_code: borrowed_asset_code } });
 
     if (!asset) {
-      return res.status(404).json({ message: "Asset not found" });
+      return res.status(404).json({ message: "Asset tidak ditemukan" });
     }
 
     // Cek apakah ada transaksi peminjaman yang sedang berlangsung untuk aset ini
@@ -133,12 +133,12 @@ const pengembalianAsset = async (req, res) => {
     await transaction.save();
 
     res.status(200).json({
-      message: "Asset Dikembalikan successfully",
+      message: "Berhasil mengembalikan aset yang dipinjam",
       data: transaction
     });
 
   } catch (error) {
-    sendErrorResponse(res, 500, "Failed to return asset", error);
+    sendErrorResponse(res, 500, "Gagal mengembalian aset", error);
   }
 };
 
@@ -168,14 +168,14 @@ const exportBorrowedReturnTransactionToExcel = async (req, res) => {
 
   // Prepare data for export
   const formattedData = data.map((asset) => ({
-    'Borrowed ID': asset.borrowed_id,
-    'Asset Code': asset.borrowed_asset_code,
-    'Asset Name': asset.borrowed_asset_name,
-    'Borrowed Name': asset.borrowed_name,
-    'Used By Program': asset.used_by_program,
-    'Borrowed Date': asset.borrowed_date.toLocaleDateString(), // Use localized date format
-    'Due Date': asset.due_date.toLocaleDateString(),
-    'Return Date': asset.return_date ? asset.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata',
+    'ID Peminjaman': asset.borrowed_id,
+    'Kode Aset': asset.borrowed_asset_code,
+    'Nama Aset': asset.borrowed_asset_name,
+    'Nama Peminjam': asset.borrowed_name,
+    'Digunakan oleh program': asset.used_by_program,
+    'Tanggal Peminjaman': asset.borrowed_date.toLocaleDateString(), // Use localized date format
+    'Tanggal Tenggat Peminjaman': asset.due_date.toLocaleDateString(),
+    'Tanggal Pengembalian': asset.return_date ? asset.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata',
     'Status': asset.status,
     'Notes': asset.notes
   }));
@@ -249,8 +249,8 @@ const exportBorrowedReturnTransactionToExcel = async (req, res) => {
   res.send(buffer);
 
 } catch (error) {
-  console.error('Error exporting data:', error);
-  res.status(500).send('Error exporting data. Please check logs for details.');
+  console.error('Kesalahan mengexport data:', error);
+  res.status(500).send('Kesalahan mengexport data.');
 } finally {
   // **Improvement:** No need for cleanup since temporary file is not used
 }
@@ -263,85 +263,23 @@ const searchPeminjamanPengembalianAsset = async (req, res) => {
         // Ambil semua data dari tabel PeminjamanPengembalianAsset
         const peminjamanPengembalianAssets = await PeminjamanPengembalianAsset.findAll();
 
-        let filteredAssets = peminjamanPengembalianAssets;
+        const filteredAssets = peminjamanPengembalianAssets.filter(asset => {
+          return Object.keys(query).every(key => {
+            const searchValue = query[key].toLowerCase();
+            const assetValue = asset[key]?.toString().toLowerCase();
+            return assetValue && assetValue.includes(searchValue);
+          });
+        });
 
-        // Filter berdasarkan borrowed_asset_code
-        if (query.borrowed_asset_code) {
-            const searchTerm = query.borrowed_asset_code.toLowerCase();
-            filteredAssets = filteredAssets.filter(asset => 
-                asset.borrowed_asset_code.toLowerCase().includes(searchTerm)
-            );
-        }
-
-        // Filter berdasarkan borrowed_asset_name
-        if (query.borrowed_asset_name) {
-            const searchTerm = query.borrowed_asset_name.toLowerCase();
-            filteredAssets = filteredAssets.filter(asset => 
-                asset.borrowed_asset_name.toLowerCase().includes(searchTerm)
-            );
-        }
-
-        // Filter berdasarkan borrowed_name
-        if (query.borrowed_name) {
-            const searchTerm = query.borrowed_name.toLowerCase();
-            filteredAssets = filteredAssets.filter(asset => 
-                asset.borrowed_name.toLowerCase().includes(searchTerm)
-            );
-        }
-
-        // Filter berdasarkan used_by_program
-        if (query.used_by_program) {
-            const searchTerm = query.used_by_program.toLowerCase();
-            filteredAssets = filteredAssets.filter(asset => 
-                asset.used_by_program.toLowerCase() === searchTerm
-            );
-        }
-
-        // Filter berdasarkan borrowed_date
-        if (query.borrowed_date) {
-            const searchTerm = new Date(query.borrowed_date).toISOString().slice(0, 10);
-            filteredAssets = filteredAssets.filter(asset => 
-                new Date(asset.borrowed_date).toISOString().slice(0, 10) === searchTerm
-            );
-        }
-
-        // Filter berdasarkan due_date
-        if (query.due_date) {
-            const searchTerm = new Date(query.due_date).toISOString().slice(0, 10);
-            filteredAssets = filteredAssets.filter(asset => 
-                new Date(asset.due_date).toISOString().slice(0, 10) === searchTerm
-            );
-        }
-
-        // Filter berdasarkan return_date
-        if (query.return_date) {
-            const searchTerm = new Date(query.return_date).toISOString().slice(0, 10);
-            filteredAssets = filteredAssets.filter(asset => 
-                asset.return_date && new Date(asset.return_date).toISOString().slice(0, 10) === searchTerm
-            );
-        }
-
-        // Filter berdasarkan status
-        if (query.status) {
-            const searchTerm = query.status.toLowerCase();
-            filteredAssets = filteredAssets.filter(asset => 
-                asset.status.toLowerCase() === searchTerm
-            );
-        }
-
-        // Filter berdasarkan notes (optional, if required)
-        if (query.notes) {
-            const searchTerm = query.notes.toLowerCase();
-            filteredAssets = filteredAssets.filter(asset => 
-                asset.notes && asset.notes.toLowerCase().includes(searchTerm)
-            );
+        if (filteredAssets.length === 0) {
+          return res.status(404).json({ message: "Tidak kesamaan transaksi ditemukan."});
         }
 
         // Kirim data yang sudah difilter sebagai respons
         res.status(200).json(filteredAssets);
     } catch (error) {
-        console.error('Error Pencarian: ', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        console.error('Kesalahan Pencarian Transaksi Peminjaman: ', error);
+        res.status(500).json({ message: 'Kesalahan Server Internal.' });
     }
 };
 

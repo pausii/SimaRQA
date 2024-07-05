@@ -38,7 +38,7 @@ const login = async (req, res) => {
         const tokenCreated = tokenGenerated(token);
 
         const data = {
-            message: 'Login Success',
+            message: 'Login Sukses',
             body: {
                 user_id: user.user_id,
                 token: tokenCreated,

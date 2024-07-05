@@ -1,19 +1,22 @@
 const { RuangAsetUtilitas, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
 const generateAssetCode = require('../services/generateAssetCode');
-const fs = require('fs');
-const path = require('path');
+const handlebars = require('handlebars');
 
+// Fungsi untuk membuat aset utilitas
 const createUtilitasAsset = async (req, res) => {
     try {
         const { asset_name, category_id, asset_price, purchase_date, asset_condition, asset_type, last_maintenance_date } = req.body;
-        
+
+        // Validasi input
         if (!asset_name || !category_id || !asset_price || !purchase_date || !asset_condition || !asset_type) {
-            return res.status(400).json({ message: 'All Field is required'});
+            return res.status(400).json({ message: 'Semua field wajib diisi.' });
         }
-        
+
+        // Generate kode aset unik
         const assetCode = await generateAssetCode(RuangAsetUtilitas, 'UTI');
-        
+
+        // Buat aset baru
         const newAsset = await RuangAsetUtilitas.create({
             asset_code: assetCode,
             asset_name,
@@ -25,16 +28,17 @@ const createUtilitasAsset = async (req, res) => {
             last_maintenance_date
         });
 
-        res.status(201).json({
-            message: 'Created Asset Utilitas Succesfully',
+        return res.status(201).json({
+            message: 'Aset Utilitas berhasil ditambahkan.',
             data: newAsset
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error.message });
+        console.error('Kesalahan menambahkan aset utilitas:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
+// Fungsi untuk mendapatkan semua aset utilitas
 const getAllUtilitasAssets = async (req, res) => {
     try {
         const utilitasAssets = await RuangAsetUtilitas.findAll({
@@ -45,15 +49,22 @@ const getAllUtilitasAssets = async (req, res) => {
                 }
             ]
         });
-        res.status(200).json({
-            message: 'Get all Asset utilitas successfully',
+
+        if (utilitasAssets.length === 0) {
+            return res.status(204).json({ message: 'Tidak ada aset utilitas yang ditemukan.' });
+        }
+
+        return res.status(200).json({
+            message: 'Berhasil mendapatkan semua aset utilitas.',
             data: utilitasAssets
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error mendapatkan aset utilitas:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
 };
 
+// Fungsi untuk mendapatkan aset utilitas berdasarkan ID
 const getUtilitasAssetById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -65,33 +76,32 @@ const getUtilitasAssetById = async (req, res) => {
                 }
             ]
         });
+
         if (!utilitas) {
-            return res.status(404).json({ message: 'Asset not found'});
+            return res.status(404).json({ message: 'Aset utilitas tidak ditemukan.' });
         }
-        res.status(200).json({
-            message: `Get Asset utilitas Successfully at ID: ${id}`,
+
+        return res.status(200).json({
+            message: `Berhasil mendapatkan aset utilitas dengan ID: ${id}.`,
             data: utilitas
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error(`Error mendapatkan aset utilitas dengan ID ${id}:`, error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
+// Fungsi untuk memperbarui aset utilitas
 const updateUtilitasAsset = async (req, res) => {
     try {
         const { id } = req.params;
         const { asset_name, category_id, asset_price, purchase_date, asset_condition, asset_type, last_maintenance_date } = req.body;
-        
-        if (!id) {
-            return res.status(400).json({ message: 'Asset ID is required'});
-        }
-        
+
         const utilitas = await RuangAsetUtilitas.findByPk(id);
         if (!utilitas) {
-            return res.status(404).json({ message: 'Asset Utilitas not found'});
+            return res.status(404).json({ message: 'Aset utilitas tidak ditemukan.' });
         }
 
-        
         await utilitas.update({
             asset_name: asset_name || utilitas.asset_name,
             category_id: category_id || utilitas.category_id,
@@ -102,37 +112,42 @@ const updateUtilitasAsset = async (req, res) => {
             last_maintenance_date: last_maintenance_date || utilitas.last_maintenance_date
         });
 
-        res.status(200).json({
-            message: `Updated Asset Utilitas Successfully at ID: ${id}`,
+        return res.status(200).json({
+            message: `Aset utilitas dengan ID ${id} berhasil diperbarui.`,
             data: utilitas
-        })
+        });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error.message });
+        console.error(`Error memperbarui aset utilitas dengan ID ${id}:`, error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
+// Fungsi untuk menghapus aset utilitas
 const deleteUtilitasAsset = async (req, res) => {
     try {
-        const utilitas = await RuangAsetUtilitas.findByPk(req.params.id);
-        if (!utilitas) {
-            return res.status(404).json({ message: 'Asset not found'});
-        }
-        await utilitas.destroy();
-        res.status(204).send();
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
+        const { id } = req.params;
+        const utilitas = await RuangAsetUtilitas.findByPk(id);
 
+        if (!utilitas) {
+            return res.status(404).json({ message: 'Aset utilitas tidak ditemukan.' });
+        }
+
+        await utilitas.destroy();
+        return res.status(204).send();
+    } catch (error) {
+        console.error(`Error menghapus aset utilitas dengan ID ${id}:`, error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
+    }
+};
+
+// Fungsi untuk menghasilkan QR Code untuk aset utilitas
 const generateQRCode = async (req, res) => {
     try {
         const utilitas = await RuangAsetUtilitas.findByPk(req.params.id);
         if (!utilitas) {
-            return res.status(404).json({ message: 'Asset not found' });
+            return res.status(404).json({ message: 'Aset utilitas tidak ditemukan.' });
         }
 
-        // Data struktur yang lebih rapi menggunakan handlebars
         const template = `
             Data Asset Ruang Utilitas dengan ID {{asset_id}}
             Kode Aset: {{asset_code}}
@@ -143,6 +158,7 @@ const generateQRCode = async (req, res) => {
             Kondisi Aset: {{asset_type}}
             Tanggal Terakhir Pemeliharaan: {{last_maintenance_date}}
         `;
+
         const compiledTemplate = handlebars.compile(template);
         const structuredData = compiledTemplate({
             asset_id: utilitas.asset_id,
@@ -155,69 +171,75 @@ const generateQRCode = async (req, res) => {
             last_maintenance_date: utilitas.last_maintenance_date ? utilitas.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata'
         });
 
-        // Opsi tambahan untuk QR Code
         const options = {
-            errorCorrectionLevel: 'H', // Error correction level: L, M, Q, H
+            errorCorrectionLevel: 'H',
             type: 'image/png',
             quality: 0.92,
             margin: 2,
             color: {
-                dark: '#000000',  // Warna foreground
-                light: '#FFFFFF'  // Warna background
+                dark: '#000000',
+                light: '#FFFFFF'
             }
         };
 
-        // Generate QR Code to a buffer with options
         const qrCodeBuffer = await QRCode.toBuffer(structuredData, options);
 
-        // Menentukan nama file yang aman
         const safeAssetName = utilitas.asset_name.replace(/[^a-zA-Z0-9]/g, '_');
         const filename = `${safeAssetName}_qr_code.png`;
 
-        // Set response headers
         res.setHeader('Content-Type', 'image/png');
-        res.setHeader('Content-Disposition', `attachment; filename="${filename}`);
-
-        // Send the QR Code buffer as response
-        res.send(qrCodeBuffer);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        return res.send(qrCodeBuffer);
     } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
-const searchAsset = async (req, res) => {
-    const { query } = req;
-
-    try {
-        const utilitas = await RuangAsetUtilitas.findAll();
-
-        let filteredAssetUtilitas = utilitas;
-
-        if (query.asset_code) {
-            const searchTerm = query.asset_code.toLowerCase();
-            filteredAssetUtilitas.filteredAssetUtilitas.filter(asset => asset.asset_code.toLowerCase().includes(searchTerm));
-        }
-
-        if (query.asset_name) {
-            const searchTerm = query.asset_name.toLowerCase();
-            filteredAssetUtilitas.filteredAssetUtilitas.filter(asset => asset.asset_name.toLowerCase().includes(searchTerm));
-        }
-
-        res.status(200).json(filteredAssetUtilitas);
-    } catch (error) {
-        console.error('Error Pencarian: ', error);
-        res.status(500).json({ message: 'Internal Server error'});
+        console.error('Error generating QR Code:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
 };
 
+// Fungsi untuk mencari aset berdasarkan query
+const searchAsset = async (req, res) => {
+    try {
+        const { query } = req;
+        const utilitasAssets = await RuangAsetUtilitas.findAll({
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        });
 
+        const filteredAssets = utilitasAssets.filter(asset => {
+            let matches = true;
+
+            if (query.asset_code) {
+                matches = matches && asset.asset_code.toLowerCase().includes(query.asset_code.toLowerCase());
+            }
+
+            if (query.asset_name) {
+                matches = matches && asset.asset_name.toLowerCase().includes(query.asset_name.toLowerCase());
+            }
+
+            return matches;
+        });
+
+        if (filteredAssets.length === 0) {
+            return res.status(404).json({ message: 'Tidak ada aset yang cocok dengan kriteria pencarian.' });
+        }
+
+        return res.status(200).json(filteredAssets);
+    } catch (error) {
+        console.error('Error pencarian aset:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
+    }
+};
 
 module.exports = {
+    createUtilitasAsset,
     getAllUtilitasAssets,
     getUtilitasAssetById,
-    createUtilitasAsset,
     updateUtilitasAsset,
     deleteUtilitasAsset,
     generateQRCode,
     searchAsset
-}
+};

@@ -1,21 +1,24 @@
 const { RuangAsetPerpustakaan, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
 const generateAssetCode = require('../services/generateAssetCode');
-const fs = require('fs');
-const path = require('path');
+const handlebars = require('handlebars');
 
+// Fungsi untuk membuat aset perpustakaan
 const createPerpustakaanAsset = async (req, res) => {
     try {
         const { asset_name, category_id, asset_price, purchase_date, asset_condition, asset_type, last_maintenance_date } = req.body;
-        
+
+        // Validasi input
         if (!asset_name || !category_id || !asset_price || !purchase_date || !asset_condition || !asset_type) {
-            return res.status(400).json({ message: 'All Field is required'});
+            return res.status(400).json({ message: 'Semua field wajib diisi.' });
         }
-        
+
+        // Generate kode aset unik
         const assetCode = await generateAssetCode(RuangAsetPerpustakaan, 'LIB');
-        
+
+        // Buat aset baru
         const newAsset = await RuangAsetPerpustakaan.create({
-            asset_code: assetCode, 
+            asset_code: assetCode,
             asset_name,
             category_id,
             asset_price,
@@ -25,16 +28,17 @@ const createPerpustakaanAsset = async (req, res) => {
             last_maintenance_date
         });
 
-        res.status(201).json({
-            message: 'Created Asset Perpustakaan Succesfully',
+        return res.status(201).json({
+            message: 'Aset Perpustakaan berhasil ditambahkan.',
             data: newAsset
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error.message });
+        console.error('Kesalahan menambahkan aset perpustakaan:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
+// Fungsi untuk mendapatkan semua aset perpustakaan
 const getAllPerpustakaanAssets = async (req, res) => {
     try {
         const perpustakaanAssets = await RuangAsetPerpustakaan.findAll({
@@ -45,15 +49,22 @@ const getAllPerpustakaanAssets = async (req, res) => {
                 }
             ]
         });
-        res.status(200).json({
-            message: 'Get all Asset perpustakaan successfully',
+
+        if (perpustakaanAssets.length === 0) {
+            return res.status(204).json({ message: 'Tidak ada aset perpustakaan yang ditemukan.' });
+        }
+
+        return res.status(200).json({
+            message: 'Berhasil mendapatkan semua aset perpustakaan.',
             data: perpustakaanAssets
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error mendapatkan aset perpustakaan:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
 };
 
+// Fungsi untuk mendapatkan aset perpustakaan berdasarkan ID
 const getPerpustakaanAssetById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -65,75 +76,78 @@ const getPerpustakaanAssetById = async (req, res) => {
                 }
             ]
         });
+
         if (!perpustakaan) {
-            return res.status(404).json({ message: 'Asset not found'});
+            return res.status(404).json({ message: 'Aset perpustakaan tidak ditemukan.' });
         }
-        res.status(200).json({
-            message: `Get Asset perpustakaan Successfully at ID: ${id}`,
+
+        return res.status(200).json({
+            message: `Berhasil mendapatkan aset perpustakaan dengan ID: ${id}.`,
             data: perpustakaan
         });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error(`Error mendapatkan aset perpustakaan dengan ID ${id}:`, error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
+// Fungsi untuk memperbarui aset perpustakaan
 const updatePerpustakaanAsset = async (req, res) => {
     try {
         const { id } = req.params;
         const { asset_name, category_id, asset_price, purchase_date, asset_condition, asset_type, last_maintenance_date } = req.body;
-        
-        if (!id) {
-            return res.status(400).json({ message: 'Asset ID is required'});
-        }
-        
-        const library = await RuangAsetPerpustakaan.findByPk(id);
-        if (!library) {
-            return res.status(404).json({ message: 'Asset Perpustakaan not found'});
+
+        const perpustakaan = await RuangAsetPerpustakaan.findByPk(id);
+        if (!perpustakaan) {
+            return res.status(404).json({ message: 'Aset perpustakaan tidak ditemukan.' });
         }
 
-        
-        await library.update({
-            asset_name: asset_name || library.asset_name,
-            category_id: category_id || library.category_id,
-            asset_price: asset_price || library.asset_price,
-            purchase_date: purchase_date || library.purchase_date,
-            asset_condition: asset_condition || library.asset_condition,
-            asset_type: asset_type || library.asset_type,
-            last_maintenance_date: last_maintenance_date || library.last_maintenance_date
+        await perpustakaan.update({
+            asset_name: asset_name || perpustakaan.asset_name,
+            category_id: category_id || perpustakaan.category_id,
+            asset_price: asset_price || perpustakaan.asset_price,
+            purchase_date: purchase_date || perpustakaan.purchase_date,
+            asset_condition: asset_condition || perpustakaan.asset_condition,
+            asset_type: asset_type || perpustakaan.asset_type,
+            last_maintenance_date: last_maintenance_date || perpustakaan.last_maintenance_date
         });
 
-        res.status(200).json({
-            message: `Updated Asset Perpustakaan Successfully at ID: ${id}`,
-            data: library
-        })
+        return res.status(200).json({
+            message: `Aset perpustakaan dengan ID ${id} berhasil diperbarui.`,
+            data: perpustakaan
+        });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error.message });
+        console.error(`Error memperbarui aset perpustakaan dengan ID ${id}:`, error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
+// Fungsi untuk menghapus aset perpustakaan
 const deletePerpustakaanAsset = async (req, res) => {
     try {
-        const perpustakaan = await RuangAsetPerpustakaan.findByPk(req.params.id);
+        const { id } = req.params;
+        const perpustakaan = await RuangAsetPerpustakaan.findByPk(id);
+
         if (!perpustakaan) {
-            return res.status(404).json({ message: 'Asset not found'});
+            return res.status(404).json({ message: 'Aset perpustakaan tidak ditemukan.' });
         }
+
         await perpustakaan.destroy();
-        res.status(204).send();
+        return res.status(204).send();
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error(`Error menghapus aset perpustakaan dengan ID ${id}:`, error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
-
+// Fungsi untuk menghasilkan QR Code untuk aset perpustakaan
 const generateQRCode = async (req, res) => {
     try {
         const perpustakaan = await RuangAsetPerpustakaan.findByPk(req.params.id);
         if (!perpustakaan) {
-            return res.status(404).json({ message: 'Asset not found'});
+            return res.status(404).json({ message: 'Aset perpustakaan tidak ditemukan.' });
         }
 
-        // Data struktur yang lebih rapi menggunakan handlebars
         const template = `
             Data Asset Ruang Perpustakaan dengan ID {{asset_id}}
             Kode Aset: {{asset_code}}
@@ -144,6 +158,7 @@ const generateQRCode = async (req, res) => {
             Kondisi Aset: {{asset_type}}
             Tanggal Terakhir Pemeliharaan: {{last_maintenance_date}}
         `;
+
         const compiledTemplate = handlebars.compile(template);
         const structuredData = compiledTemplate({
             asset_id: perpustakaan.asset_id,
@@ -156,67 +171,75 @@ const generateQRCode = async (req, res) => {
             last_maintenance_date: perpustakaan.last_maintenance_date ? perpustakaan.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata'
         });
 
-        // Opsi tambahan untuk QR Code
         const options = {
-            errorCorrectionLevel: 'H', // Error correction level: L, M, Q, H
+            errorCorrectionLevel: 'H',
             type: 'image/png',
             quality: 0.92,
             margin: 2,
             color: {
-                dark: '#000000',  // Warna foreground
-                light: '#FFFFFF'  // Warna background
+                dark: '#000000',
+                light: '#FFFFFF'
             }
         };
 
-        // Generate QR Code to a buffer with options
         const qrCodeBuffer = await QRCode.toBuffer(structuredData, options);
 
-        // Menentukan nama file yang aman
         const safeAssetName = perpustakaan.asset_name.replace(/[^a-zA-Z0-9]/g, '_');
         const filename = `${safeAssetName}_qr_code.png`;
 
-        // Set response headers
         res.setHeader('Content-Type', 'image/png');
-        res.setHeader('Content-Disposition', `attachment; filename="${filename}`);
-
-        // Send the QR Code buffer as response
-        res.send(qrCodeBuffer);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        return res.send(qrCodeBuffer);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error generating QR Code:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
-}
+};
 
+// Fungsi untuk mencari aset berdasarkan query
 const searchAsset = async (req, res) => {
-    const { query } = req;
-
     try {
-        const perpustakaan = await RuangAsetPerpustakaan.findAll();
+        const { query } = req;
+        const perpustakaanAssets = await RuangAsetPerpustakaan.findAll({
+            include: [
+                {
+                    model: CategoryAsset,
+                    as: "asset_category"
+                }
+            ]
+        });
 
-        let filteredAssetPerpustakaan = perpustakaan;
+        const filteredAssets = perpustakaanAssets.filter(asset => {
+            let matches = true;
 
-        if (query.asset_code) {
-            const searchTerm = query.asset_code.toLowerCase();
-            filteredAssetPerpustakaan.filteredAssetPerpustakaan.filter(asset => asset.asset_code.toLowerCase().includes(searchTerm));
+            if (query.asset_code) {
+                matches = matches && asset.asset_code.toLowerCase().includes(query.asset_code.toLowerCase());
+            }
+
+            if (query.asset_name) {
+                matches = matches && asset.asset_name.toLowerCase().includes(query.asset_name.toLowerCase());
+            }
+
+            return matches;
+        });
+
+        if (filteredAssets.length === 0) {
+            return res.status(404).json({ message: 'Tidak ada aset yang cocok dengan kriteria pencarian.' });
         }
 
-        if (query.asset_name) {
-            const searchTerm = query.asset_name.toLowerCase();
-            filteredAssetPerpustakaan.filteredAssetPerpustakaan.filter(asset => asset.asset_name.toLowerCase().includes(searchTerm));
-        }
-
-        res.status(200).json(filteredAssetPerpustakaan);
+        return res.status(200).json(filteredAssets);
     } catch (error) {
-        console.error('Error Pencarian: ', error);
-        res.status(500).json({ message: 'Internal Server error'});
+        console.error('Error pencarian aset:', error);
+        return res.status(500).json({ message: 'Kesalahan server internal.' });
     }
 };
 
 module.exports = {
+    createPerpustakaanAsset,
     getAllPerpustakaanAssets,
     getPerpustakaanAssetById,
-    createPerpustakaanAsset,
     updatePerpustakaanAsset,
     deletePerpustakaanAsset,
     generateQRCode,
     searchAsset
-}
+};

@@ -2,25 +2,25 @@ const { Op } = require('sequelize');
 const { Users } = require('../models');
 const bcrypt = require('bcryptjs');
 
-// Utility function to handle errors
-const handleError = (res, error, message = 'Internal Server Error', status = 500) => {
+// Fungsi utilitas untuk menangani kesalahan
+const handleError = (res, error, message = 'Kesalahan Server Internal', status = 500) => {
     console.error(error);
-    res.status(status).json({ message });
+    res.status(status).json({ pesan: message });
 };
 
-// Function to validate request body
+// Fungsi untuk memvalidasi input pengguna
 const validateUserInput = (body) => {
     const requiredFields = ['username', 'password', 'role', 'first_name', 'last_name', 'phone_number', 'address'];
     return requiredFields.every(field => body[field]);
 };
 
-// Create new user
+// Buat pengguna baru
 const createUser = async (req, res) => {
     try {
         const { username, password, role, first_name, last_name, phone_number, address } = req.body;
 
         if (!validateUserInput(req.body)) {
-            return res.status(400).json({ error: 'All fields are required' });
+            return res.status(400).json({ pesan: 'Semua kolom wajib diisi' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,18 +34,18 @@ const createUser = async (req, res) => {
             address
         });
 
-        res.status(201).json({ message: "Registration successful", data: newUser });
+        res.status(201).json({ pesan: "Registrasi berhasil", data: newUser });
     } catch (error) {
         handleError(res, error);
     }
 };
 
-// Get all users
+// Dapatkan semua pengguna
 const getAllUsers = async (req, res) => {
     try {
         const users = await Users.findAll();
         res.status(200).json({
-            message: "Get All Users Successfully",
+            pesan: "Berhasil mendapatkan semua pengguna",
             data: users
         });
     } catch (error) {
@@ -53,18 +53,18 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-// Get user by ID
+// Dapatkan pengguna berdasarkan ID
 const getUserById = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await Users.findByPk(id);
 
         if (!user) {
-            return res.status(404).json({ message: "User Not Found" });
+            return res.status(404).json({ pesan: "Pengguna tidak ditemukan" });
         }
 
         res.status(200).json({
-            message: "Get User By Id Successfully",
+            pesan: "Berhasil mendapatkan pengguna berdasarkan ID",
             data: user
         });
     } catch (error) {
@@ -72,18 +72,18 @@ const getUserById = async (req, res) => {
     }
 };
 
-// Update user
+// Perbarui pengguna
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
         const { username, password, role, first_name, last_name, phone_number, address } = req.body;
-        
+
         const existingUser = await Users.findByPk(id);
         if (!existingUser) {
-            return res.status(404).json({ message: "User Not Found" });
+            return res.status(404).json({ pesan: "Pengguna tidak ditemukan" });
         }
 
-        // Update fields if provided
+        // Perbarui field jika disediakan
         const updateData = { username, role, first_name, last_name, phone_number, address };
 
         if (password) {
@@ -91,59 +91,62 @@ const updateUser = async (req, res) => {
         }
 
         await existingUser.update(updateData);
-        res.status(200).json({ message: "User Updated Successfully", data: existingUser });
+        res.status(200).json({ pesan: "Pengguna berhasil diperbarui", data: existingUser });
     } catch (error) {
         handleError(res, error);
     }
 };
 
-// Delete user
+// Hapus pengguna
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await Users.findByPk(id);
 
         if (!user) {
-            return res.status(404).json({ message: 'User Not Found' });
+            return res.status(404).json({ pesan: 'Pengguna tidak ditemukan' });
         }
 
         await user.destroy();
-        res.status(200).json({ message: 'User Deleted Successfully' });
+        res.status(200).json({ pesan: 'Pengguna berhasil dihapus' });
     } catch (error) {
         handleError(res, error);
     }
 };
 
-
-/**
- * Fungsi untuk mencari pengguna berdasarkan atribut.
- * @param {Object} req - Objek request dari Express.
- * @param {Object} res - Objek response dari Express.
- */
-
+// Cari pengguna berdasarkan atribut
 const searchUser = async (req, res) => {
-    const { 
+    const {
         username,
         role,
         first_name,
         last_name,
         phone_number,
         address
-     } = req.query;
+    } = req.query;
 
-    const filters = {};
-    if (username) filters.username = { [Op.like]: `${username}`};
-    if (role) filters.role = { [Op.like]: `${role}`};
-    if (first_name) filters.first_name = { [Op.like]: `${first_name}`};
-    if (last_name) filters.last_name = { [Op.like]: `${last_name}`};
-    if (phone_number) filters.phone_number = { [Op.like]: `${phone_number}`};
-    if (address) filters.address = { [Op.like]: `${address}`};
+    try {
+        const filters = {};
+        if (username) filters.username = { [Op.like]: `%${username}%` };
+        if (role) filters.role = { [Op.like]: `%${role}%` };
+        if (first_name) filters.first_name = { [Op.like]: `%${first_name}%` };
+        if (last_name) filters.last_name = { [Op.like]: `%${last_name}%` };
+        if (phone_number) filters.phone_number = { [Op.like]: `%${phone_number}%` };
+        if (address) filters.address = { [Op.like]: `%${address}%` };
 
-    const users = await Users.findAll({
-        where: filters
-    });
+        const users = await Users.findAll({ where: filters });
 
-    res.status(200).json(users);
+        if (users.length === 0) {
+            return res.status(404).json({ pesan: 'Tidak ada pengguna yang cocok dengan kriteria pencarian' });
+        }
+
+        res.status(200).json({
+            pesan: 'Berhasil menemukan pengguna',
+            data: users
+        });
+    } catch (error) {
+        handleError(res, error);
+    }
 };
 
 module.exports = {
