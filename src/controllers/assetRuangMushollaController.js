@@ -10,7 +10,7 @@ const createMushollaAsset = async (req, res) => {
 
         // Validasi input
         if (!asset_name || !category_id || !asset_price || !purchase_date || !asset_condition || !asset_type) {
-            return res.status(400).json({ message: 'Semua field wajib diisi.' });
+            return res.status(400).json({ message: 'Data tidak sesuai, mohon cek kembali.' });
         }
 
         // Generate kode aset unik
@@ -29,7 +29,7 @@ const createMushollaAsset = async (req, res) => {
         });
 
         return res.status(201).json({
-            message: 'Aset Musholla berhasil ditambahkan.',
+            message: 'Data aset musholla berhasil ditambahkan.',
             data: newAsset
         });
     } catch (error) {
@@ -102,6 +102,10 @@ const updateMushollaAsset = async (req, res) => {
             return res.status(404).json({ message: 'Aset musholla tidak ditemukan.' });
         }
 
+        if (!asset_name || !category_id || !asset_price || !purchase_date || !asset_condition || !asset_type) {
+            return res.status(404).json({ message: 'Data tidak sesuai, mohon cek kembali.' });
+        }
+
         await musholla.update({
             asset_name: asset_name || musholla.asset_name,
             category_id: category_id || musholla.category_id,
@@ -113,7 +117,7 @@ const updateMushollaAsset = async (req, res) => {
         });
 
         return res.status(200).json({
-            message: `Aset musholla dengan ID ${id} berhasil diperbarui.`,
+            message: `Data aset musholla dengan ID ${id}, berhasil diperbarui.`,
             data: musholla
         });
     } catch (error) {
@@ -133,7 +137,9 @@ const deleteMushollaAsset = async (req, res) => {
         }
 
         await musholla.destroy();
-        return res.status(204).send();
+        return res.status(200).json({
+            message: 'Data aset musholla berhasil dihapus'
+        });
     } catch (error) {
         console.error(`Error menghapus aset musholla dengan ID ${id}:`, error);
         return res.status(500).json({ message: 'Kesalahan server internal.' });
@@ -224,7 +230,7 @@ const searchAsset = async (req, res) => {
         });
 
         if (filteredAssets.length === 0) {
-            return res.status(404).json({ message: 'Tidak ada aset yang cocok dengan kriteria pencarian.' });
+            return res.status(404).json({ message: 'Data tidak ditemukan.' });
         }
 
         return res.status(200).json(filteredAssets);

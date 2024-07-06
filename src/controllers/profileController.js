@@ -24,6 +24,10 @@ module.exports = {
       try {
         const userId = req.user.user_id;
         const { first_name, last_name, phone_number, address } = req.body;
+
+        if (!first_name || !last_name || !phone_number || !address) {
+          return res.status(404).json({ message: 'Field tidak sesuai, mohon perbaiki'});
+        }
   
         const user = await Users.findByPk(userId);
         if (user) {
@@ -33,9 +37,9 @@ module.exports = {
           user.address = address || user.address;
   
           await user.save();
-          res.status(200).json({ message: 'Profile updated successfully' });
+          res.status(200).json({ message: 'Data Profile telah di update' });
         } else {
-          res.status(404).json({ message: 'User not found' });
+          res.status(404).json({ message: 'Profile tidak ditemukan' });
         }
       } catch (error) {
         res.status(500).json({ error: error.message });
@@ -54,7 +58,7 @@ module.exports = {
 
         const isMatch = await bcrypt.compare(currentPassword, user.password);
         if (!isMatch) {
-            return res.status(400).json({ message: 'Kesalahan password sekarang'});
+            return res.status(400).json({ message: 'Password lama salah, mohon cek kembali'});
         }
 
         if (newPassword !== confirmPassword) {
@@ -69,11 +73,11 @@ module.exports = {
         const {password, ...userWithoutPassword } = user.toJSON();
         
         res.status(200).json({
-            message: 'Update Password Sukses',
+            message: 'Password telah diupdate',
             updatedUser: userWithoutPassword
         })
       } catch (error) {
-        res.status(500).json({ message: 'Server Error' });
+        res.status(500).json({ message: 'Kesalahan Server Internal' });
       }
     },
   };

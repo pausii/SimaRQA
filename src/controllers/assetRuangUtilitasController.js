@@ -10,7 +10,7 @@ const createUtilitasAsset = async (req, res) => {
 
         // Validasi input
         if (!asset_name || !category_id || !asset_price || !purchase_date || !asset_condition || !asset_type) {
-            return res.status(400).json({ message: 'Semua field wajib diisi.' });
+            return res.status(400).json({ message: 'Data tidak sesuai, mohon cek kembali.' });
         }
 
         // Generate kode aset unik
@@ -29,7 +29,7 @@ const createUtilitasAsset = async (req, res) => {
         });
 
         return res.status(201).json({
-            message: 'Aset Utilitas berhasil ditambahkan.',
+            message: 'Data aset utilitas berhasil ditambahkan.',
             data: newAsset
         });
     } catch (error) {
@@ -102,6 +102,10 @@ const updateUtilitasAsset = async (req, res) => {
             return res.status(404).json({ message: 'Aset utilitas tidak ditemukan.' });
         }
 
+        if (!asset_name || !category_id || !asset_price || !purchase_date || !asset_condition || !asset_type) {
+            return res.status(404).json({ message: 'Data tidak sesuai, mohon cek kembali.' });
+        }
+
         await utilitas.update({
             asset_name: asset_name || utilitas.asset_name,
             category_id: category_id || utilitas.category_id,
@@ -113,7 +117,7 @@ const updateUtilitasAsset = async (req, res) => {
         });
 
         return res.status(200).json({
-            message: `Aset utilitas dengan ID ${id} berhasil diperbarui.`,
+            message: `Data aset utilitas dengan ID ${id} berhasil diperbarui.`,
             data: utilitas
         });
     } catch (error) {
@@ -224,7 +228,7 @@ const searchAsset = async (req, res) => {
         });
 
         if (filteredAssets.length === 0) {
-            return res.status(404).json({ message: 'Tidak ada aset yang cocok dengan kriteria pencarian.' });
+            return res.status(404).json({ message: 'Data tidak ditemukan.' });
         }
 
         return res.status(200).json(filteredAssets);

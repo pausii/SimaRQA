@@ -10,7 +10,7 @@ const createPerpustakaanAsset = async (req, res) => {
 
         // Validasi input
         if (!asset_name || !category_id || !asset_price || !purchase_date || !asset_condition || !asset_type) {
-            return res.status(400).json({ message: 'Semua field wajib diisi.' });
+            return res.status(400).json({ message: 'Data tidak sesuai, mohon cek kembali.' });
         }
 
         // Generate kode aset unik
@@ -29,7 +29,7 @@ const createPerpustakaanAsset = async (req, res) => {
         });
 
         return res.status(201).json({
-            message: 'Aset Perpustakaan berhasil ditambahkan.',
+            message: 'Data aset perpustakaan berhasil ditambahkan.',
             data: newAsset
         });
     } catch (error) {
@@ -133,7 +133,9 @@ const deletePerpustakaanAsset = async (req, res) => {
         }
 
         await perpustakaan.destroy();
-        return res.status(204).send();
+        return res.status(200).json({
+            message: 'Data aset perpustakaan berhasil dihapus'
+        });
     } catch (error) {
         console.error(`Error menghapus aset perpustakaan dengan ID ${id}:`, error);
         return res.status(500).json({ message: 'Kesalahan server internal.' });
@@ -224,7 +226,7 @@ const searchAsset = async (req, res) => {
         });
 
         if (filteredAssets.length === 0) {
-            return res.status(404).json({ message: 'Tidak ada aset yang cocok dengan kriteria pencarian.' });
+            return res.status(404).json({ message: 'Data tidak ditemukan.' });
         }
 
         return res.status(200).json(filteredAssets);

@@ -30,7 +30,7 @@ const createCategory = async (req, res) => {
 
         const newCategory = await CategoryAsset.create({ category_name });
         res.status(201).json({ 
-            message: "Kategori berhasil dibuat", 
+            message: "Kategori berhasil ditambahkan", 
             data: newCategory 
         });
     } catch (error) {
@@ -77,7 +77,7 @@ const updateCategory = async (req, res) => {
         const { category_name } = req.body;
 
         if (!validateCategoryInput(req.body)) {
-            return res.status(400).json({ message: 'Nama kategori harus diisi' });
+            return res.status(400).json({ message: 'Kategori tidak sesuai, mohon cek kembali' });
         }
 
         const existingCategory = await CategoryAsset.findByPk(id);

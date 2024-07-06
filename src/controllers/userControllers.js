@@ -8,19 +8,19 @@ const handleError = (res, error, message = 'Kesalahan Server Internal', status =
     res.status(status).json({ message: message });
 };
 
-// Fungsi untuk memvalidasi input pengguna
+// Fungsi untuk memvalidasi input user
 const validateUserInput = (body) => {
     const requiredFields = ['username', 'password', 'role', 'first_name', 'last_name', 'phone_number', 'address'];
     return requiredFields.every(field => body[field]);
 };
 
-// Buat pengguna baru
+// Buat user baru
 const createUser = async (req, res) => {
     try {
         const { username, password, role, first_name, last_name, phone_number, address } = req.body;
 
         if (!validateUserInput(req.body)) {
-            return res.status(400).json({ message: 'Semua kolom wajib diisi' });
+            return res.status(400).json({ message: 'Data tidak sesuai, mohon cek kembali' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,18 +34,18 @@ const createUser = async (req, res) => {
             address
         });
 
-        res.status(201).json({ message: "Registrasi berhasil", data: newUser });
+        res.status(201).json({ message: "Data user berhasil ditambahkan", data: newUser });
     } catch (error) {
         handleError(res, error);
     }
 };
 
-// Dapatkan semua pengguna
+// Dapatkan semua user
 const getAllUsers = async (req, res) => {
     try {
         const users = await Users.findAll();
         res.status(200).json({
-            message: "Berhasil mendapatkan semua pengguna",
+            message: "Berhasil mendapatkan semua user",
             data: users
         });
     } catch (error) {
@@ -53,18 +53,18 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-// Dapatkan pengguna berdasarkan ID
+// Dapatkan user berdasarkan ID
 const getUserById = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await Users.findByPk(id);
 
         if (!user) {
-            return res.status(404).json({ message: "Pengguna tidak ditemukan" });
+            return res.status(404).json({ message: "User tidak ditemukan" });
         }
 
         res.status(200).json({
-            message: "Berhasil mendapatkan pengguna berdasarkan ID",
+            message: "Berhasil mendapatkan user berdasarkan ID",
             data: user
         });
     } catch (error) {
@@ -72,7 +72,7 @@ const getUserById = async (req, res) => {
     }
 };
 
-// Perbarui pengguna
+// Perbarui user
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,7 +80,11 @@ const updateUser = async (req, res) => {
 
         const existingUser = await Users.findByPk(id);
         if (!existingUser) {
-            return res.status(404).json({ message: "Pengguna tidak ditemukan" });
+            return res.status(404).json({ message: "User tidak ditemukan" });
+        }
+
+        if (!username || !password || !role || !first_name || !last_name || !phone_number || !address ) {
+            return res.status(404).json({ message: "Data tidak sesuai, mohon cek kembali "});
         }
 
         // Perbarui field jika disediakan
@@ -91,30 +95,30 @@ const updateUser = async (req, res) => {
         }
 
         await existingUser.update(updateData);
-        res.status(200).json({ message: "Pengguna berhasil diperbarui", data: existingUser });
+        res.status(200).json({ message: "Data user berhasil diperbarui", data: existingUser });
     } catch (error) {
         handleError(res, error);
     }
 };
 
-// Hapus pengguna
+// Hapus user
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await Users.findByPk(id);
 
         if (!user) {
-            return res.status(404).json({ message: 'Pengguna tidak ditemukan' });
+            return res.status(404).json({ message: 'User tidak ditemukan' });
         }
 
         await user.destroy();
-        res.status(200).json({ message: 'Pengguna berhasil dihapus' });
+        res.status(200).json({ message: 'User berhasil dihapus' });
     } catch (error) {
         handleError(res, error);
     }
 };
 
-// Cari pengguna berdasarkan atribut
+// Cari uUser berdasarkan atribut
 const searchUser = async (req, res) => {
     const {
         username,
@@ -137,11 +141,11 @@ const searchUser = async (req, res) => {
         const users = await Users.findAll({ where: filters });
 
         if (users.length === 0) {
-            return res.status(404).json({ message: 'Tidak ada pengguna yang cocok dengan kriteria pencarian' });
+            return res.status(404).json({ message: 'Tidak ada user yang cocok dengan kriteria pencarian' });
         }
 
         res.status(200).json({
-            message: 'Berhasil menemukan pengguna',
+            message: 'Berhasil menemukan user',
             data: users
         });
     } catch (error) {

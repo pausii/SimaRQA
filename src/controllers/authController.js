@@ -30,6 +30,12 @@ const login = async (req, res) => {
             });
         }
 
+        if (username === false && passwordChecked === false) {
+            return res.status(401).json({
+                message: 'Username atau Password Salah, Mohon Cek Kembali'
+            });
+        }
+
         const token = {
             user_id: user.user_id,
             role: user.role,

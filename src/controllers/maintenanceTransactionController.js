@@ -78,6 +78,10 @@ const createMaintenanceTransaction = async (req, res) => {
             return res.status(404).json({ message: "Aset tidak ditemukan" });
         }
 
+        if (!maintenance_asset_code || !maintenance_date || !maintenance_asset_condition || !price_maintenance || !details_maintenance) {
+            return res.status(404).json({ message: "Data tidak sesuai, mohon cek kembali."});
+        }
+
         const maintenance_asset_name = asset.asset_name;
         const transaction = await PemeliharaanAsset.create({
             maintenance_asset_code,
@@ -94,7 +98,7 @@ const createMaintenanceTransaction = async (req, res) => {
         });
 
         res.status(201).json({
-            message: "Berhasil membuat transaksi pemeliharaan",
+            message: "Berhasil menambahkan transaksi pemeliharaan",
             data: transaction
         });
     } catch (error) {
@@ -120,6 +124,10 @@ const updateMaintenanceTransaction = async (req, res) => {
             return res.status(404).json({ message: "Transaksi pemeliharaan tidak ditemukan" });
         }
 
+        if (!maintenance_asset_code || !maintenance_date || !maintenance_asset_condition || !price_maintenance || !details_maintenance) {
+            return res.status(404).json({ message: "Data pemeliharaan tidak sesuai, mohon cek kembali" });
+        }
+
         const assetModel = getAssetModelByCode(maintenance_asset_code);
         const asset = await assetModel.findOne({ where: { asset_code: maintenance_asset_code } });
 
@@ -130,6 +138,7 @@ const updateMaintenanceTransaction = async (req, res) => {
         const maintenance_asset_name = asset.asset_name;
         await transaction.update({
             maintenance_asset_code,
+            maintenance_asset_name,
             maintenance_date,
             maintenance_asset_condition,
             price_maintenance,
