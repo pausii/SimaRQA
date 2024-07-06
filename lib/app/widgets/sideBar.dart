@@ -287,7 +287,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Expanded(
+                              GestureDetector(
+                              onTap: () {
+                                Get.offNamed('/maintenance');
+                              },
+                              child: Expanded(
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       12, 0, 0, 0),
@@ -301,6 +305,7 @@ class Sidebar extends StatelessWidget {
                                         ),
                                   ),
                                 ),
+                              ),
                               ),
                             ],
                           ),
@@ -325,6 +330,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
+                              GestureDetector(
+                              onTap: () {
+                                Get.offNamed('/borrowing');
+                              },
+                              child:
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
@@ -340,43 +350,6 @@ class Sidebar extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    MouseRegion(
-                      opaque: false,
-                      cursor: SystemMouseCursors.basic,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 150),
-                        curve: Curves.easeInOut,
-                        width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered6!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Text(
-                                    'Pengembalian Aset',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0,
-                                        ),
-                                  ),
-                                ),
                               ),
                             ],
                           ),

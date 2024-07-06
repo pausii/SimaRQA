@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class MaintenanceAssetListController extends GetxController {
+class PageListController extends GetxController {
   var assetList = <dynamic>[
     {
       "text": "Perpustakaan",
@@ -16,4 +16,12 @@ class MaintenanceAssetListController extends GetxController {
       "name": "utilitas",
     }
   ].obs;
+  var next = "";
+
+  @override
+  onInit() {
+    super.onInit();
+    var parameters = Get.parameters;
+    next = parameters['next'] ?? 'unknown';
+  }
 }

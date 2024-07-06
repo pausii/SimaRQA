@@ -17,7 +17,10 @@ abstract class Routes {
   static const ASSETS_CATEGORY_ADD = _Paths.ASSETS_CATEGORY_ADD;
   static const MAINTENANCE = _Paths.MAINTENANCE;
   static const MAINTENANCE_ADD = _Paths.MAINTENANCE_ADD;
-  static const MAINTENANCE_ASSET_LIST = _Paths.MAINTENANCE_ASSET_LIST;
+  static const PAGE_LIST = _Paths.PAGE_LIST;
+  static const BORROWING = _Paths.BORROWING;
+  static const BORROWING_ADD = _Paths.BORROWING_ADD;
+  static const RETURNS = _Paths.RETURNS;
 }
 
 abstract class _Paths {
@@ -36,5 +39,8 @@ abstract class _Paths {
   static const ASSETS_CATEGORY_ADD = '/assets-category-add';
   static const MAINTENANCE = '/maintenance';
   static const MAINTENANCE_ADD = '/maintenance-add';
-  static const MAINTENANCE_ASSET_LIST = '/maintenance-asset-list';
+  static const PAGE_LIST = '/page-list';
+  static const BORROWING = '/borrowing';
+  static const BORROWING_ADD = '/borrowing-add';
+  static const RETURNS = '/returns';
 }

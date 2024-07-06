@@ -8,6 +8,10 @@ import '../modules/AssetsCategory/bindings/assets_category_binding.dart';
 import '../modules/AssetsCategory/views/assets_category_view.dart';
 import '../modules/AssetsCategoryAdd/bindings/assets_category_add_binding.dart';
 import '../modules/AssetsCategoryAdd/views/assets_category_add_view.dart';
+import '../modules/Borrowing/bindings/borrowing_binding.dart';
+import '../modules/Borrowing/views/borrowing_view.dart';
+import '../modules/BorrowingAdd/bindings/borrowing_add_binding.dart';
+import '../modules/BorrowingAdd/views/borrowing_add_view.dart';
 import '../modules/Dashboard/bindings/dashboard_binding.dart';
 import '../modules/Dashboard/views/dashboard_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
@@ -16,10 +20,12 @@ import '../modules/Maintenance/bindings/maintenance_binding.dart';
 import '../modules/Maintenance/views/maintenance_view.dart';
 import '../modules/MaintenanceAdd/bindings/maintenance_add_binding.dart';
 import '../modules/MaintenanceAdd/views/maintenance_add_view.dart';
-import '../modules/MaintenanceAssetList/bindings/maintenance_asset_list_binding.dart';
-import '../modules/MaintenanceAssetList/views/maintenance_asset_list_view.dart';
 import '../modules/OnboardingScreen/bindings/onboarding_screen_binding.dart';
 import '../modules/OnboardingScreen/views/onboarding_screen_view.dart';
+import '../modules/PageList/bindings/page_list_binding.dart';
+import '../modules/PageList/views/page_list_view.dart';
+import '../modules/Returns/bindings/returns_binding.dart';
+import '../modules/Returns/views/returns_view.dart';
 import '../modules/Users/bindings/users_binding.dart';
 import '../modules/Users/views/users_view.dart';
 import '../modules/UsersAdd/bindings/users_add_binding.dart';
@@ -96,9 +102,24 @@ class AppPages {
       binding: MaintenanceAddBinding(),
     ),
     GetPage(
-      name: _Paths.MAINTENANCE_ASSET_LIST,
-      page: () => const MaintenanceAssetListView(),
-      binding: MaintenanceAssetListBinding(),
+      name: _Paths.PAGE_LIST,
+      page: () => const PageListView(),
+      binding: PageListBinding(),
+    ),
+    GetPage(
+      name: _Paths.BORROWING,
+      page: () => const BorrowingView(),
+      binding: BorrowingBinding(),
+    ),
+    GetPage(
+      name: _Paths.BORROWING_ADD,
+      page: () => const BorrowingAddView(),
+      binding: BorrowingAddBinding(),
+    ),
+    GetPage(
+      name: _Paths.RETURNS,
+      page: () => const ReturnsView(),
+      binding: ReturnsBinding(),
     ),
   ];
 }

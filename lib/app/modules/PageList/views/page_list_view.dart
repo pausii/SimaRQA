@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import '../controllers/maintenance_asset_list_controller.dart';
+import '../controllers/page_list_controller.dart';
 
-class MaintenanceAssetListView extends GetView<MaintenanceAssetListController> {
-  const MaintenanceAssetListView({Key? key}) : super(key: key);
+class PageListView extends GetView<PageListController> {
+  const PageListView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MaintenanceAssetListController>();
+    final controller = Get.find<PageListController>();
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -98,7 +98,7 @@ class MaintenanceAssetListView extends GetView<MaintenanceAssetListController> {
                                               size: 24,
                                             ),
                                             onPressed: () async {
-                                              var result = await Get.toNamed("/maintenance-add?name=${controller.assetList[index]['name']}");
+                                              var result = await Get.toNamed("/${controller.next}?name=${controller.assetList[index]['name']}");
                                               if (result != null) {
                                                 Get.back();
                                               }
@@ -112,24 +112,6 @@ class MaintenanceAssetListView extends GetView<MaintenanceAssetListController> {
                               ));
                         },
                       )),
-                ),
-              ),
-              Align(
-                alignment: const AlignmentDirectional(0.92, 0.97),
-                child: FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 20,
-                  borderWidth: 1,
-                  buttonSize: 50,
-                  fillColor: const Color(0xFF3D77D2),
-                  icon: Icon(
-                    Icons.add,
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    await Get.toNamed("/assets-category-add");
-                  },
                 ),
               ),
             ],

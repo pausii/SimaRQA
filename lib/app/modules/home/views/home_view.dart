@@ -69,6 +69,12 @@ class HomeView extends GetView<HomeController> {
             },
             child: const Text('Go to mainntenance add Page'),
           ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/borrowing');
+            },
+            child: const Text('Go to borrowing Page'),
+          ),
         ],
       ),
     );

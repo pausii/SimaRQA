@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:get/get.dart';
-import '../controllers/maintenance_controller.dart';
 import '../../../widgets/sidebar.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '../controllers/borrowing_controller.dart';
 
-class MaintenanceView extends GetView<MaintenanceController> {
-  void dialogOption(context, id, assetName, title) {
+class BorrowingView extends GetView<BorrowingController> {
+  const BorrowingView({Key? key}) : super(key: key);
+  void dialogOption(context, id, title, status) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${assetName ?? "-"} - $title'),
+          title: Text('${title ?? "-"}'),
           // content: const Text('What do you want to do?'),
           actions: <Widget>[
             TextButton(
-              onPressed: () async {
+              onPressed: () {
                 Navigator.of(context).pop();
-                String name =
-                    await controller.getNameByCode(assetName.toString());
-                Get.toNamed(
-                    '/maintenance-add?name=$name&id=$id&action=viewDetail');
+                Get.toNamed('/borrowing-add?id=$id&action=viewDetail');
               },
               style: TextButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 33, 243, 96),
@@ -29,22 +27,22 @@ class MaintenanceView extends GetView<MaintenanceController> {
               ),
               child: const Text('Detail'),
             ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
-                String name =
-                    await controller.getNameByCode(assetName.toString());
-                await Get.toNamed(
-                    '/maintenance-add?name=$name&id=$id&action=edit');
-                controller.loadAssets();
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            Visibility(
+              visible: status == "Dipinjam" ? true : false,
+              child: TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await Get.toNamed('/returns?id=$id');
+                  controller.loadDataList();
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
+                ),
+                child: const Text('Kembalikan'),
               ),
-              child: const Text('Ubah'),
             ),
             TextButton(
               onPressed: () {
@@ -64,10 +62,9 @@ class MaintenanceView extends GetView<MaintenanceController> {
     );
   }
 
-  const MaintenanceView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MaintenanceController>();
+    final controller = Get.find<BorrowingController>();
     return Scaffold(
       backgroundColor: const Color(0xFFF1F4F8), //Color(0xFFF1F4F8)
       drawer: const Sidebar(),
@@ -130,7 +127,7 @@ class MaintenanceView extends GetView<MaintenanceController> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                'Data Pemeliharaan Aset',
+                                'Data Peminjaman',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -159,26 +156,11 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                 scrollDirection: Axis.vertical,
                                 itemCount: controller.dataList.length,
                                 itemBuilder: (context, index) {
-                                  DateTime maintenanceDate = DateTime.parse(
-                                      controller.dataList[index]
-                                          ["maintenance_date"]);
-                                  String formattedDate =
-                                      DateFormat('dd MMMM yyyy')
-                                          .format(maintenanceDate);
-
-                                  NumberFormat priceFormat =
-                                      NumberFormat.currency(
-                                          locale: 'id_ID',
-                                          symbol: 'Rp',
-                                          decimalDigits: 0);
-                                  String formattedPrice = priceFormat.format(
-                                      controller.dataList[index]
-                                          ["price_maintenance"]);
                                   return Padding(
                                       padding: const EdgeInsets.only(bottom: 4),
                                       child: Container(
                                         width: double.infinity,
-                                        height: 144,
+                                        height: 150,
                                         decoration: BoxDecoration(
                                           color: const Color(0xFF122778),
                                           borderRadius:
@@ -205,9 +187,7 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      controller.dataList[index]
-                                                          [
-                                                          "maintenance_asset_name"],
+                                                      "${controller.dataList[index]["borrowed_asset_name"] ?? "pdddx"} #${controller.dataList[index]["borrowed_asset_code"] ?? "xyzx"}",
                                                       textAlign:
                                                           TextAlign.start,
                                                       style: FlutterFlowTheme
@@ -242,14 +222,11 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                         dialogOption(
                                                             context,
                                                             controller.dataList[
-                                                                    index][
-                                                                "maintenance_id"],
-                                                            controller.dataList[
                                                                         index][
-                                                                    "maintenance_asset_code"] ??
-                                                                '-', controller.dataList[
-                                                                        index][
-                                                                    "maintenance_asset_name"] ?? '-');
+                                                                    "borrowed_id"] ??
+                                                                "uid",
+                                                            "${controller.dataList[index]["borrowed_asset_name"] ?? "name"} #${controller.dataList[index]["borrowed_asset_code"] ?? "code"}",
+                                                            controller.dataList[index]["status"]??"");
                                                       },
                                                     ),
                                                   ],
@@ -264,9 +241,9 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              0, 0, 100, 0),
+                                                              0, 0, 61, 0),
                                                       child: Text(
-                                                        'Kode Aset',
+                                                        'Peminjam',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -283,7 +260,7 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      ': ${controller.dataList[index]["maintenance_asset_code"] ?? ''}',
+                                                      ': ${controller.dataList[index]["borrowed_name"]}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -310,9 +287,9 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              0, 0, 93, 0),
+                                                              0, 0, 73, 0),
                                                       child: Text(
-                                                        'Nama Aset',
+                                                        'Program',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -329,7 +306,7 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      ': ${controller.dataList[index]["maintenance_asset_name"] ?? ''}',
+                                                      ': ${controller.dataList[index]["used_by_program"]}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -356,9 +333,9 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              0, 0, 30, 0),
+                                                              0, 0, 10, 0),
                                                       child: Text(
-                                                        'Biaya Pemeliharaan',
+                                                        'Tanggal dipinjam',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -375,7 +352,7 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      ': $formattedPrice',
+                                                      ': ${DateFormat('dd MMMM yyyy').format(DateTime.parse(controller.dataList[index]["borrowed_date"]))}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -405,9 +382,9 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                  0, 0, 11, 0),
+                                                                  0, 0, 89, 0),
                                                           child: Text(
-                                                            'Tanggal Pemeliharaan',
+                                                            'Status',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
@@ -422,21 +399,72 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                                 ),
                                                           ),
                                                         ),
-                                                        Text(
-                                                          ': $formattedDate',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              ": ",
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Montserrat',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryBackground,
+                                                                    letterSpacing:
+                                                                        0,
+                                                                  ),
+                                                            ),
+                                                            Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      top: 2,
+                                                                      bottom: 2,
+                                                                      left: 5,
+                                                                      right: 5),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: controller.dataList[index]
+                                                                            [
+                                                                            "status"] ==
+                                                                        "Dipinjam"
+                                                                    ? const Color
+                                                                        .fromARGB(
+                                                                        255,
+                                                                        255,
+                                                                        0,
+                                                                        0)
+                                                                    : Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            32,
+                                                                            182,
+                                                                            32),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            7), // Border radius
                                                               ),
-                                                        ),
+                                                              child: Text(
+                                                                '${controller.dataList[index]["status"]}',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Montserrat',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryBackground,
+                                                                      letterSpacing:
+                                                                          0,
+                                                                    ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
                                                       ],
                                                     ),
                                                   ],
@@ -453,62 +481,37 @@ class MaintenanceView extends GetView<MaintenanceController> {
                   ),
                 ),
                 Align(
-                  alignment: const AlignmentDirectional(0.92, 0.97),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 46, // Ukuran button lebih kecil
-                        height: 46, // Ukuran button lebih kecil
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Tambahkan aksi untuk tombol menu di sini
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color(0xFF3D77D2),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: const BorderSide(
-                                  color: Colors.white, width: 1),
+                    alignment: const AlignmentDirectional(0.92, 0.97),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await Get.toNamed("/page-list?next=borrowing-add");
+                        controller.loadDataList();
+                      },
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF3D77D2),
+                            borderRadius:
+                                BorderRadius.circular(15), // Sudut tumpul
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1,
                             ),
-                            padding: EdgeInsets
-                                .zero, // Menghilangkan padding default
                           ),
-                          child: const Icon(
-                            Icons.print,
-                            color: Color(0xFFFFFFFF),
-                            size: 24, // Ukuran icon lebih kecil
+                          child: const Center(
+                            child: Icon(
+                              Icons.add,
+                              color: Color(0xFFFFFFFF),
+                              size: 30,
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 7), // Jarak antara dua tombol
-                      SizedBox(
-                        width: 46, // Ukuran button lebih kecil
-                        height: 46, // Ukuran button lebih kecil
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Get.toNamed("/page-list?next=maintenance-add");
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color(0xFF3D77D2),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: const BorderSide(
-                                  color: Colors.white, width: 1),
-                            ),
-                            padding: EdgeInsets
-                                .zero, // Menghilangkan padding default
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Color(0xFFFFFFFF),
-                            size: 24, // Ukuran icon lebih kecil
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                    )),
               ],
             ),
           ),
