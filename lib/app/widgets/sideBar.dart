@@ -10,7 +10,6 @@ class Sidebar extends StatelessWidget {
     return Drawer(
       elevation: 16,
       child: ListView(
-        // mainAxisSize: MainAxisSize.max,
         children: [
           Container(
             width: 100,
@@ -112,11 +111,6 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered1!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
@@ -156,11 +150,6 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered2!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
@@ -200,11 +189,6 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered3!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
@@ -276,11 +260,6 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered4!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
@@ -288,24 +267,25 @@ class Sidebar extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               GestureDetector(
-                              onTap: () {
-                                Get.offNamed('/maintenance');
-                              },
-                              child: Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Text(
-                                    'Pemeliharaan Aset',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0,
-                                        ),
+                                onTap: () {
+                                  Get.offNamed('/report');
+                                },
+                                child: Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 0, 0),
+                                    child: Text(
+                                      'Pemeliharaan Aset',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
                               ),
                             ],
                           ),
@@ -319,11 +299,6 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered5!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
@@ -331,25 +306,25 @@ class Sidebar extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               GestureDetector(
-                              onTap: () {
-                                Get.offNamed('/borrowing');
-                              },
-                              child:
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Text(
-                                    'Peminjaman Aset',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0,
-                                        ),
+                                onTap: () {
+                                  Get.offNamed('/borrowing');
+                                },
+                                child: Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 0, 0),
+                                    child: Text(
+                                      'Peminjaman Aset',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
                               ),
                             ],
                           ),
@@ -394,29 +369,30 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered7!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Text(
-                                    'Laporan Aset Mushola',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0,
-                                        ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/report?name=musholla');
+                                },
+                                child: Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 0, 0),
+                                    child: Text(
+                                      'Laporan Aset Mushola',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -432,29 +408,30 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered8!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Text(
-                                    'Laporan Aset Audiotrium',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0,
-                                        ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/report?name=auditorium');
+                                },
+                                child: Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 0, 0),
+                                    child: Text(
+                                      'Laporan Aset Audiotrium',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -470,29 +447,30 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered9!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Text(
-                                    'Laporan Aset Perpustakaan',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0,
-                                        ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/report?name=perpustakaan');
+                                },
+                                child: Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 0, 0),
+                                    child: Text(
+                                      'Laporan Aset Perpustakaan',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -508,29 +486,30 @@ class Sidebar extends StatelessWidget {
                         duration: const Duration(milliseconds: 150),
                         curve: Curves.easeInOut,
                         width: double.infinity,
-                        // decoration: BoxDecoration(
-                        //   color: _model.mouseRegionHovered10!
-                        //       ? FlutterFlowTheme.of(context).primaryBackground
-                        //       : FlutterFlowTheme.of(context).secondaryBackground,
-                        // ),
                         child: Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Text(
-                                    'Laporan Aset Utilitas',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0,
-                                        ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed('/report?name=utilitas');
+                                },
+                                child: Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 0, 0),
+                                    child: Text(
+                                      'Laporan Aset Utilitas',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),

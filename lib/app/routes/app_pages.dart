@@ -24,6 +24,8 @@ import '../modules/OnboardingScreen/bindings/onboarding_screen_binding.dart';
 import '../modules/OnboardingScreen/views/onboarding_screen_view.dart';
 import '../modules/PageList/bindings/page_list_binding.dart';
 import '../modules/PageList/views/page_list_view.dart';
+import '../modules/Report/bindings/report_binding.dart';
+import '../modules/Report/views/report_view.dart';
 import '../modules/Returns/bindings/returns_binding.dart';
 import '../modules/Returns/views/returns_view.dart';
 import '../modules/Users/bindings/users_binding.dart';
@@ -120,6 +122,11 @@ class AppPages {
       name: _Paths.RETURNS,
       page: () => const ReturnsView(),
       binding: ReturnsBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORT,
+      page: () => const ReportView(),
+      binding: ReportBinding(),
     ),
   ];
 }

@@ -21,6 +21,7 @@ abstract class Routes {
   static const BORROWING = _Paths.BORROWING;
   static const BORROWING_ADD = _Paths.BORROWING_ADD;
   static const RETURNS = _Paths.RETURNS;
+  static const REPORT = _Paths.REPORT;
 }
 
 abstract class _Paths {
@@ -43,4 +44,5 @@ abstract class _Paths {
   static const BORROWING = '/borrowing';
   static const BORROWING_ADD = '/borrowing-add';
   static const RETURNS = '/returns';
+  static const REPORT = '/report';
 }

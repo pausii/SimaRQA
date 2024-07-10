@@ -16,6 +16,8 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   smooth_page_indicator: ^1.0.1
   intl: ^0.18.1
+  file_picker: ^5.5.0
+  path_provider: ^2.0.2
 
 dev_dependencies: 
   flutter_lints: 4.0.0
