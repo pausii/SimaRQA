@@ -18,6 +18,9 @@ dependencies:
   intl: ^0.18.1
   file_picker: ^5.5.0
   path_provider: ^2.0.2
+  printing: ^5.12.0
+  qr_flutter: ^4.1.0
+  pretty_qr_code: ^3.3.0
 
 dev_dependencies: 
   flutter_lints: 4.0.0
@@ -28,3 +31,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/logo.png

@@ -6,6 +6,7 @@ import 'package:sima_rqa/app/models/assets.dart';
 import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AssetsAddController extends GetxController {
   late AssetsModel asset;
@@ -24,7 +25,6 @@ class AssetsAddController extends GetxController {
   String action = "";
   String last_maintenance_date = "";
   String assetId = "";
-
   @override
   void onInit() {
     super.onInit();
@@ -55,6 +55,7 @@ class AssetsAddController extends GetxController {
       Dio dio = Dio();
       dio.options.headers['Authorization'] =
           'Bearer ${Storage.read("authToken")}';
+
       var response =
           await dio.get('${AppConfig.baseUrl}/api/${asset.apiPath}/$id');
       if (response.statusCode == 200) {
@@ -110,6 +111,11 @@ class AssetsAddController extends GetxController {
     } else if (action == 'edit') {
       loadAsset(assetId);
     }
+  }
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
   }
 
   void updateForm() async {
