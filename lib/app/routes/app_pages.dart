@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 
 import '../modules/Assets/bindings/assets_binding.dart';
 import '../modules/Assets/views/assets_view.dart';
@@ -40,7 +41,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = kReleaseMode ? Routes.DASHBOARD : Routes.HOME;
 
   static final routes = [
     GetPage(

@@ -15,12 +15,11 @@ class LoginController extends GetxController {
   final textFieldFocusNode2 = FocusNode();
 
   @override
-  void onClose() {
-    username.dispose();
-    textFieldFocusNode1.dispose();
-    password.dispose();
-    textFieldFocusNode2.dispose();
-    super.onClose();
+  void onReady() {
+    super.onReady();
+    if (Storage.read("onboardingPageVisited") != "true") {
+      Get.offAllNamed('/onboarding-screen');
+    }
   }
 
   void login() async {
@@ -31,7 +30,7 @@ class LoginController extends GetxController {
         data: {"username": username.text, "password": password.text},
       );
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         Alert.success("Login Success", response.data['message']);
         await Future.delayed(const Duration(seconds: 1));
         Storage.write("authToken", "${response.data['body']['token']}");
@@ -40,11 +39,12 @@ class LoginController extends GetxController {
     } catch (e) {
       if (e is DioException) {
         if (e.response?.statusCode == 404 || e.response?.statusCode == 401) {
-          Alert.error("Login Failed", e.response?.data['message']??"Error PS1");
-        }else{
+          Alert.error(
+              "Login Failed", e.response?.data['message'] ?? "Error PS1");
+        } else {
           print("ExceptionPS2: $e");
         }
-      }else{
+      } else {
         print("ExceptionPS3: $e");
       }
     }

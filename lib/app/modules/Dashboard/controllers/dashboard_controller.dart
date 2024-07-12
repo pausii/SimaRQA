@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sima_rqa/app/utils/storage.dart';
 
 class DashboardController extends GetxController {
   // stats Aset
@@ -15,5 +16,8 @@ class DashboardController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    if (Storage.read("authToken") == ""){
+      Get.offAllNamed('/login');
+    }
   }
 }

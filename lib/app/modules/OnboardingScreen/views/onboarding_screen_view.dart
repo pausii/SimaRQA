@@ -261,7 +261,7 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                                     0, 14, 0, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    // context.pushNamed('LoginPage2Copy');
+                                    controller.getStarted();
                                   },
                                   text: 'Get Started',
                                   options: FFButtonOptions(
