@@ -11,8 +11,10 @@ class AssetsController extends GetxController {
   final searchQuery = "".obs;
   final searchController = TextEditingController();
   var assetsList = <dynamic>[].obs;
+  var isLoading = true.obs;
 
   void loadAssets(String name) async {
+    isLoading.value = true;
     try {
       Dio dio = Dio();
       dio.options.headers['Authorization'] =
@@ -44,6 +46,8 @@ class AssetsController extends GetxController {
       } else {
         print("ExceptionPS3: $e");
       }
+    } finally {
+      isLoading.value = false;
     }
   }
 

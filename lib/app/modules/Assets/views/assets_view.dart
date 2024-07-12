@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../controllers/assets_controller.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import '../../../widgets/sidebar.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AssetsView extends GetView<AssetsController> {
   const AssetsView({Key? key}) : super(key: key);
@@ -201,8 +202,8 @@ class AssetsView extends GetView<AssetsController> {
                         () => Visibility(
                           visible: controller.searchQuery.value != '',
                           child: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 10),
                             child: Container(
                               width: double.infinity,
                               height: 40,
@@ -214,26 +215,26 @@ class AssetsView extends GetView<AssetsController> {
                                 ),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(5, 3, 5, 3),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    5, 3, 5, 3),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
-                                      onTap: ()  {
+                                      onTap: () {
                                         controller.searchDialog();
                                       },
                                       child: Text(
-                                      'Cari: ${controller.searchQuery.value} ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
-                                          ),
-                                    ),
+                                        'Cari: ${controller.searchQuery.value} ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0,
+                                            ),
+                                      ),
                                     ),
                                     FlutterFlowIconButton(
                                       borderRadius: 20,
@@ -246,7 +247,8 @@ class AssetsView extends GetView<AssetsController> {
                                       ),
                                       onPressed: () {
                                         controller.searchQuery.value = '';
-                                        controller.loadAssets(controller.asset.apiPath);
+                                        controller.loadAssets(
+                                            controller.asset.apiPath);
                                         controller.searchController.clear();
                                       },
                                     ),
@@ -257,119 +259,236 @@ class AssetsView extends GetView<AssetsController> {
                           ),
                         ),
                       ),
-                      Expanded(
-                          child: Obx(() => ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: controller.assetsList.length,
-                                itemBuilder: (context, index) {
-                                  DateTime purchaseDate = DateTime.parse(
-                                      controller.assetsList[index]
-                                          ["purchase_date"]);
-                                  String formattedDate =
-                                      DateFormat('dd MMMM yyyy')
-                                          .format(purchaseDate);
+                      Obx(() => Visibility(
+                          visible: controller.assetsList.isNotEmpty,
+                          child: Expanded(
+                              child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: controller.assetsList.length,
+                            itemBuilder: (context, index) {
+                              DateTime purchaseDate = DateTime.parse(controller
+                                  .assetsList[index]["purchase_date"]);
+                              String formattedDate = DateFormat('dd MMMM yyyy')
+                                  .format(purchaseDate);
 
-                                  NumberFormat priceFormat =
-                                      NumberFormat.currency(
-                                          locale: 'id_ID',
-                                          symbol: 'Rp',
-                                          decimalDigits: 0);
-                                  String formattedPrice = priceFormat.format(
-                                      controller.assetsList[index]
-                                          ["asset_price"]);
-                                  return Padding(
-                                      padding: const EdgeInsets.only(bottom: 4),
+                              NumberFormat priceFormat = NumberFormat.currency(
+                                  locale: 'id_ID',
+                                  symbol: 'Rp',
+                                  decimalDigits: 0);
+                              String formattedPrice = priceFormat.format(
+                                  controller.assetsList[index]["asset_price"]);
+                              return Padding(
+                                  padding: const EdgeInsets.only(bottom: 4),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 144,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF122778),
+                                      borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(
+                                        color: const Color(0xFF163360),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
                                       child: Container(
-                                        width: double.infinity,
-                                        height: 144,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFF122778),
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                          border: Border.all(
-                                            color: const Color(0xFF163360),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Container(
-                                            width: 100,
-                                            height: 126,
-                                            decoration: const BoxDecoration(),
-                                            child: Column(
+                                        width: 100,
+                                        height: 126,
+                                        decoration: const BoxDecoration(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Row(
                                               mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  controller.assetsList[index]
+                                                      ["asset_name"],
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Poppins',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        fontSize: 17,
+                                                        letterSpacing: 0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                                FlutterFlowIconButton(
+                                                  borderRadius: 20,
+                                                  borderWidth: 1,
+                                                  buttonSize: 35,
+                                                  icon: Icon(
+                                                    Icons.keyboard_control,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    size: 24,
+                                                  ),
+                                                  onPressed: () {
+                                                    print(
+                                                        'IconButton pressed ...');
+                                                    dialogOption(
+                                                        context,
+                                                        controller.assetsList[
+                                                            index]["asset_id"],
+                                                        controller.assetsList[
+                                                                    index][
+                                                                "asset_name"] ??
+                                                            '-');
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0, 0, 93, 0),
+                                                  child: Text(
+                                                    'Kategori',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          letterSpacing: 0,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  ': ${controller.assetsList[index]["asset_category"]?["category_name"] ?? ''}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        letterSpacing: 0,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0, 0, 110, 0),
+                                                  child: Text(
+                                                    'Harga',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          letterSpacing: 0,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  ': $formattedPrice',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        letterSpacing: 0,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0, 0, 16, 0),
+                                                  child: Text(
+                                                    'Tanggal Pembelian',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          letterSpacing: 0,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  ': $formattedDate',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        letterSpacing: 0,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                            Stack(
                                               children: [
                                                 Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                              .assetsList[index]
-                                                          ["asset_name"],
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondaryBackground,
-                                                            fontSize: 17,
-                                                            letterSpacing: 0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderRadius: 20,
-                                                      borderWidth: 1,
-                                                      buttonSize: 35,
-                                                      icon: Icon(
-                                                        Icons.keyboard_control,
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        size: 24,
-                                                      ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
-                                                        dialogOption(
-                                                            context,
-                                                            controller.assetsList[
-                                                                    index]
-                                                                ["asset_id"],
-                                                            controller.assetsList[
-                                                                        index][
-                                                                    "asset_name"] ??
-                                                                '-');
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
                                                     Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                              0, 0, 93, 0),
+                                                              0, 0, 101, 0),
                                                       child: Text(
-                                                        'Kategori',
+                                                        'Kondisi',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -386,7 +505,7 @@ class AssetsView extends GetView<AssetsController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      ': ${controller.assetsList[index]["asset_category"]?["category_name"] ?? ''}',
+                                                      ': ${controller.assetsList[index]["asset_condition"]}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -403,379 +522,46 @@ class AssetsView extends GetView<AssetsController> {
                                                     ),
                                                   ],
                                                 ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 110, 0),
-                                                      child: Text(
-                                                        'Harga',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                  letterSpacing:
-                                                                      0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      ': $formattedPrice',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 16, 0),
-                                                      child: Text(
-                                                        'Tanggal Pembelian',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                  letterSpacing:
-                                                                      0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      ': $formattedDate',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Stack(
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0, 0, 101, 0),
-                                                          child: Text(
-                                                            'Kondisi',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                  letterSpacing:
-                                                                      0,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          ': ${controller.assetsList[index]["asset_condition"]}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ].divide(
-                                                  const SizedBox(height: 4)),
+                                              ],
                                             ),
-                                          ),
+                                          ].divide(const SizedBox(height: 4)),
                                         ),
-                                      ));
-                                },
-                              ))
-                          // ListView(
-                          // padding: EdgeInsets.zero,
-                          // shrinkWrap: true,
-                          // scrollDirection: Axis.vertical,
-                          //   children: [
-                          //     Container(
-                          //       width: double.infinity,
-                          //       height: 144,
-                          //       decoration: BoxDecoration(
-                          //         color: const Color(0xFF122778),
-                          //         borderRadius: BorderRadius.circular(14),
-                          //         border: Border.all(
-                          //           color: const Color(0xFF163360),
-                          //           width: 1,
-                          //         ),
-                          //       ),
-                          //       child: Padding(
-                          //         padding: const EdgeInsets.all(10),
-                          //         child: Container(
-                          //           width: 100,
-                          //           height: 126,
-                          //           decoration: const BoxDecoration(),
-                          //           child: Column(
-                          //             mainAxisSize: MainAxisSize.max,
-                          //             children: [
-                          //               Row(
-                          //                 mainAxisSize: MainAxisSize.max,
-                          //                 mainAxisAlignment:
-                          //                     MainAxisAlignment.spaceBetween,
-                          //                 children: [
-                          //                   Text(
-                          //                     'Nama Aset tauu',
-                          //                     textAlign: TextAlign.start,
-                          //                     style: FlutterFlowTheme.of(context)
-                          //                         .bodyMedium
-                          //                         .override(
-                          //                           fontFamily: 'Poppins',
-                          //                           color: FlutterFlowTheme.of(
-                          //                                   context)
-                          //                               .secondaryBackground,
-                          //                           fontSize: 17,
-                          //                           letterSpacing: 0,
-                          //                           fontWeight: FontWeight.w600,
-                          //                         ),
-                          //                   ),
-                          //                   FlutterFlowIconButton(
-                          //                     borderRadius: 20,
-                          //                     borderWidth: 1,
-                          //                     buttonSize: 35,
-                          //                     icon: Icon(
-                          //                       Icons.keyboard_control,
-                          //                       color:
-                          //                           FlutterFlowTheme.of(context)
-                          //                               .secondaryBackground,
-                          //                       size: 24,
-                          //                     ),
-                          //                     onPressed: () {
-                          //                       print('IconButton pressed ...');
-                          //                     },
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //               Row(
-                          //                 mainAxisSize: MainAxisSize.max,
-                          //                 mainAxisAlignment:
-                          //                     MainAxisAlignment.start,
-                          //                 children: [
-                          //                   Padding(
-                          //                     padding: const EdgeInsetsDirectional
-                          //                         .fromSTEB(0, 0, 93, 0),
-                          //                     child: Text(
-                          //                       'Kategori',
-                          //                       style: FlutterFlowTheme.of(
-                          //                               context)
-                          //                           .bodyMedium
-                          //                           .override(
-                          //                             fontFamily: 'Montserrat',
-                          //                             color: FlutterFlowTheme.of(
-                          //                                     context)
-                          //                                 .secondaryBackground,
-                          //                             letterSpacing: 0,
-                          //                           ),
-                          //                     ),
-                          //                   ),
-                          //                   Text(
-                          //                     ': Alat',
-                          //                     style: FlutterFlowTheme.of(context)
-                          //                         .bodyMedium
-                          //                         .override(
-                          //                           fontFamily: 'Montserrat',
-                          //                           color: FlutterFlowTheme.of(
-                          //                                   context)
-                          //                               .secondaryBackground,
-                          //                           letterSpacing: 0,
-                          //                         ),
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //               Row(
-                          //                 mainAxisSize: MainAxisSize.max,
-                          //                 mainAxisAlignment:
-                          //                     MainAxisAlignment.start,
-                          //                 children: [
-                          //                   Padding(
-                          //                     padding: const EdgeInsetsDirectional
-                          //                         .fromSTEB(0, 0, 110, 0),
-                          //                     child: Text(
-                          //                       'Harga',
-                          //                       style: FlutterFlowTheme.of(
-                          //                               context)
-                          //                           .bodyMedium
-                          //                           .override(
-                          //                             fontFamily: 'Montserrat',
-                          //                             color: FlutterFlowTheme.of(
-                          //                                     context)
-                          //                                 .secondaryBackground,
-                          //                             letterSpacing: 0,
-                          //                           ),
-                          //                     ),
-                          //                   ),
-                          //                   Text(
-                          //                     ': Rp70.000.00',
-                          //                     style: FlutterFlowTheme.of(context)
-                          //                         .bodyMedium
-                          //                         .override(
-                          //                           fontFamily: 'Montserrat',
-                          //                           color: FlutterFlowTheme.of(
-                          //                                   context)
-                          //                               .secondaryBackground,
-                          //                           letterSpacing: 0,
-                          //                         ),
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //               Row(
-                          //                 mainAxisSize: MainAxisSize.max,
-                          //                 mainAxisAlignment:
-                          //                     MainAxisAlignment.start,
-                          //                 children: [
-                          //                   Padding(
-                          //                     padding: const EdgeInsetsDirectional
-                          //                         .fromSTEB(0, 0, 16, 0),
-                          //                     child: Text(
-                          //                       'Tanggal Pembelian',
-                          //                       style: FlutterFlowTheme.of(
-                          //                               context)
-                          //                           .bodyMedium
-                          //                           .override(
-                          //                             fontFamily: 'Montserrat',
-                          //                             color: FlutterFlowTheme.of(
-                          //                                     context)
-                          //                                 .secondaryBackground,
-                          //                             letterSpacing: 0,
-                          //                           ),
-                          //                     ),
-                          //                   ),
-                          //                   Text(
-                          //                     ': 20 June 2024',
-                          //                     style: FlutterFlowTheme.of(context)
-                          //                         .bodyMedium
-                          //                         .override(
-                          //                           fontFamily: 'Montserrat',
-                          //                           color: FlutterFlowTheme.of(
-                          //                                   context)
-                          //                               .secondaryBackground,
-                          //                           letterSpacing: 0,
-                          //                         ),
-                          //                   ),
-                          //                 ],
-                          //               ),
-
-                          //               Stack(
-                          //                 children: [
-                          //                   Row(
-                          //                     mainAxisSize: MainAxisSize.max,
-                          //                     mainAxisAlignment:
-                          //                         MainAxisAlignment.start,
-                          //                     children: [
-                          //                       Padding(
-                          //                         padding:
-                          //                             const EdgeInsetsDirectional
-                          //                                 .fromSTEB(0, 0, 101, 0),
-                          //                         child: Text(
-                          //                           'Kondisi',
-                          //                           style: FlutterFlowTheme.of(
-                          //                                   context)
-                          //                               .bodyMedium
-                          //                               .override(
-                          //                                 fontFamily:
-                          //                                     'Montserrat',
-                          //                                 color: FlutterFlowTheme
-                          //                                         .of(context)
-                          //                                     .secondaryBackground,
-                          //                                 letterSpacing: 0,
-                          //                               ),
-                          //                         ),
-                          //                       ),
-                          //                       Text(
-                          //                         ': Baik',
-                          //                         style:
-                          //                             FlutterFlowTheme.of(context)
-                          //                                 .bodyMedium
-                          //                                 .override(
-                          //                                   fontFamily:
-                          //                                       'Montserrat',
-                          //                                   color: FlutterFlowTheme
-                          //                                           .of(context)
-                          //                                       .secondaryBackground,
-                          //                                   letterSpacing: 0,
-                          //                                 ),
-                          //                       ),
-                          //                     ],
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //             ].divide(const SizedBox(height: 4)),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ].divide(const SizedBox(height: 5)),
-                          // ),
-
+                                      ),
+                                    ),
+                                  ));
+                            },
+                          )))),
+                      Obx(() =>  Visibility(
+                          visible: controller.isLoading.value,
+                          child: SizedBox(
+                        width: double.infinity, // Atau ukuran tertentu
+                        height: 500.0, // Atau ukuran tertentu
+                          child: Skeletonizer(
+                          enabled: true,
+                          child: ListView.builder(
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                child: ListTile(
+                                  title: Text('Item number $index as title title', style: const TextStyle(fontSize: 22)),
+                                  subtitle: const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                    SizedBox(height: 5),
+                                    Text('Subtitle here xxxxxxxxxxx', style: TextStyle(fontSize: 15)),
+                                    Text('Subtitle here xxxxxx', style: TextStyle(fontSize: 15)),
+                                    Text('Subtitle here xxxxxxxxx', style: TextStyle(fontSize: 15)),
+                                    Text('Subtitle here xxxxxxxxccccc', style: TextStyle(fontSize: 15)),
+                                  ]),
+                                  trailing: const Icon(Icons.ac_unit),
+                                ),
+                              );
+                            },
                           ),
+                        ),
+                        )
+                      )
+                    )
                     ],
                   ),
                 ),
