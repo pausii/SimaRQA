@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import '../controllers/login_controller.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
@@ -206,52 +206,79 @@ class LoginView extends GetView<LoginController> {
               ),
               const SizedBox(height: 20),
               Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF0C54F0),
-                      Color(0xFF42A5F5)
-                    ], // Warna gradasi
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 4,
-                      offset: const Offset(2, 4), // Posisi bayangan
-                    ),
-                  ],
-                  borderRadius:
-                      BorderRadius.circular(8), // Sesuaikan dengan tombol
-                ),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    controller.login();
-                  },
-                  text: 'Masuk',
-                  options: FFButtonOptions(
-                    height: 40,
-                    padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: Colors.transparent, // Warna diatur oleh Container
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: const Color(0xFFFFFFFF),
-                          letterSpacing: 0,
+                height: 40,
+                child: Obx(
+                  () => Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF0C54F0),
+                              Color(0xFF42A5F5)
+                            ], // Warna gradasi
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 4,
+                              offset: const Offset(2, 4), // Posisi bayangan
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(
+                              8), // Sesuaikan dengan tombol
                         ),
-                    elevation: 0, // Elevation diatur oleh Container
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
-                    ),
-                    borderRadius:
-                        BorderRadius.circular(8), // Sesuaikan dengan Container
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            controller.login();
+                          },
+                          text: controller.isLoading.value ? '' : 'Masuk',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 40,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24, 0, 24, 0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
+                            color: Colors
+                                .transparent, // Warna diatur oleh Container
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: const Color(0xFFFFFFFF),
+                                  letterSpacing: 0,
+                                ),
+                            elevation: 0, // Elevation diatur oleh Container
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                                8), // Sesuaikan dengan Container
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Visibility(
+                          visible: controller.isLoading.value,
+                          child: Center(
+                            child:
+                                LoadingAnimationWidget.horizontalRotatingDots(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              size: 50,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

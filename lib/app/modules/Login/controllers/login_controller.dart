@@ -13,6 +13,7 @@ class LoginController extends GetxController {
 
   final password = TextEditingController();
   final textFieldFocusNode2 = FocusNode();
+  var isLoading = false.obs;
 
   @override
   void onReady() {
@@ -23,6 +24,11 @@ class LoginController extends GetxController {
   }
 
   void login() async {
+    if (isLoading.value == true){
+      return;
+    }
+
+    isLoading.value = true;
     try {
       Dio dio = Dio();
       final response = await dio.post(
@@ -34,6 +40,7 @@ class LoginController extends GetxController {
         Alert.success("Login Success", response.data['message']);
         await Future.delayed(const Duration(seconds: 1));
         Storage.write("authToken", "${response.data['body']['token']}");
+        Storage.write("role", "${response.data['body']['role']}");
         Get.toNamed('/dashboard');
       }
     } catch (e) {
@@ -47,6 +54,8 @@ class LoginController extends GetxController {
       } else {
         print("ExceptionPS3: $e");
       }
+    } finally {
+      isLoading.value = false;
     }
   }
 }
