@@ -7,4 +7,4 @@ const route = express.Router();
 
 route.get('/', [tokenVerified, adminOrDivision], getCountData);
 
-module.exports = route;
+module.exports = route; 
