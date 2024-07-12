@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sima_rqa/app/config/app_config.dart';
 import 'package:sima_rqa/app/models/assets.dart';
@@ -7,6 +8,8 @@ import 'package:sima_rqa/app/utils/storage.dart';
 
 class AssetsController extends GetxController {
   late AssetsModel asset;
+  final searchQuery = "".obs;
+  final searchController = TextEditingController();
   var assetsList = <dynamic>[].obs;
 
   void loadAssets(String name) async {
@@ -15,6 +18,19 @@ class AssetsController extends GetxController {
       dio.options.headers['Authorization'] =
           'Bearer ${Storage.read("authToken")}';
       var response = await dio.get('${AppConfig.baseUrl}/api/$name');
+      if (searchQuery.value != "") {
+        // Filter data yang sesuai dengan kriteria pencarian
+        var filteredData = response.data['data'].where((element) {
+          return element['asset_name']
+              .toString()
+              .toLowerCase()
+              .contains(searchQuery.value.toLowerCase());
+        }).toList();
+
+        // Ganti isi list asli dengan hasil filter
+        response.data['data'] = filteredData;
+      }
+
       if (response.statusCode == 200) {
         assetsList.assignAll(response.data['data']);
       }
@@ -50,11 +66,8 @@ class AssetsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print("assets onReady");
     var parameters = Get.parameters;
     String? name = parameters['name'];
-
-    print('Asset found: $name');
     if (name == 'musholla') {
       asset = AssetsMushollaModel();
     } else if (name == 'auditorium') {
@@ -72,8 +85,28 @@ class AssetsController extends GetxController {
     loadAssets(asset.apiPath);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void searchDialog() {
+    Get.dialog(
+      AlertDialog(
+        // title: Text('Pencarian'),
+        content: TextField(
+          controller: searchController,
+          decoration: const InputDecoration(hintText: "Masukkan pencarian..."),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Ambil nilai dari input
+              String inputValue = searchController.text;
+              // Tutup dialog
+              Get.back();
+              searchQuery(inputValue);
+              loadAssets(asset.apiPath);
+            },
+            child: const Text('Cari'),
+          ),
+        ],
+      ),
+    );
   }
 }

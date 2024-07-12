@@ -12,13 +12,14 @@ class AssetsView extends GetView<AssetsController> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('${assetName??"-"}'),
+          title: Text('${assetName ?? "-"}'),
           // content: const Text('What do you want to do?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Get.toNamed('/assets-add?name=${controller.asset.name}&id=$id&action=viewDetail');
+                Get.toNamed(
+                    '/assets-add?name=${controller.asset.name}&id=$id&action=viewDetail');
               },
               style: TextButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 33, 243, 96),
@@ -79,7 +80,8 @@ class AssetsView extends GetView<AssetsController> {
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
-                await Get.toNamed('/assets-add?name=${controller.asset.name}&id=$id&action=edit');
+                await Get.toNamed(
+                    '/assets-add?name=${controller.asset.name}&id=$id&action=edit');
                 controller.loadAssets(controller.asset.apiPath);
               },
               style: TextButton.styleFrom(
@@ -195,6 +197,66 @@ class AssetsView extends GetView<AssetsController> {
                           ),
                         ),
                       ),
+                      Obx(
+                        () => Visibility(
+                          visible: controller.searchQuery.value != '',
+                          child: Padding(
+                            padding:
+                                const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                            child: Container(
+                              width: double.infinity,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                  color: const Color(0xFF163360),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.fromSTEB(5, 3, 5, 3),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: ()  {
+                                        controller.searchDialog();
+                                      },
+                                      child: Text(
+                                      'Cari: ${controller.searchQuery.value} ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0,
+                                          ),
+                                    ),
+                                    ),
+                                    FlutterFlowIconButton(
+                                      borderRadius: 20,
+                                      borderWidth: 1,
+                                      buttonSize: 40,
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Color(0xFFA30C0C),
+                                        size: 19,
+                                      ),
+                                      onPressed: () {
+                                        controller.searchQuery.value = '';
+                                        controller.loadAssets(controller.asset.apiPath);
+                                        controller.searchController.clear();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Expanded(
                           child: Obx(() => ListView.builder(
                                 padding: EdgeInsets.zero,
@@ -202,11 +264,21 @@ class AssetsView extends GetView<AssetsController> {
                                 scrollDirection: Axis.vertical,
                                 itemCount: controller.assetsList.length,
                                 itemBuilder: (context, index) {
-                                  DateTime purchaseDate = DateTime.parse(controller.assetsList[index]["purchase_date"]);
-                                  String formattedDate = DateFormat('dd MMMM yyyy').format(purchaseDate);
+                                  DateTime purchaseDate = DateTime.parse(
+                                      controller.assetsList[index]
+                                          ["purchase_date"]);
+                                  String formattedDate =
+                                      DateFormat('dd MMMM yyyy')
+                                          .format(purchaseDate);
 
-                                  NumberFormat priceFormat = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
-                                  String formattedPrice = priceFormat.format(controller.assetsList[index]["asset_price"]);
+                                  NumberFormat priceFormat =
+                                      NumberFormat.currency(
+                                          locale: 'id_ID',
+                                          symbol: 'Rp',
+                                          decimalDigits: 0);
+                                  String formattedPrice = priceFormat.format(
+                                      controller.assetsList[index]
+                                          ["asset_price"]);
                                   return Padding(
                                       padding: const EdgeInsets.only(bottom: 4),
                                       child: Container(
@@ -277,9 +349,10 @@ class AssetsView extends GetView<AssetsController> {
                                                             controller.assetsList[
                                                                     index]
                                                                 ["asset_id"],
-                                                                controller.assetsList[
-                                                                    index]
-                                                                ["asset_name"]??'-');
+                                                            controller.assetsList[
+                                                                        index][
+                                                                    "asset_name"] ??
+                                                                '-');
                                                       },
                                                     ),
                                                   ],
@@ -313,7 +386,7 @@ class AssetsView extends GetView<AssetsController> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      ': ${controller.assetsList[index]["asset_category"]?["category_name"]??''}',
+                                                      ': ${controller.assetsList[index]["asset_category"]?["category_name"] ?? ''}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -737,11 +810,14 @@ class AssetsView extends GetView<AssetsController> {
                           ),
                         ),
                       ),
-                      onSelected: (value) async{
+                      onSelected: (value) async {
                         print('Selected menu item: $value');
                         if (value == 1) {
-                          await Get.toNamed('/assets-add?name=${controller.asset.name}');
+                          await Get.toNamed(
+                              '/assets-add?name=${controller.asset.name}');
                           controller.loadAssets(controller.asset.apiPath);
+                        } else if (value == 2) {
+                          controller.searchDialog();
                         }
                       },
                       itemBuilder: (BuildContext context) =>
@@ -769,7 +845,7 @@ class AssetsView extends GetView<AssetsController> {
                           ]),
                         ),
                         const PopupMenuItem<int>(
-                          value: 2,
+                          value: 3,
                           child: Row(children: [
                             Icon(
                               Icons.qr_code_scanner,
@@ -777,17 +853,6 @@ class AssetsView extends GetView<AssetsController> {
                             ),
                             SizedBox(height: 1, width: 8),
                             Text('Scan QR Code'),
-                          ]),
-                        ),
-                        const PopupMenuItem<int>(
-                          value: 3,
-                          child: Row(children: [
-                            Icon(
-                              Icons.download,
-                              size: 24,
-                            ),
-                            SizedBox(height: 1, width: 8),
-                            Text('Export ke Excel'),
                           ]),
                         ),
                       ],
