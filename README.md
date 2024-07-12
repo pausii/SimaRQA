@@ -13,20 +13,22 @@ This program is a project 3 management asset with have Data Master, Transaction 
 - Postman or API Platform alternative
 
 ## Instalation
-1. Clone this repository to your computer: 
+1. Create Database first 
+
+2. Clone this repository to your computer: 
     ```bash
     Backend: git clone https://github.com/pausii/SimaRQA.git
 
-2. Open your repository with this command: 
+3. Open your repository with this command: 
     
     ```bash
     cd name_repository
 
-3. Install package module with this command:
+4. Install package module with this command:
     ```bash
     npm install
 
-4. Make new file with name `.env` then settings with program and your database
+5. Make new file with name `.env` then settings with program and your database
 
     ```bash
     DB_PORT=3000 or your number port want to use it (*disclaimer you need check index.js for that port) 
@@ -48,7 +50,9 @@ This program is a project 3 management asset with have Data Master, Transaction 
     PRODUCTION_HOST=......
     ```
 
-5. Do migration and seeder data to your database : 
+    or you can see in `.env.example`
+
+6. Do migration and seeder data to your database : 
 
     ```bash
     npm run reset
@@ -59,7 +63,7 @@ This program is a project 3 management asset with have Data Master, Transaction 
 
     (* that command will migration migration seed data to your database)
 
-6. Finish Process, that you can use API Platform and using down there API Spesification
+7. Finish Process, that you can use API Platform and using down there API Spesification
 
 
 npm v9.8.1
@@ -93,7 +97,7 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "login success, welcome!",
+    "message": "Login Sukses!",
     "user_id": "integer",
     "token": "string",
     "username": "string",
@@ -103,6 +107,29 @@ base-url: localhost:3000
     "last_name": "string",
     "phone_number": "string",
     "address": "text"
+}
+```
+# **Statistics**
+
+## **Get All Statistics (administrator & division)**
+
+**Request** : 
+
+- Method    : GET
+- Endpoint  : `(base-url/api/statistics/)`
+
+**Response** :
+
+```json
+{
+    "auditorium": "integer",
+    "musholla": "integer",
+    "perpustakaan": "integer",
+    "borrowedReturn": "integer",
+    "maintenance": "integer",
+    "users": "integer",
+    "categories": "integer",
+    "utilitas": "integer"
 }
 ```
 
@@ -122,7 +149,7 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Get All Users Successfully!",
+    "message": "Berhasil mendapatkan semua user!",
     "data": {
         "user_id": "integer",
         "username": "string",
@@ -150,7 +177,7 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Get User Successfully By ID:id !",
+    "message": "Berhasil mendapatkan user berdasarkan ID:id !",
     "data": {
         "user_id": "integer",
         "username": "string",
@@ -190,7 +217,7 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Create User Successfully!",
+    "message": "Data user berhasil ditambahkan!",
     "data": {
         "user_id": "integer",
         "username": "string",
@@ -230,7 +257,7 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Update User Successfully at ID:id !",
+    "message": "Data user berhasil diperbarui!",
     "data": {
         "user_id": "integer",
         "username": "string",
@@ -257,7 +284,7 @@ base-url: localhost:3000
 
 ```json
 {
-    "message": "Delete User Successfully at ID:id !",
+    "message": "User berhasil dihapus !",
     "data": {
         "user_id": "integer",
         "username": "string",
