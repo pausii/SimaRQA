@@ -604,6 +604,8 @@ class AssetsView extends GetView<AssetsController> {
                           controller.loadAssets(controller.asset.apiPath);
                         } else if (value == 2) {
                           controller.searchDialog();
+                        } else if (value == 3) {
+                          controller.scanQrCode();
                         }
                       },
                       itemBuilder: (BuildContext context) =>

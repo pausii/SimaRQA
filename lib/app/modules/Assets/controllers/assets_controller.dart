@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,7 @@ import 'package:sima_rqa/app/config/app_config.dart';
 import 'package:sima_rqa/app/models/assets.dart';
 import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class AssetsController extends GetxController {
   late AssetsModel asset;
@@ -112,5 +114,22 @@ class AssetsController extends GetxController {
         ],
       ),
     );
+  }
+
+  void scanQrCode() async {
+    try {
+      String? cameraScanResult = await scanner.scan();
+      print("===cameraScanResult===");
+      print(cameraScanResult);
+      Map<String, dynamic> data = json.decode(cameraScanResult.toString());
+      if (data['code'] != null) {
+        String code = data['code'];
+        print("===code===");
+        print(code);
+        Get.toNamed('/assets-add?name=${asset.name}&id=$code&action=viewDetail');
+      }
+    } catch (e) {
+      print("ExceptionPS5: $e");
+    }
   }
 }

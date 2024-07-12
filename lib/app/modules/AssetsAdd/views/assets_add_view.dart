@@ -12,7 +12,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 class AssetsAddView extends GetView<AssetsAddController> {
   const AssetsAddView({Key? key}) : super(key: key);
-  Future<String> generateQrImageData(String data) async {
+  Future<Uint8List> generateQrImageData(String data) async {
     try {
       final qrPainter = await QrPainter(
         data: data,
@@ -25,16 +25,19 @@ class AssetsAddView extends GetView<AssetsAddController> {
       // Convert to image with specified size
       final picData =
           await qrPainter.toImageData(100, format: ui.ImageByteFormat.png);
-      if (picData != null) {
-        final buffer = picData.buffer.asUint8List();
-        return await saveImage(buffer, "qr_code");
-      } else {
-        print('Failed to generate QR code image data');
-        return "";
-      }
+      return picData!.buffer.asUint8List();
+      // if (picData != null) {
+      //   final buffer = picData.buffer.asUint8List();
+      //   return await saveImage(buffer, "qr_code");
+      // } else {
+      //   print('Failed to generate QR code image data');
+      //   // return "";
+      //   return Uint8List(0);
+      // }
     } catch (e) {
       print('Error generating QR code image data: $e');
-      return "";
+      // return "";
+      return Uint8List(0);
     }
   }
 
@@ -47,10 +50,10 @@ class AssetsAddView extends GetView<AssetsAddController> {
     return path;
   }
 
-  Future<pw.Document> printAset(String urlQr) async {
+  Future<pw.Document> printAset(Uint8List qrBytes) async {
     try {
       final pdf = await pw.Document();
-      final image = await imageFromAssetBundle(urlQr);
+      // final image = await imageFromAssetBundle(qrBytes);
       pdf.addPage(
         pw.Page(
           build: (pw.Context context) => pw.Container(
@@ -72,7 +75,7 @@ class AssetsAddView extends GetView<AssetsAddController> {
                 pw.Container(
                   alignment: pw.Alignment.centerRight,
                   child: pw.Image(
-                    image,
+                    pw.MemoryImage(qrBytes),
                   ),
                 ),
               ],
@@ -134,33 +137,31 @@ class AssetsAddView extends GetView<AssetsAddController> {
         ),
         actions: [
           Visibility(
-            visible: controller.readonly == true,
-            child:   IconButton(
-              onPressed: () async {
-                try {
-                  Map<String, dynamic> data = {
-                    'code': controller.assetCode.text,
-                    'path': controller.asset.name,
-                  };
+              visible: controller.readonly == true,
+              child: IconButton(
+                  onPressed: () async {
+                    try {
+                      Map<String, dynamic> data = {
+                        'code': controller.assetCode.text,
+                        'path': controller.asset.name,
+                      };
 
-                  String jsonEncoded = jsonEncode(data);
-                  String urlQr =
-                      await generateQrImageData(jsonEncoded);
-                  if (urlQr != "") {
-                    final pdf = await printAset(urlQr);
-                    await Printing.layoutPdf(
-                        onLayout: (format) async => pdf.save());
-                    // controller.generateQrImageData();
-                  }
-                } catch (e) {
-                  print("ExceptionPS4: $e");
-                }
-              },
-              icon: const Icon(
-                Icons.print,
-                color: Colors.white,
-              ))
-          )
+                      String jsonEncoded = jsonEncode(data);
+                      Uint8List qrBytes = await generateQrImageData(jsonEncoded);
+                      if (qrBytes != "") {
+                        final pdf = await printAset(qrBytes);
+                        await Printing.layoutPdf(
+                            onLayout: (format) async => pdf.save());
+                        // controller.generateQrImageData();
+                      }
+                    } catch (e) {
+                      print("ExceptionPS4: $e");
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.print,
+                    color: Colors.white,
+                  )))
         ],
         centerTitle: true,
         elevation: 4,

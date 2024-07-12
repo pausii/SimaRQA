@@ -22,6 +22,7 @@ dependencies:
   qr_flutter: ^4.1.0
   pretty_qr_code: ^3.3.0
   skeletonizer: ^1.0.1
+  qrscan: ^0.3.3
 
 dev_dependencies: 
   flutter_lints: 4.0.0
@@ -32,4 +33,3 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-    - assets/images/logo.png
