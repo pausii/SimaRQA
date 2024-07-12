@@ -16,7 +16,7 @@ class DashboardView extends GetView<DashboardController> {
       resizeToAvoidBottomInset: false,
       // key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: const Sidebar(),
+      drawer: Sidebar(),
       appBar: AppBar(
         backgroundColor: const Color(0xFF163360),
         automaticallyImplyLeading: true,

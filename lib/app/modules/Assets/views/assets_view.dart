@@ -116,7 +116,7 @@ class AssetsView extends GetView<AssetsController> {
     final controller = Get.find<AssetsController>();
     return Scaffold(
       backgroundColor: const Color(0xFFF1F4F8), //Color(0xFFF1F4F8)
-      drawer: const Sidebar(),
+      drawer: Sidebar(),
       appBar: AppBar(
         backgroundColor: const Color(0xFF163360),
         automaticallyImplyLeading: true,
