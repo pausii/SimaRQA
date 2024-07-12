@@ -64,6 +64,15 @@ const getAllMushollaAssets = async (req, res) => {
     }
 };
 
+const getCountMushollaAssets = async (req, res) => {
+    try {
+        const musholla = await RuangAsetMusholla.count();
+        res.status(200).json({ musholla });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
 // Fungsi untuk mendapatkan aset musholla berdasarkan ID
 const getMushollaAssetById = async (req, res) => {
     try {
@@ -244,6 +253,7 @@ module.exports = {
     createMushollaAsset,
     getAllMushollaAssets,
     getMushollaAssetById,
+    getCountMushollaAssets,
     updateMushollaAsset,
     deleteMushollaAsset,
     generateQRCode,

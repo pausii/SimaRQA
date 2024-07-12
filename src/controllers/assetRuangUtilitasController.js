@@ -2,6 +2,7 @@ const { RuangAsetUtilitas, CategoryAsset } = require('../models');
 const QRCode = require('qrcode');
 const generateAssetCode = require('../services/generateAssetCode');
 const handlebars = require('handlebars');
+const { getCountAuditoriumAssets } = require('./assetRuangAuditoriumController');
 
 // Fungsi untuk membuat aset utilitas
 const createUtilitasAsset = async (req, res) => {
@@ -61,6 +62,15 @@ const getAllUtilitasAssets = async (req, res) => {
     } catch (error) {
         console.error('Error mendapatkan aset utilitas:', error);
         return res.status(500).json({ message: 'Kesalahan server internal.' });
+    }
+};
+
+const getCountUtilitasAssets = async (req, res) => {
+    try {
+        const utilitas = await RuangAsetUtilitas.count();
+        res.status(200).json({ utilitas });
+    } catch (error) {
+        handleError(res, error);
     }
 };
 
@@ -241,6 +251,7 @@ const searchAsset = async (req, res) => {
 module.exports = {
     createUtilitasAsset,
     getAllUtilitasAssets,
+    getCountUtilitasAssets,
     getUtilitasAssetById,
     updateUtilitasAsset,
     deleteUtilitasAsset,

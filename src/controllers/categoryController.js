@@ -11,7 +11,7 @@ const { Op } = require('sequelize');
 const handleError = (res, error, message = 'Terjadi kesalahan pada server', status = 500) => {
     console.error(error);
     res.status(status).json({ message: message });
-};
+};  
 
 // Fungsi untuk memvalidasi input kategori
 const validateCategoryInput = (body) => {
@@ -46,6 +46,15 @@ const getAllCategory = async (req, res) => {
             message: "Berhasil mendapatkan semua kategori",
             data: categories
         });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+const getCountCategory = async (req, res) => {
+    try {
+        const categories = await CategoryAsset.count();
+        res.status(200).json({ categories });
     } catch (error) {
         handleError(res, error);
     }
@@ -162,6 +171,7 @@ module.exports = {
     createCategory,
     getAllCategory,
     getCategoryById,
+    getCountCategory,
     updateCategory,
     deleteCategory,
     searchCategory

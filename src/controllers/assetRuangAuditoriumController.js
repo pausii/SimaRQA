@@ -38,6 +38,15 @@ const createAuditoriumAsset = async (req, res) => {
     }
 };
 
+const getCountAuditoriumAssets = async (req, res) => {
+    try {
+        const auditorium = await RuangAsetAuditorium.count();
+        res.status(200).json({ auditorium });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
 // Fungsi untuk mendapatkan semua aset auditorium
 const getAllAuditoriumAssets = async (req, res) => {
     try {
@@ -244,6 +253,7 @@ module.exports = {
     createAuditoriumAsset,
     getAllAuditoriumAssets,
     getAuditoriumAssetById,
+    getCountAuditoriumAssets,
     updateAuditoriumAsset,
     deleteAuditoriumAsset,
     generateQRCode,

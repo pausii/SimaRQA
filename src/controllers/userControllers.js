@@ -53,6 +53,15 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+const getCountUsers = async (req, res) => {
+    try {
+        const users = await Users.count();
+        res.status(200).json({ users });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
 // Dapatkan user berdasarkan ID
 const getUserById = async (req, res) => {
     try {
@@ -155,6 +164,7 @@ const searchUser = async (req, res) => {
 
 module.exports = {
     getAllUsers,
+    getCountUsers,
     getUserById,
     createUser,
     updateUser,
