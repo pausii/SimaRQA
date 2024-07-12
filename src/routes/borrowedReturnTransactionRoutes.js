@@ -6,7 +6,8 @@ const {
     tambahPeminjamanAsset,
     pengembalianAsset,
     exportBorrowedReturnTransactionToExcel,
-    searchPeminjamanPengembalianAsset
+    searchPeminjamanPengembalianAsset,
+    getCountBorrowedReturnTransaction
 } = require('../controllers/borrowedReturnTransactionController');
 
 const { tokenVerified, adminOrDivision } = require('../middlewares/token');
@@ -14,6 +15,7 @@ const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 const route = express.Router();
 
 route.get('/', [tokenVerified, adminOrDivision], getAllBorrowedReturnTransaction);
+route.get('/stats', [tokenVerified, adminOrDivision], getCountBorrowedReturnTransaction);
 route.get('/search', [tokenVerified, adminOrDivision], searchPeminjamanPengembalianAsset);
 route.get('/:id', [tokenVerified, adminOrDivision], getBorrowedReturnTransactionById);
 route.post('/', [tokenVerified, adminOrDivision], tambahPeminjamanAsset);
