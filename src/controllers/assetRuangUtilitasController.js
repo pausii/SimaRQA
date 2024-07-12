@@ -65,15 +65,6 @@ const getAllUtilitasAssets = async (req, res) => {
     }
 };
 
-const getCountUtilitasAssets = async (req, res) => {
-    try {
-        const utilitas = await RuangAsetUtilitas.count();
-        res.status(200).json({ utilitas });
-    } catch (error) {
-        handleError(res, error);
-    }
-};
-
 // Fungsi untuk mendapatkan aset utilitas berdasarkan ID
 const getUtilitasAssetById = async (req, res) => {
     try {
@@ -251,7 +242,6 @@ const searchAsset = async (req, res) => {
 module.exports = {
     createUtilitasAsset,
     getAllUtilitasAssets,
-    getCountUtilitasAssets,
     getUtilitasAssetById,
     updateUtilitasAsset,
     deleteUtilitasAsset,

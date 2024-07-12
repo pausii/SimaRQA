@@ -43,14 +43,6 @@ const getAllMaintenanceTransaction = async (req, res) => {
     }
 };
 
-const getCountMaintenanceTransaction = async (req, res) => {
-    try {
-        const maintenance = await PemeliharaanAsset.count();
-        res.status(200).json({ maintenance });
-    } catch (error) {
-        handleError(res, error);
-    }
-};
 
 // Endpoint untuk mendapatkan transaksi pemeliharaan berdasarkan ID
 const getMaintenanceTransactionById = async (req, res) => {
@@ -328,7 +320,6 @@ const searchMaintenanceTransaction = async (req, res) => {
 
 module.exports = { 
     getAllMaintenanceTransaction,
-    getCountMaintenanceTransaction,
     getMaintenanceTransactionById,
     createMaintenanceTransaction,
     updateMaintenanceTransaction,

@@ -51,15 +51,6 @@ const getAllCategory = async (req, res) => {
     }
 };
 
-const getCountCategory = async (req, res) => {
-    try {
-        const categories = await CategoryAsset.count();
-        res.status(200).json({ categories });
-    } catch (error) {
-        handleError(res, error);
-    }
-};
-
 // Mendapatkan kategori berdasarkan ID
 const getCategoryById = async (req, res) => {
     try {
@@ -171,7 +162,6 @@ module.exports = {
     createCategory,
     getAllCategory,
     getCategoryById,
-    getCountCategory,
     updateCategory,
     deleteCategory,
     searchCategory

@@ -64,15 +64,6 @@ const getAllPerpustakaanAssets = async (req, res) => {
     }
 };
 
-const getCountPerpustakaanAssets = async (req, res) => {
-    try {
-        const perpustakaan = await RuangAsetPerpustakaan.count();
-        res.status(200).json({ perpustakaan });
-    } catch (error) {
-        handleError(res, error);
-    }
-};
-
 // Fungsi untuk mendapatkan aset perpustakaan berdasarkan ID
 const getPerpustakaanAssetById = async (req, res) => {
     try {
@@ -248,7 +239,6 @@ const searchAsset = async (req, res) => {
 module.exports = {
     createPerpustakaanAsset,
     getAllPerpustakaanAssets,
-    getCountPerpustakaanAssets,
     getPerpustakaanAssetById,
     updatePerpustakaanAsset,
     deletePerpustakaanAsset,

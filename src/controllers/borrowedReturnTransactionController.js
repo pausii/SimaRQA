@@ -33,15 +33,6 @@ const getAllBorrowedReturnTransaction = async (req, res) => {
   }
 };
 
-const getCountBorrowedReturnTransaction = async (req, res) => {
-  try {
-      const borrowedReturn = await PeminjamanPengembalianAsset.count();
-      res.status(200).json({ borrowedReturn });
-  } catch (error) {
-      handleError(res, error);
-  }
-};
-
 const getBorrowedReturnTransactionById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -296,7 +287,6 @@ const searchPeminjamanPengembalianAsset = async (req, res) => {
 
 module.exports = {
   getAllBorrowedReturnTransaction,
-  getCountBorrowedReturnTransaction,
   getBorrowedReturnTransactionById,
   tambahPeminjamanAsset,
   pengembalianAsset,
