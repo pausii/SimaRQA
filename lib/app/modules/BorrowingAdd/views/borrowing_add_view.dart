@@ -26,7 +26,7 @@ class BorrowingAddView extends GetView<BorrowingAddController> {
         backgroundColor: const Color(0xFF0B2EAE),
         automaticallyImplyLeading: true,
         title: Text(
-          'Buat Peminjaman',
+          controller.title,
           style: FlutterFlowTheme.of(context).bodyMedium.override(
                 fontFamily: 'Poppins',
                 color: FlutterFlowTheme.of(context).secondaryBackground,

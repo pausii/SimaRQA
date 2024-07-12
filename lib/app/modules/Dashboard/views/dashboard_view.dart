@@ -18,12 +18,12 @@ class DashboardView extends GetView<DashboardController> {
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: const Sidebar(),
       appBar: AppBar(
-        backgroundColor: Color(0xFF163360),
+        backgroundColor: const Color(0xFF163360),
         automaticallyImplyLeading: true,
         title: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Image.asset(
-            'images/logo.png',
+            'assets/images/logo.png',
             width: 166,
             height: 45,
             fit: BoxFit.cover,
@@ -34,7 +34,7 @@ class DashboardView extends GetView<DashboardController> {
           background: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              'images/bg2.jpg',
+              'assets/images/bg2.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -45,190 +45,100 @@ class DashboardView extends GetView<DashboardController> {
       body: SafeArea(
         top: true,
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+          padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
           child: ListView(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
             children: [
               Container(
-                width: 339,
-                height: 215,
-                decoration: BoxDecoration(
-                  color: Color(0xFF3D77D2),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: Image.asset(
-                      'images/bg-home.jpg',
-                    ).image,
+                  width: 339,
+                  height: 215,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3D77D2),
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: Image.asset(
+                        'assets/images/bg-home.jpg',
+                      ).image,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                    shape: BoxShape.rectangle,
                   ),
-                  borderRadius: BorderRadius.circular(10),
-                  shape: BoxShape.rectangle,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 351,
-                      height: 37,
-                      decoration: BoxDecoration(
-                        color: Color(0x003D77D2),
-                      ),
-                      child: Column(
-                        // mainAxisSize: MainAxisSize.max,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
-                            child: Text(
-                              'Statistik Aset',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    letterSpacing: 0,
-                                  ),
-                            ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 2,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).accent4,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
+                  child: Obx(
+                    () => Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Musholla',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    letterSpacing: 0,
-                                  ),
-                            ),
-                            Text(
-                              '100',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
+                        Container(
+                          width: 351,
+                          height: 37,
+                          decoration: const BoxDecoration(
+                            color: Color(0x003D77D2),
+                          ),
+                          child: Column(
+                            // mainAxisSize: MainAxisSize.max,
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, // Menyusun secara vertikal di tengah
+                            crossAxisAlignment: CrossAxisAlignment
+                                .center, // Menyusun secara horizontal di tengah
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 5),
+                                child: Text(
+                                  'Statistik Aset',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        letterSpacing: 0,
+                                      ),
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                height: 2,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).accent4,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Auditorium',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    letterSpacing: 0,
-                                  ),
-                            ),
-                            Text(
-                              '33',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
+                        Center(
+                          child: Wrap(
+                            spacing: 10.0, // Jarak horizontal antara kolom
+                            runSpacing: 10.0, // Jarak vertikal antara baris
+                            alignment: WrapAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildColumn(context, 'Musholla',
+                                      controller.musholla.value.toString()),
+                                  _buildColumn(context, 'Auditorium',
+                                      controller.auditorium.value.toString()),
+                                ],
+                              ),
+                              const SizedBox(height: 3),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildColumn(context, 'Perpustakaan',
+                                      controller.perpustakaan.value.toString()),
+                                  _buildColumn(context, 'Utilitas',
+                                      controller.utilitas.value.toString()),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Musholla',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    letterSpacing: 0,
-                                  ),
-                            ),
-                            Text(
-                              '100',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Auditorium',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    letterSpacing: 0,
-                                  ),
-                            ),
-                            Text(
-                              '33',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+                  )),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                 child: Container(
@@ -241,7 +151,8 @@ class DashboardView extends GetView<DashboardController> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                         child: Container(
                           width: double.infinity,
                           height: 21,
@@ -263,19 +174,20 @@ class DashboardView extends GetView<DashboardController> {
                       ),
                       FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
+                          Get.offNamed('/maintenance');
                         },
                         text: 'Pemeliharaan Aset',
-                        icon: FaIcon(
+                        icon: const FaIcon(
                           FontAwesomeIcons.hourglassStart,
                         ),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 60,
-                          padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              24, 0, 24, 0),
                           iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: Color(0xFF072289),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: const Color(0xFF072289),
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Readex Pro',
@@ -284,7 +196,7 @@ class DashboardView extends GetView<DashboardController> {
                                     letterSpacing: 0,
                                   ),
                           elevation: 3,
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
                           ),
@@ -293,19 +205,20 @@ class DashboardView extends GetView<DashboardController> {
                       ),
                       FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
+                          Get.offNamed('/borrowing');
                         },
                         text: 'Peminjaman Aset',
-                        icon: FaIcon(
+                        icon: const FaIcon(
                           FontAwesomeIcons.box,
                         ),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 60,
-                          padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              24, 0, 24, 0),
                           iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: Color(0xFF072289),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          color: const Color(0xFF072289),
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Readex Pro',
@@ -314,50 +227,83 @@ class DashboardView extends GetView<DashboardController> {
                                     letterSpacing: 0,
                                   ),
                           elevation: 3,
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
-                        text: 'Pengembalian Aset',
-                        icon: FaIcon(
-                          FontAwesomeIcons.hive,
-                        ),
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 60,
-                          padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                          iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: Color(0xFF072289),
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    letterSpacing: 0,
-                                  ),
-                          elevation: 3,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ].divide(SizedBox(height: 3)),
+                      // FFButtonWidget(
+                      //   onPressed: () {
+                      //     print('Button pressed ...');
+                      //   },
+                      //   text: 'Pengembalian Aset',
+                      //   icon: const FaIcon(
+                      //     FontAwesomeIcons.hive,
+                      //   ),
+                      //   options: FFButtonOptions(
+                      //     width: double.infinity,
+                      //     height: 60,
+                      //     padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                      //     iconPadding:
+                      //         const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      //     color: const Color(0xFF072289),
+                      //     textStyle:
+                      //         FlutterFlowTheme.of(context).titleSmall.override(
+                      //               fontFamily: 'Readex Pro',
+                      //               color: Colors.white,
+                      //               fontSize: 17,
+                      //               letterSpacing: 0,
+                      //             ),
+                      //     elevation: 3,
+                      //     borderSide: const BorderSide(
+                      //       color: Colors.transparent,
+                      //       width: 1,
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(8),
+                      //   ),
+                      // ),
+                    ].divide(const SizedBox(height: 3)),
                   ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildColumn(context, String text, String number) {
+    return Container(
+      width: 140.0, // Lebar setiap kolom
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            text,
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Readex Pro',
+                  color: Colors.white,
+                  fontSize: 16,
+                  letterSpacing: 0,
+                ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8.0), // Jarak antara teks dan angka
+          Text(
+            number,
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Readex Pro',
+                  color: Colors.white,
+                  fontSize: 25,
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.bold,
+                ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

@@ -77,7 +77,7 @@ class MaintenanceView extends GetView<MaintenanceController> {
         title: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Image.asset(
-            'images/logo.png',
+            'assets/images/logo.png',
             width: 166,
             height: 45,
             fit: BoxFit.cover,
@@ -88,7 +88,7 @@ class MaintenanceView extends GetView<MaintenanceController> {
           background: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              'images/bg2.jpg',
+              'assets/images/bg2.jpg',
               fit: BoxFit.cover,
             ),
           ),

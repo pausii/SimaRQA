@@ -21,6 +21,7 @@ class BorrowingAddController extends GetxController {
   var assetList = <dynamic>[].obs;
   var hintTextAssetCode = "Pilih Aset".obs;
   var hintTextPrograms = "Pilih Program".obs;
+  String title = "";
 
   @override
   void onInit() {
@@ -41,7 +42,12 @@ class BorrowingAddController extends GetxController {
     action = parameters['action'] ?? '';
     if (action == 'viewDetail') {
       readonly = true;
-    } else if (action == 'edit') {}
+      title = 'Detail Peminjaman';
+    } else if (action == 'edit') {
+      title = 'Edit Peminjaman';
+    }else{
+      title = 'Buat Peminjaman';
+    }
   }
 
   @override

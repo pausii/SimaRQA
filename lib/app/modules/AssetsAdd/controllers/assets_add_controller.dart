@@ -25,6 +25,8 @@ class AssetsAddController extends GetxController {
   String action = "";
   String last_maintenance_date = "";
   String assetId = "";
+  String title = "";
+
   @override
   void onInit() {
     super.onInit();
@@ -40,13 +42,16 @@ class AssetsAddController extends GetxController {
     } else if (name == 'utilitas') {
       asset = AssetsUtilitasModel();
     }
-
     action = parameters['action'] ?? '';
     if (action == 'viewDetail') {
       readonly = true;
       codeAsetVisible = true;
+      title = 'Detail Aset ${asset.name.capitalize}';
     } else if (action == 'edit') {
       codeAsetVisible = true;
+      title = 'Edit Aset ${asset.name.capitalize}';
+    }else{
+      title = 'Tambah Aset ${asset.name.capitalize}';
     }
   }
 

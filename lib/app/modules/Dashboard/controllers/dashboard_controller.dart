@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController {
-  //TODO: Implement DashboardController
-  // var drawer = MenuDrawerModel;
+  // stats Aset
+  final musholla = 0.obs;
+  final auditorium = 0.obs;
+  final perpustakaan = 0.obs;
+  final utilitas = 0.obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -14,11 +16,4 @@ class DashboardController extends GetxController {
   void onReady() {
     super.onReady();
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

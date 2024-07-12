@@ -49,8 +49,8 @@ class MaintenanceAddView extends GetView<MaintenanceAddController> {
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
+            child: ListView(
+              // mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),

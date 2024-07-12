@@ -124,7 +124,7 @@ class AssetsAddView extends GetView<AssetsAddController> {
         backgroundColor: const Color(0xFF0B2EAE),
         automaticallyImplyLeading: true,
         title: Text(
-          'Tambah Aset ${controller.asset.name.capitalize}',
+          controller.title,
           style: FlutterFlowTheme.of(context).bodyMedium.override(
                 fontFamily: 'Poppins',
                 color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -133,7 +133,9 @@ class AssetsAddView extends GetView<AssetsAddController> {
               ),
         ),
         actions: [
-          IconButton(
+          Visibility(
+            visible: controller.readonly == true,
+            child:   IconButton(
               onPressed: () async {
                 try {
                   Map<String, dynamic> data = {
@@ -158,6 +160,7 @@ class AssetsAddView extends GetView<AssetsAddController> {
                 Icons.print,
                 color: Colors.white,
               ))
+          )
         ],
         centerTitle: true,
         elevation: 4,

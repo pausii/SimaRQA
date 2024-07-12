@@ -120,7 +120,7 @@ class AssetsView extends GetView<AssetsController> {
         title: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Image.asset(
-            'images/logo.png',
+            'assets/images/logo.png',
             width: 166,
             height: 45,
             fit: BoxFit.cover,
@@ -131,7 +131,7 @@ class AssetsView extends GetView<AssetsController> {
           background: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              'images/bg2.jpg',
+              'assets/images/bg2.jpg',
               fit: BoxFit.cover,
             ),
           ),

@@ -22,8 +22,8 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
           image: DecorationImage(
             fit: BoxFit.cover,
             alignment: const AlignmentDirectional(-1, 0),
-            image: Image.network(
-              'https://t4.ftcdn.net/jpg/02/89/93/09/360_F_289930961_NgjgMqMLrFZ6vy6X9DKfq65O2s3uEewR.jpg',
+            image: Image.asset(
+              'assets/images/bg2.jpg'
             ).image,
           ),
         ),
@@ -48,7 +48,7 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                           height: 143,
                           decoration: const BoxDecoration(),
                           child: Image.asset(
-                            'images/Planner_calendar_for_time_management.png',
+                            'assets/images/Planner_calendar_for_time_management.png',
                             width: double.infinity,
                             height: 500,
                             fit: BoxFit.fitHeight,
@@ -140,7 +140,7 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                           height: 143,
                           decoration: const BoxDecoration(),
                           child: Image.asset(
-                            'images/Project_management,_teamwork_and_integration.png',
+                            'assets/images/Project_management,_teamwork_and_integration.png',
                             width: double.infinity,
                             height: 500,
                             fit: BoxFit.fitHeight,
@@ -227,8 +227,8 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                       color: const Color(0xFFF1F4F8),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: Image.network(
-                          'https://t4.ftcdn.net/jpg/02/89/93/09/360_F_289930961_NgjgMqMLrFZ6vy6X9DKfq65O2s3uEewR.jpg',
+                        image: Image.asset(
+                          'assets/images/bg2.jpg'
                         ).image,
                       ),
                     ),
@@ -250,7 +250,7 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 0, 0, 44),
                                 child: Image.asset(
-                                  'images/Logo.png',
+                                  'assets/images/Logo.png',
                                   width: 300,
                                   height: 170,
                                   fit: BoxFit.fitWidth,

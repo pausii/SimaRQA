@@ -80,11 +80,11 @@ class Sidebar extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.offNamed('/assets?name=musholla');
-                              },
-                              child: Expanded(
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.offNamed('/assets?name=musholla');
+                                },
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       12, 0, 0, 0),
@@ -117,11 +117,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.offNamed('/assets?name=auditorium');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.offNamed('/assets?name=auditorium');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -137,7 +137,7 @@ class Sidebar extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -156,11 +156,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.offNamed('/assets?name=perpustakaan');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.offNamed('/assets?name=perpustakaan');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -195,12 +195,12 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.offNamed('/assets?name=utilitas',
-                                      preventDuplicates: true);
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.offNamed('/assets?name=utilitas',
+                                        preventDuplicates: true);
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -266,11 +266,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.offNamed('/report');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.offNamed('/maintenance');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -305,11 +305,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.offNamed('/borrowing');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.offNamed('/borrowing');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -375,11 +375,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed('/report?name=musholla');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/report?name=musholla');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -414,11 +414,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed('/report?name=auditorium');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/report?name=auditorium');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -453,11 +453,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed('/report?name=perpustakaan');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/report?name=perpustakaan');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -492,11 +492,11 @@ class Sidebar extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed('/report?name=utilitas');
-                                },
-                                child: Expanded(
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/report?name=utilitas');
+                                  },
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -547,6 +547,40 @@ class Sidebar extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 5),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                                child: GestureDetector(
+                              onTap: () {
+                                Get.offNamed('/dashboard');
+                              },
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
+                                child: Text(
+                                  'Home',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0,
+                                      ),
+                                ),
+                              ),
+                            )),
+                          ],
+                        ),
                       ),
                     ),
                     Container(
@@ -620,26 +654,25 @@ class Sidebar extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            GestureDetector(
-                                onTap: () {
-                                  Get.offNamed('/users');
-                                },
-                                child: Expanded(
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12, 0, 0, 0),
-                                    child: Text(
-                                      'Mengelola Data User',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
-                                          ),
-                                    ),
-                                  ),
-                                )),
+                            Expanded(
+                                child: GestureDetector(
+                              onTap: () {
+                                Get.offNamed('/users');
+                              },
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 0, 0, 0),
+                                child: Text(
+                                  'Mengelola Data User',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0,
+                                      ),
+                                ),
+                              ),
+                            )),
                           ],
                         ),
                       ),
