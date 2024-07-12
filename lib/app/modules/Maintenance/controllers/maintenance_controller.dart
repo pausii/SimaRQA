@@ -6,14 +6,16 @@ import 'package:sima_rqa/app/utils/storage.dart';
 
 class MaintenanceController extends GetxController {
   var dataList = <dynamic>[].obs;
+  var isLoading = true.obs;
 
   @override
   void onReady() {
     super.onReady();
-    loadAssets();
+    loadData();
   }
 
-   void loadAssets() async {
+   void loadData() async {
+    isLoading.value = true;
     try {
       Dio dio = Dio();
       dio.options.headers['Authorization'] =
@@ -32,6 +34,8 @@ class MaintenanceController extends GetxController {
       } else {
         print("ExceptionPS3: $e");
       }
+    } finally{
+      isLoading.value = false;
     }
   }
 

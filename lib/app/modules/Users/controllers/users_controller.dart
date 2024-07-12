@@ -6,11 +6,7 @@ import 'package:sima_rqa/app/utils/storage.dart';
 
 class UsersController extends GetxController {
   var usersList = <dynamic>[].obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  var isLoading = true.obs;
 
   @override
   void onReady() {
@@ -35,6 +31,7 @@ class UsersController extends GetxController {
   }
 
   void loadUsers() async {
+    isLoading.value = true;
     try {
       Dio dio = Dio();
       dio.options.headers['Authorization'] ='Bearer ${Storage.read("authToken")}';
@@ -52,6 +49,8 @@ class UsersController extends GetxController {
       } else {
         print("ExceptionPS3: $e");
       }
+    } finally {
+      isLoading.value = false;
     }
   }
 

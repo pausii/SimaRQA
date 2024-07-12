@@ -5,6 +5,8 @@ import 'package:sima_rqa/app/utils/storage.dart';
 
 class BorrowingController extends GetxController {
   var dataList = <dynamic>[].obs;
+  var isLoading = true.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -16,13 +18,15 @@ class BorrowingController extends GetxController {
     loadDataList();
   }
 
-    void loadDataList() async {
+  void loadDataList() async {
+    isLoading.value = true;
     try {
       Dio dio = Dio();
-      dio.options.headers['Authorization'] ='Bearer ${Storage.read("authToken")}';
+      dio.options.headers['Authorization'] =
+          'Bearer ${Storage.read("authToken")}';
       var response = await dio.get('${AppConfig.baseUrl}/api/borrowed-return/');
       if (response.statusCode == 200) {
-       dataList.assignAll(response.data['data']);
+        dataList.assignAll(response.data['data']);
       }
     } catch (e) {
       if (e is DioException) {
@@ -34,6 +38,8 @@ class BorrowingController extends GetxController {
       } else {
         print("ExceptionPS3: $e");
       }
+    } finally {
+      isLoading.value = false;
     }
   }
 }

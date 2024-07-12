@@ -6,15 +6,13 @@ import 'package:sima_rqa/app/config/app_config.dart';
 import 'package:sima_rqa/app/models/assets.dart';
 import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
-// ignore: depend_on_referenced_packages
-import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
 
 class ReportController extends GetxController {
   late AssetsModel asset;
   var dataList = <dynamic>[].obs;
+  var isLoading = false.obs;
 
   final count = 0.obs;
   @override
@@ -36,10 +34,11 @@ class ReportController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    loadAssets(asset.apiPath);
+    loadData(asset.apiPath);
   }
 
-  void loadAssets(String name) async {
+  void loadData(String name) async {
+    isLoading.value = true;
     try {
       Dio dio = Dio();
       dio.options.headers['Authorization'] =
@@ -58,6 +57,8 @@ class ReportController extends GetxController {
       } else {
         print("ExceptionPS3: $e");
       }
+    } finally {
+      isLoading.value = false;
     }
   }
 
