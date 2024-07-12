@@ -19,7 +19,11 @@ const reportAssetUtilitasRoutes = require('./reportAssetUtilitasRoutes');
 const maintenanceTransactionRoutes = require('./maintenanceTransactionRoutes');
 const borrowedReturnTransactionRoutes = require('./borrowedReturnTransactionRoutes');
 
+const statisticDataRoutes = require('./statisticRoutes');
+
 route.use('/api/auth', authLogin);
+
+route.use('/api/statistics', statisticDataRoutes);
 
 route.use('/api/profile', profileRoutes);
 route.use('/api/user', userRoutes);

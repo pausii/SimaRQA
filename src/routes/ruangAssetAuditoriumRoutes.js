@@ -15,7 +15,6 @@ const { tokenVerified, adminOrDivision } = require('../middlewares/token');
 const route = express.Router();
 
 route.get('/', [tokenVerified, adminOrDivision], getAllAuditoriumAssets);
-route.get('/stats', [tokenVerified, adminOrDivision], getCountAuditoriumAssets);
 route.get('/search', [tokenVerified, adminOrDivision], searchAsset);
 route.get('/:id', [tokenVerified, adminOrDivision], getAuditoriumAssetById);
 route.post('/', [tokenVerified, adminOrDivision], createAuditoriumAsset);

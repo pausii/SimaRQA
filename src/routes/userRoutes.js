@@ -12,7 +12,6 @@ const { tokenVerified, onlyAdmin } = require('../middlewares/token');
 const userRoute = express.Router();
 
 userRoute.get('/', [tokenVerified, onlyAdmin], getAllUsers);
-userRoute.get('/stats', [tokenVerified, onlyAdmin], getCountUsers);
 userRoute.get('/search', [tokenVerified, onlyAdmin], searchUser);
 userRoute.get('/:id', [tokenVerified, onlyAdmin], getUserById);
 userRoute.post('/', [tokenVerified, onlyAdmin], createUser);
