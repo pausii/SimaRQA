@@ -17,20 +17,23 @@ This program is a project 3 management asset with have Data Master, Transaction 
 
 2. Clone this repository to your computer: 
     ```bash
-    Backend: git clone https://github.com/pausii/SimaRQA.git
+    git clone --branch backend https://github.com/pausii/SimaRQA.git SimaAsetBackend
+    ```
 
 3. Open your repository with this command: 
     
     ```bash
-    cd name_repository
+    cd SimaAsetBackend
+    ```
 
 4. Install package module with this command:
     ```bash
     npm install
+    ```
 
 5. Make new file with name `.env` then settings with program and your database
 
-    ```bash
+    ```env
     DB_PORT=3000 or your number port want to use it (*disclaimer you need check index.js for that port) 
     JWT_SECRET=.......
 
@@ -62,6 +65,7 @@ This program is a project 3 management asset with have Data Master, Transaction 
     npm run seeder
 
     (* that command will migration migration seed data to your database)
+    ```
 
 7. Finish Process, that you can use API Platform and using down there API Spesification
 
