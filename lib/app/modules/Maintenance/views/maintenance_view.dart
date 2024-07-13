@@ -476,31 +476,31 @@ class MaintenanceView extends GetView<MaintenanceController> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(
-                        width: 46, // Ukuran button lebih kecil
-                        height: 46, // Ukuran button lebih kecil
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Tambahkan aksi untuk tombol menu di sini
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: const Color(0xFF3D77D2),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: const BorderSide(
-                                  color: Colors.white, width: 1),
-                            ),
-                            padding: EdgeInsets
-                                .zero, // Menghilangkan padding default
-                          ),
-                          child: const Icon(
-                            Icons.print,
-                            color: Color(0xFFFFFFFF),
-                            size: 24, // Ukuran icon lebih kecil
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 7), // Jarak antara dua tombol
+                      // SizedBox(
+                      //   width: 46, // Ukuran button lebih kecil
+                      //   height: 46, // Ukuran button lebih kecil
+                      //   child: ElevatedButton(
+                      //     onPressed: () {
+                      //       // Tambahkan aksi untuk tombol menu di sini
+                      //     },
+                      //     style: ElevatedButton.styleFrom(
+                      //       primary: const Color(0xFF3D77D2),
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(15),
+                      //         side: const BorderSide(
+                      //             color: Colors.white, width: 1),
+                      //       ),
+                      //       padding: EdgeInsets
+                      //           .zero, // Menghilangkan padding default
+                      //     ),
+                      //     child: const Icon(
+                      //       Icons.print,
+                      //       color: Color(0xFFFFFFFF),
+                      //       size: 24, // Ukuran icon lebih kecil
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(width: 7), // Jarak antara dua tombol
                       SizedBox(
                         width: 46, // Ukuran button lebih kecil
                         height: 46, // Ukuran button lebih kecil
