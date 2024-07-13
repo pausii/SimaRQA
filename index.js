@@ -7,7 +7,7 @@ const morgan = require("morgan");
 
 // Gunakan CORS
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "*",  // Mengizinkan semua origin
     credentials: true,
 }));
 
