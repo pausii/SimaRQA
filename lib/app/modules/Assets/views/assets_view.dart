@@ -260,7 +260,7 @@ class AssetsView extends GetView<AssetsController> {
                         ),
                       ),
                       Obx(() => Visibility(
-                          visible: controller.assetsList.isNotEmpty,
+                          visible: controller.isLoading.value == false,
                           child: Expanded(
                               child: ListView.builder(
                             padding: EdgeInsets.zero,
