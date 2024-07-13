@@ -31,6 +31,21 @@ class AssetsView extends GetView<AssetsController> {
               child: const Text('Detail'),
             ),
             TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await Get.toNamed(
+                    '/assets-add?name=${controller.asset.name}&id=$id&action=edit');
+                controller.loadAssets(controller.asset.apiPath);
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              ),
+              child: const Text('Ubah'),
+            ),
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 showDialog(
@@ -78,33 +93,18 @@ class AssetsView extends GetView<AssetsController> {
               ),
               child: const Text('Hapus'),
             ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
-                await Get.toNamed(
-                    '/assets-add?name=${controller.asset.name}&id=$id&action=edit');
-                controller.loadAssets(controller.asset.apiPath);
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Ubah'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Batal'),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: Colors.grey,
+            //     foregroundColor: Colors.white,
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            //   ),
+            //   child: const Text('Batal'),
+            // ),
           ],
         );
       },
