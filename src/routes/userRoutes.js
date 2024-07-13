@@ -8,14 +8,14 @@ const {
     searchUser,
     getCountUsers
  } = require('../controllers/userControllers');
-const { tokenVerified, onlyAdmin } = require('../middlewares/token');
+const { tokenVerified, onlyAdmin, adminOrDivision } = require('../middlewares/token');
 const userRoute = express.Router();
 
 userRoute.get('/', [tokenVerified, onlyAdmin], getAllUsers);
 userRoute.get('/search', [tokenVerified, onlyAdmin], searchUser);
 userRoute.get('/:id', [tokenVerified, onlyAdmin], getUserById);
 userRoute.post('/', [tokenVerified, onlyAdmin], createUser);
-userRoute.put('/:id', [tokenVerified, onlyAdmin], updateUser);
+userRoute.put('/:id', [tokenVerified, adminOrDivision], updateUser);
 userRoute.delete('/:id', [tokenVerified, onlyAdmin], deleteUser);
 
 module.exports = userRoute;

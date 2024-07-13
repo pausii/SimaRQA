@@ -83,7 +83,7 @@ const updateUser = async (req, res) => {
             return res.status(404).json({ message: "User tidak ditemukan" });
         }
 
-        if (!username || !password || !role || !first_name || !last_name || !phone_number || !address ) {
+        if (!username || !role || !first_name || !last_name || !phone_number || !address ) {
             return res.status(404).json({ message: "Data tidak sesuai, mohon cek kembali "});
         }
 
@@ -118,7 +118,7 @@ const deleteUser = async (req, res) => {
     }
 };
 
-// Cari uUser berdasarkan atribut
+// Cari user berdasarkan atribut
 const searchUser = async (req, res) => {
     const {
         username,
