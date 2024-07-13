@@ -13,20 +13,38 @@ class UsersAddView extends GetView<UsersAddController> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF0B2EAE),
         automaticallyImplyLeading: true,
-        title: Text(
-          'Tambah Data User',
+        title: Obx(() => Text(
+          controller.title.value,
           style: FlutterFlowTheme.of(context).bodyMedium.override(
                 fontFamily: 'Poppins',
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 fontSize: 19,
                 letterSpacing: 0,
               ),
-        ),
-        actions: const [],
+        )),
+        actions: [
+         Obx(() =>  Visibility(
+            visible: controller.readonly == true,
+            child: IconButton(
+            icon: const Icon(
+              Icons.edit_document,
+              color: Colors.white,
+              size: 24,
+            ),
+            onPressed: () {
+              // String id = Get.parameters['id'] ?? "";
+              // Get.toNamed("/users-add?id=$id&action=edit");
+              Get.parameters['action'] = 'edit';
+              controller.onInit();
+              controller.onReady();
+              controller.readonly.value = false;
+            }
+          )))
+        ],
         centerTitle: true,
         elevation: 4,
       ),
-      body: SafeArea(
+      body: Obx(() => SafeArea(
         top: true,
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(10, 30, 10, 0),
@@ -47,7 +65,7 @@ class UsersAddView extends GetView<UsersAddController> {
                     // focusNode: _model.textFieldFocusNode1,
                     autofocus: true,
                     obscureText: false,
-                    readOnly: controller.readonly,
+                    readOnly: controller.readonly.value,
                     decoration: InputDecoration(
                       labelText: 'Username',
                       labelStyle:
@@ -105,7 +123,7 @@ class UsersAddView extends GetView<UsersAddController> {
                     // focusNode: _model.textFieldFocusNode1,
                     autofocus: true,
                     obscureText: true,
-                    readOnly: controller.readonly,
+                    readOnly: controller.readonly.value,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       labelStyle:
@@ -202,7 +220,7 @@ class UsersAddView extends GetView<UsersAddController> {
                     // focusNode: _model.textFieldFocusNode1,
                     autofocus: true,
                     obscureText: false,
-                    readOnly: controller.readonly,
+                    readOnly: controller.readonly.value,
                     decoration: InputDecoration(
                       labelText: 'Nama Depan',
                       labelStyle:
@@ -260,7 +278,7 @@ class UsersAddView extends GetView<UsersAddController> {
                     // focusNode: _model.textFieldFocusNode1,
                     autofocus: true,
                     obscureText: false,
-                    readOnly: controller.readonly,
+                    readOnly: controller.readonly.value,
                     decoration: InputDecoration(
                       labelText: 'Nama Belakang',
                       labelStyle:
@@ -318,7 +336,7 @@ class UsersAddView extends GetView<UsersAddController> {
                     // focusNode: _model.textFieldFocusNode1,
                     autofocus: true,
                     obscureText: false,
-                    readOnly: controller.readonly,
+                    readOnly: controller.readonly.value,
                     decoration: InputDecoration(
                       labelText: 'No Telepon',
                       labelStyle:
@@ -377,7 +395,7 @@ class UsersAddView extends GetView<UsersAddController> {
                     autofocus: true,
                     maxLines: 3,
                     obscureText: false,
-                    readOnly: controller.readonly,
+                    readOnly: controller.readonly.value,
                     decoration: InputDecoration(
                       labelText: 'Alamat',
                       labelStyle:
@@ -435,7 +453,7 @@ class UsersAddView extends GetView<UsersAddController> {
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                   child: Visibility(
-                      visible: controller.readonly == true ? false : true,
+                      visible: controller.readonly.value == false,
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(9, 0, 9, 0),
@@ -476,7 +494,6 @@ class UsersAddView extends GetView<UsersAddController> {
                             Expanded(
                               child: FFButtonWidget(
                                 onPressed: () {
-                                  print('Button pressed ...');
                                   if (controller.action == "edit") {
                                     controller.updateForm();
                                   } else {
@@ -519,6 +536,6 @@ class UsersAddView extends GetView<UsersAddController> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

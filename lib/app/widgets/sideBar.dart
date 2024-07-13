@@ -633,18 +633,24 @@ class _SidebarState extends State<Sidebar> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12, 0, 0, 0),
-                                    child: Text(
-                                      'Data Profile',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
-                                          ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      String id = Storage.read("userId");
+                                      Get.toNamed('/users-add?id=$id&action=viewDetail');
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
+                                      child: Text(
+                                        'Data Profile',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),

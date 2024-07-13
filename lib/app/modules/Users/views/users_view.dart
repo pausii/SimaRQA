@@ -17,9 +17,10 @@ class UsersView extends GetView<UsersController> {
           // content: const Text('What do you want to do?'),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop();
-                Get.toNamed('/users-add?id=$userId&action=viewDetail');
+                await Get.toNamed('/users-add?id=$userId&action=viewDetail');
+                controller.loadUsers();
               },
               style: TextButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 33, 243, 96),
@@ -28,6 +29,20 @@ class UsersView extends GetView<UsersController> {
                     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               ),
               child: const Text('Detail'),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await Get.toNamed('/users-add?id=$userId&action=edit');
+                controller.loadUsers();
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              ),
+              child: const Text('Ubah'),
             ),
             TextButton(
               onPressed: () {
@@ -77,32 +92,18 @@ class UsersView extends GetView<UsersController> {
               ),
               child: const Text('Hapus'),
             ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
-                await Get.toNamed('/users-add?id=$userId&action=edit');
-                controller.loadUsers();
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Ubah'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Batal'),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: Colors.grey,
+            //     foregroundColor: Colors.white,
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            //   ),
+            //   child: const Text('Batal'),
+            // ),
           ],
         );
       },
@@ -235,7 +236,7 @@ class UsersView extends GetView<UsersController> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "${controller.usersList[index]["first_name"]} ${controller.usersList[index]["first_name"]}",
+                                                    "${controller.usersList[index]["first_name"]} ${controller.usersList[index]["last_name"]}",
                                                     textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -263,8 +264,6 @@ class UsersView extends GetView<UsersController> {
                                                       size: 24,
                                                     ),
                                                     onPressed: () {
-                                                      print(
-                                                          'IconButton pressed ...');
                                                       dialogOption(
                                                           context,
                                                           controller.usersList[

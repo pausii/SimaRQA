@@ -6,13 +6,14 @@ import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
 
 class UsersAddController extends GetxController {
-  bool readonly = false;
+  var readonly = false.obs;
   final inputUsername = TextEditingController();
   final inputPassword = TextEditingController();
   final inputFirstName = TextEditingController();
   final inputLastName = TextEditingController();
   final inputTelp = TextEditingController();
   final inputAddress = TextEditingController();
+  var title = "".obs;
 
   var hintTextRole = "Level User".obs;
   String action = "";
@@ -24,7 +25,11 @@ class UsersAddController extends GetxController {
     var parameters = Get.parameters;
     action = parameters['action'] ?? '';
     if (action == 'viewDetail') {
-      readonly = true;
+      title.value = 'Data User';
+    } else if (action == 'edit') {
+      title.value = 'Edit Data User';
+    }else{
+      title.value = 'Tambah Data User';
     }
   }
 
@@ -34,6 +39,7 @@ class UsersAddController extends GetxController {
     var parameters = Get.parameters;
     userId = parameters['id'] ?? '';
     if (action == 'viewDetail') {
+      readonly.value = true;
       loadUser(userId);
     } else if (action == 'edit') {
       loadUser(userId);
@@ -128,7 +134,7 @@ class UsersAddController extends GetxController {
         if (e is DioException) {
           if (e.response?.statusCode == 401) {
             Get.offAllNamed("/login");
-          } else if (e.response?.statusCode == 500) {
+          } else if (e.response?.statusCode == 500 || e.response?.statusCode == 404) {
             Alert.error("Error", e.response?.data['message'] ?? "Error PS1");
           } else {
             print("ExceptionPS2: $e");

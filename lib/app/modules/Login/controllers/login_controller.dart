@@ -40,6 +40,7 @@ class LoginController extends GetxController {
         Alert.success("Login Success", response.data['message']);
         await Future.delayed(const Duration(seconds: 1));
         Storage.write("authToken", "${response.data['body']['token']}");
+        Storage.write("userId", "${response.data['body']['user_id']}");
         Storage.write("role", "${response.data['body']['role']}");
         Get.toNamed('/dashboard');
       }
