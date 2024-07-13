@@ -24,6 +24,7 @@ dependencies:
   skeletonizer: ^1.0.1
   qrscan: ^0.3.3
   loading_animation_widget: ^1.2.1
+  permission_handler: ^11.0.1
 
 dev_dependencies: 
   flutter_lints: 4.0.0

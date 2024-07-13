@@ -7,6 +7,7 @@ import 'package:sima_rqa/app/models/assets.dart';
 import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:permission_handler/permission_handler.dart';
 
 class AssetsController extends GetxController {
   late AssetsModel asset;
@@ -118,6 +119,24 @@ class AssetsController extends GetxController {
 
   void scanQrCode() async {
     try {
+      var status = await Permission.camera.status;
+
+    if (status.isDenied) {
+      // Jika izin ditolak, minta izin
+      if (await Permission.camera.request().isGranted) {
+        // Izin diberikan
+        print("Camera permission granted");
+      } else {
+        // Izin tetap ditolak
+        // print("Camera permission denied");
+        Alert.error("Error", "Izin kamera ditolak");
+        return;
+      }
+    } else if (status.isGranted) {
+      // Izin sudah diberikan
+      print("Camera permission is already granted");
+    }
+    
       String? cameraScanResult = await scanner.scan();
       print("===cameraScanResult===");
       print(cameraScanResult);
