@@ -15,8 +15,8 @@ Before running this project, make sure you have installed
 1. **Clone Repository**
 
     ```bash
-    https://github.com/pausii/SimaRQA -b frontend
-    cd SimaRQA
+    git clone --branch frontend https://github.com/pausii/SimaRQA SimaAsetFrontend
+    cd SimaAsetFrontend
     ```
     
 2. **Install Dependencies**
