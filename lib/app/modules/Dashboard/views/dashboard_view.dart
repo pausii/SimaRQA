@@ -7,14 +7,11 @@ import '../controllers/dashboard_controller.dart';
 import '../../../widgets/sidebar.dart';
 
 class DashboardView extends GetView<DashboardController> {
-  // late MenuDrawerModel _drawerModel;
-
   const DashboardView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: Sidebar(),
       appBar: AppBar(
