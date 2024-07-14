@@ -87,61 +87,64 @@ class _SidebarState extends State<Sidebar> {
                             ],
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 2, 0, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.offNamed('/assets?name=musholla');
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              12, 0, 0, 0),
-                                      child: Text(
-                                        'Ruang Aset Mushola',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0,
-                                            ),
+                        MouseRegion(
+                          opaque: false,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/assets?name=musholla',
+                                  preventDuplicates: true);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(12, 0, 0, 0),
+                                        child: Text(
+                                          'Ruang Aset Mushola',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0,
+                                              ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
                         MouseRegion(
                           opaque: false,
-                          cursor: SystemMouseCursors.basic,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 150),
-                            curve: Curves.easeInOut,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 2, 0, 5),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.offNamed('/assets?name=auditorium');
-                                      },
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/assets?name=auditorium',
+                                  preventDuplicates: true);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(12, 0, 0, 0),
@@ -156,8 +159,8 @@ class _SidebarState extends State<Sidebar> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -165,22 +168,22 @@ class _SidebarState extends State<Sidebar> {
                         MouseRegion(
                           opaque: false,
                           cursor: SystemMouseCursors.click,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 150),
-                            curve: Curves.easeInOut,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 2, 0, 5),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.offNamed(
-                                            '/assets?name=perpustakaan');
-                                      },
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/assets?name=perpustakaan',
+                                  preventDuplicates: true);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(12, 0, 0, 0),
@@ -194,9 +197,9 @@ class _SidebarState extends State<Sidebar> {
                                               ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -204,22 +207,22 @@ class _SidebarState extends State<Sidebar> {
                         MouseRegion(
                           opaque: false,
                           cursor: SystemMouseCursors.click,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 150),
-                            curve: Curves.easeInOut,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 2, 0, 5),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.offNamed('/assets?name=utilitas',
-                                            preventDuplicates: true);
-                                      },
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/assets?name=utilitas',
+                                  preventDuplicates: true);
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(12, 0, 0, 0),
@@ -233,9 +236,9 @@ class _SidebarState extends State<Sidebar> {
                                               ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -275,22 +278,22 @@ class _SidebarState extends State<Sidebar> {
                         ),
                         MouseRegion(
                           opaque: false,
-                          cursor: SystemMouseCursors.basic,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 150),
-                            curve: Curves.easeInOut,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 2, 0, 5),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.offNamed('/maintenance');
-                                      },
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/maintenance');
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(12, 0, 0, 0),
@@ -305,30 +308,30 @@ class _SidebarState extends State<Sidebar> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                         MouseRegion(
                           opaque: false,
-                          cursor: SystemMouseCursors.basic,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 150),
-                            curve: Curves.easeInOut,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 2, 0, 5),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.offNamed('/borrowing');
-                                      },
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/borrowing');
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(12, 0, 0, 0),
@@ -343,8 +346,8 @@ class _SidebarState extends State<Sidebar> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -389,22 +392,22 @@ class _SidebarState extends State<Sidebar> {
                           visible: widget.role.value == "administrator",
                           child: MouseRegion(
                             opaque: false,
-                            cursor: SystemMouseCursors.basic,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 150),
-                              curve: Curves.easeInOut,
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 2, 0, 5),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed('/report?name=musholla');
-                                        },
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed('/report?name=musholla');
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.easeInOut,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 2, 0, 5),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(12, 0, 0, 0),
@@ -419,8 +422,8 @@ class _SidebarState extends State<Sidebar> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -430,23 +433,22 @@ class _SidebarState extends State<Sidebar> {
                           visible: widget.role.value == "administrator",
                           child: MouseRegion(
                             opaque: false,
-                            cursor: SystemMouseCursors.basic,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 150),
-                              curve: Curves.easeInOut,
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 2, 0, 5),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed(
-                                              '/report?name=auditorium');
-                                        },
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed('/report?name=auditorium');
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.easeInOut,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 2, 0, 5),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(12, 0, 0, 0),
@@ -461,8 +463,8 @@ class _SidebarState extends State<Sidebar> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -472,23 +474,22 @@ class _SidebarState extends State<Sidebar> {
                           visible: widget.role.value == "administrator",
                           child: MouseRegion(
                             opaque: false,
-                            cursor: SystemMouseCursors.basic,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 150),
-                              curve: Curves.easeInOut,
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 2, 0, 5),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed(
-                                              '/report?name=perpustakaan');
-                                        },
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed('/report?name=perpustakaan');
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.easeInOut,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 2, 0, 5),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(12, 0, 0, 0),
@@ -503,8 +504,8 @@ class _SidebarState extends State<Sidebar> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -514,22 +515,22 @@ class _SidebarState extends State<Sidebar> {
                           visible: widget.role.value == "administrator",
                           child: MouseRegion(
                             opaque: false,
-                            cursor: SystemMouseCursors.basic,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 150),
-                              curve: Curves.easeInOut,
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 2, 0, 5),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed('/report?name=utilitas');
-                                        },
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.toNamed('/report?name=utilitas');
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.easeInOut,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 2, 0, 5),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(12, 0, 0, 0),
@@ -544,8 +545,8 @@ class _SidebarState extends State<Sidebar> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -584,150 +585,157 @@ class _SidebarState extends State<Sidebar> {
                             ],
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 2, 0, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () {
-                                    Get.offNamed('/dashboard');
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12, 0, 0, 0),
-                                    child: Text(
-                                      'Home',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
-                                          ),
-                                    ),
-                                  ),
-                                )),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 2, 0, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      String id = Storage.read("userId");
-                                      Get.toNamed('/users-add?id=$id&action=viewDetail');
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              12, 0, 0, 0),
-                                      child: Text(
-                                        'Data Profile',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0,
-                                            ),
+                        MouseRegion(
+                          opaque: false,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/dashboard');
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(12, 0, 0, 0),
+                                        child: Text(
+                                          'Home',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0,
+                                              ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
+                                    )
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 2, 0, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () {
-                                    Get.offNamed('/users');
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12, 0, 0, 0),
-                                    child: Text(
-                                      'Mengelola Data User',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
+                        MouseRegion(
+                          opaque: false,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              String id = Storage.read("userId");
+                              Get.toNamed(
+                                  '/users-add?id=$id&action=viewDetail');
+                            },
+                            child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.easeInOut,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 2, 0, 5),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(12, 0, 0, 0),
+                                          child: Text(
+                                            'Data Profile',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  letterSpacing: 0,
+                                                ),
                                           ),
-                                    ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )),
-                              ],
+                          ),
+                        ),
+                        MouseRegion(
+                          opaque: false,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.offNamed('/users');
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(12, 0, 0, 0),
+                                        child: Text(
+                                          'Mengelola Data User',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0,
+                                              ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 2, 0, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () {
-                                    Storage.write("authToken", "");
-                                    Get.offNamed('/login');
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12, 0, 0, 0),
-                                    child: Text(
-                                      'Logout',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
-                                          ),
-                                    ),
-                                  ),
-                                )),
-                              ],
+                        MouseRegion(
+                          opaque: false,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Storage.write("authToken", "");
+                              Get.offNamed('/login');
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(12, 0, 0, 0),
+                                        child: Text(
+                                          'Logout',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0,
+                                              ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
