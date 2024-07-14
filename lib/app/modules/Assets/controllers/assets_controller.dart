@@ -61,7 +61,7 @@ class AssetsController extends GetxController {
           'Bearer ${Storage.read("authToken")}';
       var response =
           await dio.delete('${AppConfig.baseUrl}/api/${asset.apiPath}/$id');
-      if (response.statusCode == 204) {
+      if (response.statusCode == 200) {
         Alert.success("Success", "Asset berhasil dihapus");
         loadAssets(asset.apiPath);
       }
