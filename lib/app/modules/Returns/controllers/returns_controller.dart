@@ -49,8 +49,8 @@ class ReturnsController extends GetxController {
       Dio dio = Dio();
       dio.options.headers['Authorization'] =
           'Bearer ${Storage.read("authToken")}';
-      var response = await dio
-          .put('${AppConfig.baseUrl}/api/borrowed-return/$id', data: {
+      var response =
+          await dio.put('${AppConfig.baseUrl}/api/borrowed-return/$id', data: {
         "borrowed_asset_code": data["borrowed_asset_code"],
         "borrowed_name": data["borrowed_name"],
         "used_by_program": data["used_by_program"],
@@ -69,6 +69,8 @@ class ReturnsController extends GetxController {
       if (e is DioException) {
         if (e.response?.statusCode == 401) {
           Get.offAllNamed("/login");
+        } else if (e.response?.statusCode == 400) {
+          Alert.error("Error", e.response?.data['message'] ?? "Error PS1");
         } else {
           print("ExceptionPS2: $e");
         }

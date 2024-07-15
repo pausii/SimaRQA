@@ -17,20 +17,6 @@ class AssetsView extends GetView<AssetsController> {
           // content: const Text('What do you want to do?'),
           actions: <Widget>[
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Get.toNamed(
-                    '/assets-add?name=${controller.asset.name}&id=$id&action=viewDetail');
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 33, 243, 96),
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Detail'),
-            ),
-            TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await Get.toNamed(
@@ -281,7 +267,11 @@ class AssetsView extends GetView<AssetsController> {
                                   controller.assetsList[index]["asset_price"]);
                               return Padding(
                                   padding: const EdgeInsets.only(bottom: 4),
-                                  child: Container(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed('/assets-add?name=${controller.asset.name}&id=${controller.assetsList[index]["asset_id"]}&action=viewDetail');
+                                    },
+                                    child: Container(
                                     width: double.infinity,
                                     height: 144,
                                     decoration: BoxDecoration(
@@ -527,6 +517,7 @@ class AssetsView extends GetView<AssetsController> {
                                           ].divide(const SizedBox(height: 4)),
                                         ),
                                       ),
+                                  ),
                                     ),
                                   ));
                             },
@@ -606,6 +597,8 @@ class AssetsView extends GetView<AssetsController> {
                           controller.searchDialog();
                         } else if (value == 3) {
                           controller.scanQrCode();
+                        }else if (value == 4) {
+                          controller.saveReport(context);
                         }
                       },
                       itemBuilder: (BuildContext context) =>
@@ -641,6 +634,17 @@ class AssetsView extends GetView<AssetsController> {
                             ),
                             SizedBox(height: 1, width: 8),
                             Text('Scan QR Code'),
+                          ]),
+                        ),
+                        const PopupMenuItem<int>(
+                          value: 4,
+                          child: Row(children: [
+                            Icon(
+                              Icons.print,
+                              size: 24,
+                            ),
+                            SizedBox(height: 1, width: 8),
+                            Text('Ekspor aset'),
                           ]),
                         ),
                       ],

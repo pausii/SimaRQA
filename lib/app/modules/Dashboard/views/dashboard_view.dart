@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sima_rqa/app/utils/storage.dart';
 import '../controllers/dashboard_controller.dart';
 import '../../../widgets/sidebar.dart';
 
@@ -26,7 +27,18 @@ class DashboardView extends GetView<DashboardController> {
             fit: BoxFit.cover,
           ),
         ),
-        actions: [],
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 7),
+            child: IconButton(
+              icon: const Icon(FontAwesomeIcons.circleUser),
+              onPressed: () {
+                String id = Storage.read("userId");
+                Get.toNamed('/users-add?id=$id&action=viewDetail');
+              },
+            ),
+          )
+        ],
         flexibleSpace: FlexibleSpaceBar(
           background: ClipRRect(
             borderRadius: BorderRadius.circular(8),
@@ -138,25 +150,25 @@ class DashboardView extends GetView<DashboardController> {
                   )),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                child: Container(
+                child: SizedBox(
                   width: 100,
                   height: 281,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
+                  // decoration: BoxDecoration(
+                  //   color: FlutterFlowTheme.of(context).secondaryBackground,
+                  // ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                        child: Container(
+                        child: SizedBox(
                           width: double.infinity,
                           height: 21,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
+                          // decoration: BoxDecoration(
+                          //   color: FlutterFlowTheme.of(context)
+                          //       .secondaryBackground,
+                          // ),
                           child: Text(
                             'Transaksi',
                             textAlign: TextAlign.start,
@@ -273,7 +285,7 @@ class DashboardView extends GetView<DashboardController> {
   }
 
   Widget _buildColumn(context, String text, String number) {
-    return Container(
+    return SizedBox(
       width: 140.0, // Lebar setiap kolom
       child: Column(
         mainAxisSize: MainAxisSize.min,

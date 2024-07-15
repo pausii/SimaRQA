@@ -16,20 +16,20 @@ class UsersView extends GetView<UsersController> {
           title: Text('${userName ?? "-"}'),
           // content: const Text('What do you want to do?'),
           actions: <Widget>[
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
-                await Get.toNamed('/users-add?id=$userId&action=viewDetail');
-                controller.loadUsers();
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 33, 243, 96),
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Detail'),
-            ),
+            // TextButton(
+            //   onPressed: () async {
+            //     Navigator.of(context).pop();
+            //     await Get.toNamed('/users-add?id=$userId&action=viewDetail');
+            //     controller.loadUsers();
+            //   },
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: const Color.fromARGB(255, 33, 243, 96),
+            //     foregroundColor: Colors.white,
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            //   ),
+            //   child: const Text('Detail'),
+            // ),
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
@@ -92,18 +92,18 @@ class UsersView extends GetView<UsersController> {
               ),
               child: const Text('Hapus'),
             ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.of(context).pop();
-            //   },
-            //   style: TextButton.styleFrom(
-            //     backgroundColor: Colors.grey,
-            //     foregroundColor: Colors.white,
-            //     padding:
-            //         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            //   ),
-            //   child: const Text('Batal'),
-            // ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+                foregroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              ),
+              child: const Text('Batal'),
+            ),
           ],
         );
       },
@@ -209,187 +209,94 @@ class UsersView extends GetView<UsersController> {
                               itemBuilder: (context, index) {
                                 return Padding(
                                     padding: const EdgeInsets.only(bottom: 4),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 144,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFF122778),
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
-                                          color: const Color(0xFF163360),
-                                          width: 1,
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        await Get.toNamed(
+                                            '/users-add?id=${controller.usersList[index]["user_id"]}&action=viewDetail');
+                                        controller.loadUsers();
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 144,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF122778),
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                          border: Border.all(
+                                            color: const Color(0xFF163360),
+                                            width: 1,
+                                          ),
                                         ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Container(
-                                          width: 100,
-                                          height: 126,
-                                          decoration: const BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "${controller.usersList[index]["first_name"]} ${controller.usersList[index]["last_name"]}",
-                                                    textAlign: TextAlign.start,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          fontSize: 17,
-                                                          letterSpacing: 0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                  ),
-                                                  FlutterFlowIconButton(
-                                                    borderRadius: 20,
-                                                    borderWidth: 1,
-                                                    buttonSize: 35,
-                                                    icon: Icon(
-                                                      Icons.keyboard_control,
-                                                      color: FlutterFlowTheme
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Container(
+                                            width: 100,
+                                            height: 126,
+                                            decoration: const BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "${controller.usersList[index]["first_name"]} ${controller.usersList[index]["last_name"]}",
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: FlutterFlowTheme
                                                               .of(context)
-                                                          .secondaryBackground,
-                                                      size: 24,
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                            fontSize: 17,
+                                                            letterSpacing: 0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
                                                     ),
-                                                    onPressed: () {
-                                                      dialogOption(
-                                                          context,
-                                                          controller.usersList[
-                                                              index]["user_id"],
-                                                          "${controller.usersList[index]["first_name"]} ${controller.usersList[index]["last_name"]}");
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 50, 0),
-                                                    child: Text(
-                                                      'Username',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    ': ${controller.usersList[index]["username"]}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          letterSpacing: 0,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 90, 0),
-                                                    child: Text(
-                                                      'Role',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    ': ${controller.usersList[index]["role"]}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          letterSpacing: 0,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Stack(
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0, 0, 42, 0),
-                                                        child: Text(
-                                                          'No Telepon',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                        ),
+                                                    FlutterFlowIconButton(
+                                                      borderRadius: 20,
+                                                      borderWidth: 1,
+                                                      buttonSize: 35,
+                                                      icon: Icon(
+                                                        Icons.keyboard_control,
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        size: 24,
                                                       ),
-                                                      Text(
-                                                        ': ${controller.usersList[index]["phone_number"]}',
+                                                      onPressed: () {
+                                                        dialogOption(
+                                                            context,
+                                                            controller.usersList[
+                                                                    index]
+                                                                ["user_id"],
+                                                            "${controller.usersList[index]["first_name"]} ${controller.usersList[index]["last_name"]}");
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 50, 0),
+                                                      child: Text(
+                                                        'Username',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -404,11 +311,123 @@ class UsersView extends GetView<UsersController> {
                                                                       0,
                                                                 ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ].divide(const SizedBox(height: 4)),
+                                                    ),
+                                                    Text(
+                                                      ': ${controller.usersList[index]["username"]}',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 90, 0),
+                                                      child: Text(
+                                                        'Role',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  letterSpacing:
+                                                                      0,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      ': ${controller.usersList[index]["role"]}',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Stack(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 0, 42, 0),
+                                                          child: Text(
+                                                            'No Telepon',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  letterSpacing:
+                                                                      0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          ': ${controller.usersList[index]["phone_number"]}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ].divide(
+                                                  const SizedBox(height: 4)),
+                                            ),
                                           ),
                                         ),
                                       ),

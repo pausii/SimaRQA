@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AssetsController extends GetxController {
   late AssetsModel asset;
@@ -141,14 +143,69 @@ class AssetsController extends GetxController {
       print("===cameraScanResult===");
       print(cameraScanResult);
       Map<String, dynamic> data = json.decode(cameraScanResult.toString());
-      if (data['code'] != null) {
-        String code = data['code'];
-        print("===code===");
-        print(code);
-        Get.toNamed('/assets-add?name=${asset.name}&id=$code&action=viewDetail');
+      if (data['path'] != null) {
+        String idAsset = data['id'];
+        String path = data['path'];
+        print("===idAsset===");
+        print(idAsset);
+        Get.toNamed('/assets-add?name=$path&id=$idAsset&action=viewDetail');
       }
     } catch (e) {
       print("ExceptionPS5: $e");
+    }
+  }
+
+  Future<void> saveReport(BuildContext context) async {
+    try {
+      // Mendapatkan direktori penyimpanan lokal yang tersedia
+      Directory? directory;
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory();
+      } else if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      }
+
+      if (directory == null) {
+        Alert.error("Error", "Directory not found");
+        return;
+      }
+
+      Dio dio = Dio();
+      Map<String, dynamic> headers = {
+        HttpHeaders.authorizationHeader: 'Bearer ${Storage.read("authToken")}',
+        HttpHeaders.contentTypeHeader: 'application/json',
+      };
+      var response = await dio.get(
+        '${AppConfig.baseUrl}/api/${asset.name}-reports/export/excel',
+        options: Options(
+          headers: headers,
+          responseType:
+              ResponseType.bytes, // Menanggapi sebagai byte untuk file
+        ),
+      );
+
+      String fileName = response.headers.value('Content-Disposition')!;
+      fileName = fileName.replaceAll('attachment; filename="', "");
+      fileName = fileName.replaceAll('"', "");
+      String dirPath = "";
+      
+      // ignore: unnecessary_null_comparison
+      if (directory != null) {
+        dirPath = directory.path;
+      } else {
+        Alert.error("Error", "Directory not found");
+        return;
+      }
+      // if (directory != null) {
+      // String filePath = '${directory.path}/$fileName';
+      String filePath = '$dirPath/$fileName';
+      File file = File(filePath);
+      await file.writeAsBytes(response.data as List<int>);
+      Alert.success("Success", "File downloaded at $filePath");
+      return;
+    } catch (e) {
+      print("ExceptionPS1: $e");
+      Alert.error("Error", "ExceptionPS1: $e");
     }
   }
 }

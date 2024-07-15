@@ -104,18 +104,29 @@ class ReportController extends GetxController {
       );
 
       String fileName = response.headers.value('Content-Disposition')!;
-      
+      fileName = fileName.replaceAll('attachment; filename="', "");
+      fileName = fileName.replaceAll('"', "");
+
+      // Directory? downloadsDirectory = await getDownloadsDirectory();
+      // ignore: unnecessary_null_comparison
+      String dirPath = "";
+      // if (downloadsDirectory != null) {
+      //   dirPath = downloadsDirectory.path;
+      // } else
       // ignore: unnecessary_null_comparison
       if (directory != null) {
-        String filePath = '${directory.path}/$fileName';
-        File file = File(filePath);
-        await file.writeAsBytes(response.data as List<int>);
-        Alert.success("Success", "File downloaded at $filePath");
-        return;
+        dirPath = directory.path;
       } else {
-        Alert.error("Error", "Failed to get storage directory");
+        Alert.error("Error", "Directory not found");
         return;
       }
+      // if (directory != null) {
+      // String filePath = '${directory.path}/$fileName';
+      String filePath = '$dirPath/$fileName';
+      File file = File(filePath);
+      await file.writeAsBytes(response.data as List<int>);
+      Alert.success("Success", "File downloaded at $filePath");
+      return;
     } catch (e) {
       print("ExceptionPS1: $e");
       Alert.error("Error", "ExceptionPS1: $e");

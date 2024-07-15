@@ -15,19 +15,19 @@ class BorrowingView extends GetView<BorrowingController> {
           title: Text('${title ?? "-"}'),
           // content: const Text('What do you want to do?'),
           actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Get.toNamed('/borrowing-add?id=$id&action=viewDetail');
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 33, 243, 96),
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Detail'),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //     Get.toNamed('/borrowing-add?id=$id&action=viewDetail');
+            //   },
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: const Color.fromARGB(255, 33, 243, 96),
+            //     foregroundColor: Colors.white,
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            //   ),
+            //   child: const Text('Detail'),
+            // ),
             Visibility(
               visible: status == "Dipinjam" ? true : false,
               child: TextButton(
@@ -151,8 +151,8 @@ class BorrowingView extends GetView<BorrowingController> {
                         ),
                       ),
                       Obx(() => Visibility(
-                            visible: controller.isLoading.value == false,
-                              child: Expanded(
+                          visible: controller.isLoading.value == false,
+                          child: Expanded(
                             child: ListView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
@@ -161,209 +161,93 @@ class BorrowingView extends GetView<BorrowingController> {
                               itemBuilder: (context, index) {
                                 return Padding(
                                     padding: const EdgeInsets.only(bottom: 4),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFF122778),
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
-                                          color: const Color(0xFF163360),
-                                          width: 1,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(
+                                              '/borrowing-add?id=${controller.dataList[index]["borrowed_id"] ?? "uid"}&action=viewDetail');
+                                        },
                                         child: Container(
-                                          width: 100,
-                                          height: 126,
-                                          decoration: const BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Row(
+                                          width: double.infinity,
+                                          height: 150,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFF122778),
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            border: Border.all(
+                                              color: const Color(0xFF163360),
+                                              width: 1,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: Container(
+                                              width: 100,
+                                              height: 126,
+                                              decoration: const BoxDecoration(),
+                                              child: Column(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    "${controller.dataList[index]["borrowed_asset_name"] ?? "pdddx"} #${controller.dataList[index]["borrowed_asset_code"] ?? "xyzx"}",
-                                                    textAlign: TextAlign.start,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Poppins',
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        "${controller.dataList[index]["borrowed_asset_name"] ?? "pdddx"} #${controller.dataList[index]["borrowed_asset_code"] ?? "xyzx"}",
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  fontSize: 17,
+                                                                  letterSpacing:
+                                                                      0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
+                                                      FlutterFlowIconButton(
+                                                        borderRadius: 20,
+                                                        borderWidth: 1,
+                                                        buttonSize: 35,
+                                                        icon: Icon(
+                                                          Icons
+                                                              .keyboard_control,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryBackground,
-                                                          fontSize: 17,
-                                                          letterSpacing: 0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
+                                                          size: 24,
                                                         ),
+                                                        onPressed: () {
+                                                          print(
+                                                              'IconButton pressed ...');
+                                                          dialogOption(
+                                                              context,
+                                                              controller.dataList[
+                                                                          index]
+                                                                      [
+                                                                      "borrowed_id"] ??
+                                                                  "uid",
+                                                              "${controller.dataList[index]["borrowed_asset_name"] ?? "name"} #${controller.dataList[index]["borrowed_asset_code"] ?? "code"}",
+                                                              controller.dataList[
+                                                                          index]
+                                                                      [
+                                                                      "status"] ??
+                                                                  "");
+                                                        },
+                                                      ),
+                                                    ],
                                                   ),
-                                                  FlutterFlowIconButton(
-                                                    borderRadius: 20,
-                                                    borderWidth: 1,
-                                                    buttonSize: 35,
-                                                    icon: Icon(
-                                                      Icons.keyboard_control,
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                      size: 24,
-                                                    ),
-                                                    onPressed: () {
-                                                      print(
-                                                          'IconButton pressed ...');
-                                                      dialogOption(
-                                                          context,
-                                                          controller.dataList[
-                                                                      index][
-                                                                  "borrowed_id"] ??
-                                                              "uid",
-                                                          "${controller.dataList[index]["borrowed_asset_name"] ?? "name"} #${controller.dataList[index]["borrowed_asset_code"] ?? "code"}",
-                                                          controller.dataList[
-                                                                      index]
-                                                                  ["status"] ??
-                                                              "");
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 61, 0),
-                                                    child: Text(
-                                                      'Peminjam',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    ': ${controller.dataList[index]["borrowed_name"]}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          letterSpacing: 0,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 73, 0),
-                                                    child: Text(
-                                                      'Program',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    ': ${controller.dataList[index]["used_by_program"]}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          letterSpacing: 0,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 10, 0),
-                                                    child: Text(
-                                                      'Tanggal dipinjam',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Montserrat',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                letterSpacing:
-                                                                    0,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    ': ${DateFormat('dd MMMM yyyy').format(DateTime.parse(controller.dataList[index]["borrowed_date"]))}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          letterSpacing: 0,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Stack(
-                                                children: [
                                                   Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -374,9 +258,9 @@ class BorrowingView extends GetView<BorrowingController> {
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                                0, 0, 89, 0),
+                                                                0, 0, 61, 0),
                                                         child: Text(
-                                                          'Status',
+                                                          'Peminjam',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -391,12 +275,11 @@ class BorrowingView extends GetView<BorrowingController> {
                                                               ),
                                                         ),
                                                       ),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            ": ",
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
+                                                      Text(
+                                                        ': ${controller.dataList[index]["borrowed_name"]}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
@@ -407,41 +290,115 @@ class BorrowingView extends GetView<BorrowingController> {
                                                                   letterSpacing:
                                                                       0,
                                                                 ),
-                                                          ),
-                                                          Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    top: 2,
-                                                                    bottom: 2,
-                                                                    left: 5,
-                                                                    right: 5),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: controller.dataList[
-                                                                              index]
-                                                                          [
-                                                                          "status"] ==
-                                                                      "Dipinjam"
-                                                                  ? const Color
-                                                                      .fromARGB(
-                                                                      255,
-                                                                      255,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 0, 73, 0),
+                                                        child: Text(
+                                                          'Program',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        ': ${controller.dataList[index]["used_by_program"]}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  letterSpacing:
                                                                       0,
-                                                                      0)
-                                                                  : Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          32,
-                                                                          182,
-                                                                          32),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          7), // Border radius
-                                                            ),
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 0, 10, 0),
+                                                        child: Text(
+                                                          'Tanggal dipinjam',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        ': ${DateFormat('dd MMMM yyyy').format(DateTime.parse(controller.dataList[index]["borrowed_date"]))}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  letterSpacing:
+                                                                      0,
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Stack(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(0,
+                                                                    0, 89, 0),
                                                             child: Text(
-                                                              '${controller.dataList[index]["status"]}',
+                                                              'Status',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -455,18 +412,83 @@ class BorrowingView extends GetView<BorrowingController> {
                                                                         0,
                                                                   ),
                                                             ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                ": ",
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Montserrat',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryBackground,
+                                                                      letterSpacing:
+                                                                          0,
+                                                                    ),
+                                                              ),
+                                                              Container(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        top: 2,
+                                                                        bottom:
+                                                                            2,
+                                                                        left: 5,
+                                                                        right:
+                                                                            5),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: controller.dataList[index]
+                                                                              [
+                                                                              "status"] ==
+                                                                          "Dipinjam"
+                                                                      ? const Color
+                                                                          .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          0,
+                                                                          0)
+                                                                      : Color.fromARGB(
+                                                                          255,
+                                                                          32,
+                                                                          182,
+                                                                          32),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              7), // Border radius
+                                                                ),
+                                                                child: Text(
+                                                                  '${controller.dataList[index]["status"]}',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Montserrat',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                        letterSpacing:
+                                                                            0,
+                                                                      ),
+                                                                ),
+                                                              )
+                                                            ],
                                                           )
                                                         ],
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
-                                                ],
+                                                ].divide(
+                                                    const SizedBox(height: 4)),
                                               ),
-                                            ].divide(const SizedBox(height: 4)),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ));
+                                        )));
                               },
                             ),
                           ))),
@@ -511,36 +533,63 @@ class BorrowingView extends GetView<BorrowingController> {
                 ),
                 Align(
                     alignment: const AlignmentDirectional(0.92, 0.97),
-                    child: GestureDetector(
-                      onTap: () async {
-                        await Get.toNamed("/page-list?next=borrowing-add");
-                        controller.loadDataList();
-                      },
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF3D77D2),
-                            borderRadius:
-                                BorderRadius.circular(15), // Sudut tumpul
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 1,
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      SizedBox(
+                        width: 46, // Ukuran button lebih kecil
+                        height: 46, // Ukuran button lebih kecil
+                        child: ElevatedButton(
+                          onPressed: () {
+                            controller.saveReport(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color(0xFF3D77D2),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: const BorderSide(
+                                  color: Colors.white, width: 1),
                             ),
+                            padding: EdgeInsets
+                                .zero, // Menghilangkan padding default
                           ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.add,
-                              color: Color(0xFFFFFFFF),
-                              size: 30,
-                            ),
+                          child: const Icon(
+                            Icons.print,
+                            color: Color(0xFFFFFFFF),
+                            size: 24, // Ukuran icon lebih kecil
                           ),
                         ),
                       ),
-                    )),
+                      const SizedBox(width: 7), // Jarak antara dua tombol
+                      GestureDetector(
+                        onTap: () async {
+                          await Get.toNamed("/page-list?next=borrowing-add");
+                          controller.loadDataList();
+                        },
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF3D77D2),
+                              borderRadius:
+                                  BorderRadius.circular(15), // Sudut tumpul
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1,
+                              ),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.add,
+                                color: Color(0xFFFFFFFF),
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ]))
               ],
             ),
           ),

@@ -81,6 +81,7 @@ class _SidebarState extends State<Sidebar> {
                                       .override(
                                         fontFamily: 'Readex Pro',
                                         letterSpacing: 0,
+                                        fontSize: 17,
                                       ),
                                 ),
                               ),
@@ -107,8 +108,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Ruang Aset Mushola',
                                           style: FlutterFlowTheme.of(context)
@@ -116,6 +117,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -146,8 +148,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Ruang Aset Auditorium',
                                           style: FlutterFlowTheme.of(context)
@@ -155,6 +157,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -185,8 +188,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Ruang Aset Perpustakaan',
                                           style: FlutterFlowTheme.of(context)
@@ -194,6 +197,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -224,8 +228,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Ruang Aset Utilitas',
                                           style: FlutterFlowTheme.of(context)
@@ -233,6 +237,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -263,13 +268,14 @@ class _SidebarState extends State<Sidebar> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     12, 12, 0, 8),
                                 child: Text(
-                                  'Teansaksi Aset',
+                                  'Transaksi Aset',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
                                         fontFamily: 'Readex Pro',
                                         letterSpacing: 0,
+                                        fontSize: 17,
                                       ),
                                 ),
                               ),
@@ -295,8 +301,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Pemeliharaan Aset',
                                           style: FlutterFlowTheme.of(context)
@@ -304,6 +310,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -333,8 +340,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Peminjaman Aset',
                                           style: FlutterFlowTheme.of(context)
@@ -342,6 +349,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -381,6 +389,7 @@ class _SidebarState extends State<Sidebar> {
                                         .override(
                                           fontFamily: 'Readex Pro',
                                           letterSpacing: 0,
+                                          fontSize: 17,
                                         ),
                                   ),
                                 ),
@@ -409,8 +418,8 @@ class _SidebarState extends State<Sidebar> {
                                     children: [
                                       Expanded(
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(12, 0, 0, 0),
+                                          padding: const EdgeInsets.only(
+                                              left: 12, bottom: 3),
                                           child: Text(
                                             'Laporan Aset Mushola',
                                             style: FlutterFlowTheme.of(context)
@@ -418,6 +427,7 @@ class _SidebarState extends State<Sidebar> {
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   letterSpacing: 0,
+                                                  fontSize: 15,
                                                 ),
                                           ),
                                         ),
@@ -450,8 +460,8 @@ class _SidebarState extends State<Sidebar> {
                                     children: [
                                       Expanded(
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(12, 0, 0, 0),
+                                          padding: const EdgeInsets.only(
+                                              left: 12, bottom: 3),
                                           child: Text(
                                             'Laporan Aset Audiotrium',
                                             style: FlutterFlowTheme.of(context)
@@ -459,6 +469,7 @@ class _SidebarState extends State<Sidebar> {
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   letterSpacing: 0,
+                                                  fontSize: 15,
                                                 ),
                                           ),
                                         ),
@@ -491,8 +502,8 @@ class _SidebarState extends State<Sidebar> {
                                     children: [
                                       Expanded(
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(12, 0, 0, 0),
+                                          padding: const EdgeInsets.only(
+                                              left: 12, bottom: 3),
                                           child: Text(
                                             'Laporan Aset Perpustakaan',
                                             style: FlutterFlowTheme.of(context)
@@ -500,6 +511,7 @@ class _SidebarState extends State<Sidebar> {
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   letterSpacing: 0,
+                                                  fontSize: 15,
                                                 ),
                                           ),
                                         ),
@@ -532,8 +544,8 @@ class _SidebarState extends State<Sidebar> {
                                     children: [
                                       Expanded(
                                         child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(12, 0, 0, 0),
+                                          padding: const EdgeInsets.only(
+                                              left: 12, bottom: 3),
                                           child: Text(
                                             'Laporan Aset Utilitas',
                                             style: FlutterFlowTheme.of(context)
@@ -541,6 +553,7 @@ class _SidebarState extends State<Sidebar> {
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   letterSpacing: 0,
+                                                  fontSize: 15,
                                                 ),
                                           ),
                                         ),
@@ -579,6 +592,7 @@ class _SidebarState extends State<Sidebar> {
                                       .override(
                                         fontFamily: 'Readex Pro',
                                         letterSpacing: 0,
+                                        fontSize: 17,
                                       ),
                                 ),
                               ),
@@ -604,8 +618,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Home',
                                           style: FlutterFlowTheme.of(context)
@@ -613,6 +627,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -621,45 +636,6 @@ class _SidebarState extends State<Sidebar> {
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        MouseRegion(
-                          opaque: false,
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: () {
-                              String id = Storage.read("userId");
-                              Get.toNamed(
-                                  '/users-add?id=$id&action=viewDetail');
-                            },
-                            child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 150),
-                                curve: Curves.easeInOut,
-                                width: double.infinity,
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 2, 0, 5),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(12, 0, 0, 0),
-                                          child: Text(
-                                            'Data Profile',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
                           ),
                         ),
                         MouseRegion(
@@ -681,8 +657,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Mengelola Data User',
                                           style: FlutterFlowTheme.of(context)
@@ -690,6 +666,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),
@@ -720,8 +697,8 @@ class _SidebarState extends State<Sidebar> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
                                         child: Text(
                                           'Logout',
                                           style: FlutterFlowTheme.of(context)
@@ -729,6 +706,7 @@ class _SidebarState extends State<Sidebar> {
                                               .override(
                                                 fontFamily: 'Readex Pro',
                                                 letterSpacing: 0,
+                                                fontSize: 15,
                                               ),
                                         ),
                                       ),

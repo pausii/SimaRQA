@@ -250,7 +250,7 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 0, 0, 44),
                                 child: Image.asset(
-                                  'assets/images/Logo.png',
+                                  'assets/images/logo.png',
                                   width: 300,
                                   height: 170,
                                   fit: BoxFit.fitWidth,

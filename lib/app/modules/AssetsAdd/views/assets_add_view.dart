@@ -142,8 +142,9 @@ class AssetsAddView extends GetView<AssetsAddController> {
                   onPressed: () async {
                     try {
                       Map<String, dynamic> data = {
-                        'code': controller.assetCode.text,
+                        // 'code': controller.assetCode.text,
                         'path': controller.asset.name,
+                        'id': controller.assetId,
                       };
 
                       String jsonEncoded = jsonEncode(data);

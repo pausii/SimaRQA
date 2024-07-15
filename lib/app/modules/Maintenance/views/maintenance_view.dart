@@ -19,22 +19,6 @@ class MaintenanceView extends GetView<MaintenanceController> {
                 Navigator.of(context).pop();
                 String name =
                     await controller.getNameByCode(assetName.toString());
-                Get.toNamed(
-                    '/maintenance-add?name=$name&id=$id&action=viewDetail');
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 33, 243, 96),
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              ),
-              child: const Text('Detail'),
-            ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
-                String name =
-                    await controller.getNameByCode(assetName.toString());
                 await Get.toNamed(
                     '/maintenance-add?name=$name&id=$id&action=edit');
                 controller.loadData();
@@ -177,236 +161,99 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                       ["price_maintenance"]);
                               return Padding(
                                   padding: const EdgeInsets.only(bottom: 4),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 144,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF122778),
-                                      borderRadius: BorderRadius.circular(14),
-                                      border: Border.all(
-                                        color: const Color(0xFF163360),
-                                        width: 1,
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      String name = await controller
+                                          .getNameByCode(controller.dataList[index]["maintenance_asset_code"] ?? '');
+                                      int id = controller.dataList[index]["maintenance_id"];
+                                      Get.toNamed(
+                                          '/maintenance-add?name=$name&id=$id&action=viewDetail');
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 144,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF122778),
+                                        borderRadius: BorderRadius.circular(14),
+                                        border: Border.all(
+                                          color: const Color(0xFF163360),
+                                          width: 1,
+                                        ),
                                       ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Container(
-                                        width: 100,
-                                        height: 126,
-                                        decoration: const BoxDecoration(),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  controller.dataList[index][
-                                                      "maintenance_asset_name"],
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        fontSize: 17,
-                                                        letterSpacing: 0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                                FlutterFlowIconButton(
-                                                  borderRadius: 20,
-                                                  borderWidth: 1,
-                                                  buttonSize: 35,
-                                                  icon: Icon(
-                                                    Icons.keyboard_control,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 24,
-                                                  ),
-                                                  onPressed: () {
-                                                    print(
-                                                        'IconButton pressed ...');
-                                                    dialogOption(
-                                                        context,
-                                                        controller
-                                                                .dataList[index]
-                                                            ["maintenance_id"],
-                                                        controller.dataList[
-                                                                    index][
-                                                                "maintenance_asset_code"] ??
-                                                            '-',
-                                                        controller.dataList[
-                                                                    index][
-                                                                "maintenance_asset_name"] ??
-                                                            '-');
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 0, 100, 0),
-                                                  child: Text(
-                                                    'Kode Aset',
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Container(
+                                          width: 100,
+                                          height: 126,
+                                          decoration: const BoxDecoration(),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    controller.dataList[index][
+                                                        "maintenance_asset_name"],
+                                                    textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          fontFamily:
-                                                              'Montserrat',
+                                                          fontFamily: 'Poppins',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryBackground,
+                                                          fontSize: 17,
                                                           letterSpacing: 0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  ': ${controller.dataList[index]["maintenance_asset_code"] ?? ''}',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        letterSpacing: 0,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 0, 93, 0),
-                                                  child: Text(
-                                                    'Nama Aset',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          letterSpacing: 0,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  ': ${controller.dataList[index]["maintenance_asset_name"] ?? ''}',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        letterSpacing: 0,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 0, 30, 0),
-                                                  child: Text(
-                                                    'Biaya Pemeliharaan',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          letterSpacing: 0,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  ': $formattedPrice',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Montserrat',
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        letterSpacing: 0,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            Stack(
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 11, 0),
-                                                      child: Text(
-                                                        'Tanggal Pemeliharaan',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                  letterSpacing:
-                                                                      0,
-                                                                ),
-                                                      ),
+                                                  FlutterFlowIconButton(
+                                                    borderRadius: 20,
+                                                    borderWidth: 1,
+                                                    buttonSize: 35,
+                                                    icon: Icon(
+                                                      Icons.keyboard_control,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      size: 24,
                                                     ),
-                                                    Text(
-                                                      ': $formattedDate',
+                                                    onPressed: () {
+                                                      dialogOption(
+                                                          context,
+                                                          controller.dataList[
+                                                                  index][
+                                                              "maintenance_id"],
+                                                          controller.dataList[
+                                                                      index][
+                                                                  "maintenance_asset_code"] ??
+                                                              '-',
+                                                          controller.dataList[
+                                                                      index][
+                                                                  "maintenance_asset_name"] ??
+                                                              '-');
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 0, 100, 0),
+                                                    child: Text(
+                                                      'Kode Aset',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -421,11 +268,160 @@ class MaintenanceView extends GetView<MaintenanceController> {
                                                                     0,
                                                               ),
                                                     ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ].divide(const SizedBox(height: 4)),
+                                                  ),
+                                                  Text(
+                                                    ': ${controller.dataList[index]["maintenance_asset_code"] ?? ''}',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          letterSpacing: 0,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 0, 93, 0),
+                                                    child: Text(
+                                                      'Nama Aset',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    ': ${controller.dataList[index]["maintenance_asset_name"] ?? ''}',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          letterSpacing: 0,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 0, 30, 0),
+                                                    child: Text(
+                                                      'Biaya Pemeliharaan',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    ': $formattedPrice',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          letterSpacing: 0,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Stack(
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 0, 11, 0),
+                                                        child: Text(
+                                                          'Tanggal Pemeliharaan',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Montserrat',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                letterSpacing:
+                                                                    0,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        ': $formattedDate',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  letterSpacing:
+                                                                      0,
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ].divide(const SizedBox(height: 4)),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -476,37 +472,39 @@ class MaintenanceView extends GetView<MaintenanceController> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // SizedBox(
-                      //   width: 46, // Ukuran button lebih kecil
-                      //   height: 46, // Ukuran button lebih kecil
-                      //   child: ElevatedButton(
-                      //     onPressed: () {
-                      //       // Tambahkan aksi untuk tombol menu di sini
-                      //     },
-                      //     style: ElevatedButton.styleFrom(
-                      //       primary: const Color(0xFF3D77D2),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(15),
-                      //         side: const BorderSide(
-                      //             color: Colors.white, width: 1),
-                      //       ),
-                      //       padding: EdgeInsets
-                      //           .zero, // Menghilangkan padding default
-                      //     ),
-                      //     child: const Icon(
-                      //       Icons.print,
-                      //       color: Color(0xFFFFFFFF),
-                      //       size: 24, // Ukuran icon lebih kecil
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(width: 7), // Jarak antara dua tombol
                       SizedBox(
                         width: 46, // Ukuran button lebih kecil
                         height: 46, // Ukuran button lebih kecil
                         child: ElevatedButton(
                           onPressed: () {
-                            Get.toNamed("/page-list?next=maintenance-add");
+                            controller.saveReport(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color(0xFF3D77D2),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: const BorderSide(
+                                  color: Colors.white, width: 1),
+                            ),
+                            padding: EdgeInsets
+                                .zero, // Menghilangkan padding default
+                          ),
+                          child: const Icon(
+                            Icons.print,
+                            color: Color(0xFFFFFFFF),
+                            size: 24, // Ukuran icon lebih kecil
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 7), // Jarak antara dua tombol
+                      SizedBox(
+                        width: 46, // Ukuran button lebih kecil
+                        height: 46, // Ukuran button lebih kecil
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await Get.toNamed(
+                                "/page-list?next=maintenance-add");
+                            controller.loadData();
                           },
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xFF3D77D2),

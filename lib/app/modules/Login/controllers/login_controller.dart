@@ -42,7 +42,7 @@ class LoginController extends GetxController {
         Storage.write("authToken", "${response.data['body']['token']}");
         Storage.write("userId", "${response.data['body']['user_id']}");
         Storage.write("role", "${response.data['body']['role']}");
-        Get.toNamed('/dashboard');
+        Get.offAllNamed('/dashboard');
       }
     } catch (e) {
       if (e is DioException) {
