@@ -43,7 +43,6 @@ SimaRQA is under [MIT License](./LICENSE).
 - Argin Fiorenza - 1121130049
 - Muhammad Raihan - 1121130051
 - Novara Aulist Zakia - 1121130066
-- Fachrul Reza Arisandy - 1121130038
  
 ## Tech Stack
 
