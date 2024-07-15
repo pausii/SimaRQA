@@ -175,7 +175,7 @@ const exportBorrowedReturnTransactionToExcel = async (req, res) => {
     'Digunakan oleh program': asset.used_by_program,
     'Tanggal Peminjaman': asset.borrowed_date.toLocaleDateString(), // Use localized date format
     'Tanggal Tenggat Peminjaman': asset.due_date.toLocaleDateString(),
-    'Tanggal Pengembalian': asset.return_date ? asset.last_maintenance_date.toISOString().split('T')[0] : 'Belum Terdata',
+    'Tanggal Pengembalian': asset.return_date ? asset.return_date.toISOString().split('T')[0] : 'Belum Terdata',
     'Status': asset.status,
     'Notes': asset.notes
   }));
