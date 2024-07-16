@@ -643,6 +643,45 @@ class _SidebarState extends State<Sidebar> {
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(
                             onTap: () {
+                              Get.toNamed('/assets-category');
+                            },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.easeInOut,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 2, 0, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 12, bottom: 3),
+                                        child: Text(
+                                          'Mengelola Kategori Aset',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0,
+                                                fontSize: 15,
+                                              ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        MouseRegion(
+                          opaque: false,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
                               Get.offNamed('/users');
                             },
                             child: AnimatedContainer(
