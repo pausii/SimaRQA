@@ -112,7 +112,6 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                                       size: 30,
                                     ),
                                     onPressed: () async {
-                                      print("woyy");
                                       await controller.pageViewController
                                           ?.nextPage(
                                         duration:
