@@ -1,5 +1,6 @@
-import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:get/get.dart';
 
 import '../modules/Assets/bindings/assets_binding.dart';
 import '../modules/Assets/views/assets_view.dart';
@@ -29,6 +30,8 @@ import '../modules/Report/bindings/report_binding.dart';
 import '../modules/Report/views/report_view.dart';
 import '../modules/Returns/bindings/returns_binding.dart';
 import '../modules/Returns/views/returns_view.dart';
+import '../modules/SplashScreen/bindings/splash_screen_binding.dart';
+import '../modules/SplashScreen/views/splash_screen_view.dart';
 import '../modules/Users/bindings/users_binding.dart';
 import '../modules/Users/views/users_view.dart';
 import '../modules/UsersAdd/bindings/users_add_binding.dart';
@@ -41,7 +44,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = kReleaseMode ? Routes.DASHBOARD : Routes.HOME;
+  static const INITIAL = kReleaseMode ? Routes.SPLASH_SCREEN : Routes.HOME;
 
   static final routes = [
     GetPage(
@@ -128,6 +131,11 @@ class AppPages {
       name: _Paths.REPORT,
       page: () => const ReportView(),
       binding: ReportBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH_SCREEN,
+      page: () => const SplashScreenView(),
+      binding: SplashScreenBinding(),
     ),
   ];
 }
