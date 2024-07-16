@@ -70,6 +70,14 @@ const tambahPeminjamanAsset = async (req, res) => {
           return res.status(404).json({ message: "Aset Tidak Ditemukan." });
       }
 
+      const isBorrowed = await PeminjamanPengembalianAsset.findOne({
+        where: { borrowed_asset_code, status: 'Dipinjam'}
+      });
+
+      if (isBorrowed) {
+        return res.status(400).json({ message: "Aset Sedang Dipinjam" })
+      }
+
       if (asset.asset_type === 'Dapat Dipindahkan') {
         const borrowed_asset_name = asset.asset_name;
         const transaction = await PeminjamanPengembalianAsset.create({
