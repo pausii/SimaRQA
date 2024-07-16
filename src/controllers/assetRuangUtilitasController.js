@@ -43,6 +43,7 @@ const createUtilitasAsset = async (req, res) => {
 const getAllUtilitasAssets = async (req, res) => {
     try {
         const utilitasAssets = await RuangAsetUtilitas.findAll({
+            order: [['createdAt', 'DESC']], 
             include: [
                 {
                     model: CategoryAsset,

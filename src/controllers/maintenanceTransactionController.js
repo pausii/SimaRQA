@@ -33,7 +33,9 @@ const getAssetModelByCode = (assetCode) => {
 // Endpoint untuk mendapatkan semua transaksi pemeliharaan
 const getAllMaintenanceTransaction = async (req, res) => {
     try {
-        const transactions = await PemeliharaanAsset.findAll();
+        const transactions = await PemeliharaanAsset.findAll({
+            order: [['createdAt', 'DESC']] 
+        });
         res.status(200).json({
             message: 'Berhasil mendapatkan semua transaksi pemeliharaan',
             data: transactions

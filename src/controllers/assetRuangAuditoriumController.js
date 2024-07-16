@@ -42,6 +42,7 @@ const createAuditoriumAsset = async (req, res) => {
 const getAllAuditoriumAssets = async (req, res) => {
     try {
         const auditoriumAssets = await RuangAsetAuditorium.findAll({
+            order: [['createdAt', 'DESC']], 
             include: [
                 {
                     model: CategoryAsset,

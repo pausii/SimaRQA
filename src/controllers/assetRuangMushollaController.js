@@ -42,6 +42,7 @@ const createMushollaAsset = async (req, res) => {
 const getAllMushollaAssets = async (req, res) => {
     try {
         const mushollaAssets = await RuangAsetMusholla.findAll({
+            order: [['createdAt', 'DESC']], 
             include: [
                 {
                     model: CategoryAsset,

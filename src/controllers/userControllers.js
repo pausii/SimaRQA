@@ -43,7 +43,9 @@ const createUser = async (req, res) => {
 // Dapatkan semua user
 const getAllUsers = async (req, res) => {
     try {
-        const users = await Users.findAll();
+        const users = await Users.findAll({
+            order: [['createdAt', 'DESC']] 
+        });
         res.status(200).json({
             message: "Berhasil mendapatkan semua user",
             data: users

@@ -41,7 +41,9 @@ const createCategory = async (req, res) => {
 // Mendapatkan semua kategori
 const getAllCategory = async (req, res) => {
     try {
-        const categories = await CategoryAsset.findAll();
+        const categories = await CategoryAsset.findAll({
+            order: [['createdAt', 'DESC']] 
+        });
         res.status(200).json({
             message: "Berhasil mendapatkan semua kategori",
             data: categories

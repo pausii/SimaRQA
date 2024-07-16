@@ -23,7 +23,9 @@ const getAssetModelByCode = (assetCode) => {
 
 const getAllBorrowedReturnTransaction = async (req, res) => {
   try {
-    const borrowedReturn = await PeminjamanPengembalianAsset.findAll();
+    const borrowedReturn = await PeminjamanPengembalianAsset.findAll({
+      order: [['createdAt', 'DESC']] 
+    });
     res.status(200).json({
       message: 'Berhasil Mendapatkan Semua Transaksi Peminjaman & Pengembalian Aset',
       data: borrowedReturn      
@@ -62,14 +64,10 @@ const tambahPeminjamanAsset = async (req, res) => {
       } = req.body;
 
       const assetModel = getAssetModelByCode(borrowed_asset_code);
-      const asset = await assetModel.findOne({ where: { asset_code: borrowed_asset_code } });
+      const asset = await assetModel.findOne({ where: { asset_code: borrowed_asset_code, asset_type: 'Dapat Dipindahkan' } });
 
       if (!asset) {
           return res.status(404).json({ message: "Aset Tidak Ditemukan." });
-      }
-
-      if (asset.asset_type === 'Tidak Dapat Dipindahkan') {
-        return res.status(400).json({ message: "Asset Tidak Dapat Dipinjam" });
       }
 
       if (asset.asset_type === 'Dapat Dipindahkan') {

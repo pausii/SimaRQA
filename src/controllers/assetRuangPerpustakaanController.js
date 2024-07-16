@@ -42,6 +42,7 @@ const createPerpustakaanAsset = async (req, res) => {
 const getAllPerpustakaanAssets = async (req, res) => {
     try {
         const perpustakaanAssets = await RuangAsetPerpustakaan.findAll({
+            order: [['createdAt', 'DESC']], 
             include: [
                 {
                     model: CategoryAsset,
