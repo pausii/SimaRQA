@@ -26,14 +26,6 @@ class AssetsAddView extends GetView<AssetsAddController> {
       final picData =
           await qrPainter.toImageData(100, format: ui.ImageByteFormat.png);
       return picData!.buffer.asUint8List();
-      // if (picData != null) {
-      //   final buffer = picData.buffer.asUint8List();
-      //   return await saveImage(buffer, "qr_code");
-      // } else {
-      //   print('Failed to generate QR code image data');
-      //   // return "";
-      //   return Uint8List(0);
-      // }
     } catch (e) {
       print('Error generating QR code image data: $e');
       // return "";
@@ -52,7 +44,7 @@ class AssetsAddView extends GetView<AssetsAddController> {
 
   Future<pw.Document> printAset(Uint8List qrBytes) async {
     try {
-      final pdf = await pw.Document();
+      final pdf = pw.Document();
       // final image = await imageFromAssetBundle(qrBytes);
       pdf.addPage(
         pw.Page(
@@ -65,10 +57,10 @@ class AssetsAddView extends GetView<AssetsAddController> {
                 pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      _buildInfoRow('ID           ', 'PSX912'),
-                      _buildInfoRow('Nama     ', 'Air Conditioner 1'),
-                      _buildInfoRow('Kategori ', 'Xyzz'),
-                      _buildInfoRow('Tanggal  ', '01-01-2021'),
+                      _buildInfoRow('ID           ', controller.assetCode.text),
+                      _buildInfoRow('Nama     ', controller.inputName.text),
+                      _buildInfoRow('Kategori ', controller.hintTextCategory.value),
+                      _buildInfoRow('Tanggal  ', controller.inputPurchaseDate.text),
                     ]),
                 pw.SizedBox(width: 20), // Jarak antara children
                 // Right Column (QR Code)

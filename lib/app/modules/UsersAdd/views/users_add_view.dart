@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import '../controllers/users_add_controller.dart';
+import '../../../utils/storage.dart';
 
 class UsersAddView extends GetView<UsersAddController> {
   const UsersAddView({Key? key}) : super(key: key);
@@ -174,7 +175,9 @@ class UsersAddView extends GetView<UsersAddController> {
                     //     _model.textController1Validator.asValidator(context),
                   ),
                 ),
-                Padding(
+                Visibility(
+                  visible: Storage.read("role") == "administrator",
+                  child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                     child: Obx(
                       () => FlutterFlowDropDown(
@@ -213,6 +216,7 @@ class UsersAddView extends GetView<UsersAddController> {
                         // isMultiSelect: false,
                       ),
                     )),
+                ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                   child: TextFormField(
