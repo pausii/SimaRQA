@@ -159,7 +159,7 @@ class BorrowingAddController extends GetxController {
       dio.options.headers['Authorization'] =
           'Bearer ${Storage.read("authToken")}';
       var response =
-          await dio.get('${AppConfig.baseUrl}/api/${asset.apiPath}/');
+          await dio.get('${AppConfig.baseUrl}/api/${asset.apiPath}/?type=Dapat Dipindahkan');
       if (response.statusCode == 200) {
         assetList.assignAll(response.data['data']);
       }
