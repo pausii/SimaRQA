@@ -6,6 +6,7 @@ import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BorrowingController extends GetxController {
   var dataList = <dynamic>[].obs;
@@ -51,54 +52,51 @@ class BorrowingController extends GetxController {
 
   Future<void> saveReport(BuildContext context) async {
     try {
-
-      // Mendapatkan direktori penyimpanan lokal yang tersedia
-      Directory? directory;
-      if (Platform.isAndroid) {
-        directory = await getExternalStorageDirectory();
-      } else if (Platform.isIOS) {
-        directory = await getApplicationDocumentsDirectory();
+      if (!(await Permission.storage.isGranted) || !(await Permission.manageExternalStorage.isGranted)) {
+        await Permission.storage.request();
+        await Permission.manageExternalStorage.request(); // for android above 11
       }
 
-      if (directory == null) {
-        Alert.error("Error", "Directory not found");
-        return;
-      }
+      if (await Permission.manageExternalStorage.isGranted || await Permission.storage.isGranted) {
+        Dio dio = Dio();
+        Map<String, dynamic> headers = {
+          HttpHeaders.authorizationHeader:
+              'Bearer ${Storage.read("authToken")}',
+          HttpHeaders.contentTypeHeader: 'application/json',
+        };
+        var response = await dio.get(
+          '${AppConfig.baseUrl}/api/borrowed-return/export/excel',
+          options: Options(
+            headers: headers,
+            responseType:
+                ResponseType.bytes, // Menanggapi sebagai byte untuk file
+          ),
+        );
 
-      Dio dio = Dio();
-      Map<String, dynamic> headers = {
-        HttpHeaders.authorizationHeader: 'Bearer ${Storage.read("authToken")}',
-        HttpHeaders.contentTypeHeader: 'application/json',
-      };
-      print('${AppConfig.baseUrl}/api/borrowed-return/export/excel');
-      var response = await dio.get(
-        '${AppConfig.baseUrl}/api/borrowed-return/export/excel',
-        options: Options(
-          headers: headers,
-          responseType:
-              ResponseType.bytes, // Menanggapi sebagai byte untuk file
-        ),
-      );
+        String fileName = response.headers.value('Content-Disposition')!;
+        fileName = fileName.replaceAll('attachment; filename="', "");
+        fileName = fileName.replaceAll('"', "");
 
-      String fileName = response.headers.value('Content-Disposition')!;
-      fileName = fileName.replaceAll('attachment; filename="', "");
-      fileName = fileName.replaceAll('"', "");
-      String dirPath = "";
-      
-      // ignore: unnecessary_null_comparison
-      if (directory != null) {
-        dirPath = directory.path;
+        // String downloadsPath = '/storage/emulated/0/Download';
+        Directory? downloadsDirectory;
+        downloadsDirectory = await getExternalStorageDirectory();
+        String downloadsPath = '${downloadsDirectory?.path.split('Android')[0]}Download';
+        print(downloadsPath);
+        // return;
+        String filePath = '$downloadsPath/$fileName';
+        print(filePath.toString());
+        File fileDef = File(filePath.toString());
+        try {
+          await fileDef.create(recursive: true);
+          File file = File(filePath.toString());
+          await file.writeAsBytes(response.data as List<int>);
+          Alert.success("Success", "File downloaded at $filePath");
+        } catch (e) {
+          Alert.error("Error", "Gagal menyimpan file: $e");
+        }
       } else {
-        Alert.error("Error", "Directory not found");
-        return;
+        Alert.error("Error", "Izin storage ditolak");
       }
-      // if (directory != null) {
-      // String filePath = '${directory.path}/$fileName';
-      String filePath = '$dirPath/$fileName';
-      File file = File(filePath);
-      await file.writeAsBytes(response.data as List<int>);
-      Alert.success("Success", "File downloaded at $filePath");
-      return;
     } catch (e) {
       print("ExceptionPS1: $e");
       Alert.error("Error", "ExceptionPS1: $e");
