@@ -41,6 +41,8 @@ const createAuditoriumAsset = async (req, res) => {
 // Fungsi untuk mendapatkan semua aset auditorium
 const getAllAuditoriumAssets = async (req, res) => {
     try {
+        const type = req.query.type;
+        const where = type ? { asset_type: type } : {};
         const auditoriumAssets = await RuangAsetAuditorium.findAll({
             order: [['createdAt', 'DESC']], 
             include: [
@@ -48,7 +50,8 @@ const getAllAuditoriumAssets = async (req, res) => {
                     model: CategoryAsset,
                     as: "asset_category"
                 }
-            ]
+            ],
+            where
         });
 
         if (auditoriumAssets.length === 0) {

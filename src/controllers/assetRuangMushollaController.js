@@ -41,6 +41,8 @@ const createMushollaAsset = async (req, res) => {
 // Fungsi untuk mendapatkan semua aset musholla
 const getAllMushollaAssets = async (req, res) => {
     try {
+        const type = req.query.type;
+        const where = type ? { asset_type: type } : {};
         const mushollaAssets = await RuangAsetMusholla.findAll({
             order: [['createdAt', 'DESC']], 
             include: [
@@ -48,7 +50,8 @@ const getAllMushollaAssets = async (req, res) => {
                     model: CategoryAsset,
                     as: "asset_category"
                 }
-            ]
+            ],
+            where
         });
 
         if (mushollaAssets.length === 0) {

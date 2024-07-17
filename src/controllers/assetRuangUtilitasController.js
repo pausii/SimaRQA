@@ -42,6 +42,8 @@ const createUtilitasAsset = async (req, res) => {
 // Fungsi untuk mendapatkan semua aset utilitas
 const getAllUtilitasAssets = async (req, res) => {
     try {
+        const type = req.query.type;
+        const where = type ? { asset_type: type } : {};
         const utilitasAssets = await RuangAsetUtilitas.findAll({
             order: [['createdAt', 'DESC']], 
             include: [
@@ -49,7 +51,8 @@ const getAllUtilitasAssets = async (req, res) => {
                     model: CategoryAsset,
                     as: "asset_category"
                 }
-            ]
+            ],
+            where
         });
 
         if (utilitasAssets.length === 0) {

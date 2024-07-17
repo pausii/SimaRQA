@@ -41,6 +41,8 @@ const createPerpustakaanAsset = async (req, res) => {
 // Fungsi untuk mendapatkan semua aset perpustakaan
 const getAllPerpustakaanAssets = async (req, res) => {
     try {
+        const type = req.query.type;
+        const where = type ? { asset_type: type } : {};
         const perpustakaanAssets = await RuangAsetPerpustakaan.findAll({
             order: [['createdAt', 'DESC']], 
             include: [
@@ -48,7 +50,8 @@ const getAllPerpustakaanAssets = async (req, res) => {
                     model: CategoryAsset,
                     as: "asset_category"
                 }
-            ]
+            ],
+            where
         });
 
         if (perpustakaanAssets.length === 0) {
