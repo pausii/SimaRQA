@@ -524,9 +524,9 @@ class AssetsView extends GetView<AssetsController> {
                           )))),
                       Obx(() =>  Visibility(
                           visible: controller.isLoading.value,
-                          child: SizedBox(
-                        width: double.infinity, // Atau ukuran tertentu
-                        height: 500.0, // Atau ukuran tertentu
+                          child: Expanded(
+                        // width: double.infinity, // Atau ukuran tertentu
+                        // height: 500.0, // Atau ukuran tertentu
                           child: Skeletonizer(
                           enabled: true,
                           child: ListView.builder(
