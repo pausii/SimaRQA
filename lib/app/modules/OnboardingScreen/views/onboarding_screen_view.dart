@@ -170,7 +170,7 @@ class OnboardingScreenView extends GetView<OnboardingScreenController> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 12, 0, 0),
                                 child: Text(
-                                  'Catat kondisi aset Rumah Quran Aqsyanna dengan baik, fokus pada pemeliharaan untuk memastikan kelayakan dan fungsinya',
+                                  'Catat kondisi aset Rumah Quran Aqsyanna dengan baik, fokus pada pemeliharaan untuk memastikan kelayakan dan fungsionalitasnya.',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .labelMedium
