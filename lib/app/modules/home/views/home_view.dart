@@ -25,8 +25,62 @@ class HomeView extends GetView<HomeController> {
             onPressed: () {
               Get.toNamed('/login');
             },
-            child: Text('Go to Profile'),
-          )
+            child: const Text('Go to Login Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/dashboard');
+            },
+            child: const Text('Go to dashboard Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/onboarding-screen');
+            },
+            child: const Text('Go to asset Onboarding Screen Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/assets?name=musholla');
+            },
+            child: const Text('Go to assets Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/users');
+            },
+            child: const Text('Go to users Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/assets-category');
+            },
+            child: const Text('Go to assets category Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/maintenance?name=musholla');
+            },
+            child: const Text('Go to maintenance Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/maintenance-add?name=musholla');
+            },
+            child: const Text('Go to mainntenance add Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/borrowing');
+            },
+            child: const Text('Go to borrowing Page'),
+          ),
+           ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/report?name=musholla');
+            },
+            child: const Text('Go to report Page'),
+          ),
         ],
       ),
     );
