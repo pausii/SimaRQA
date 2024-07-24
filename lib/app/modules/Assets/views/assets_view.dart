@@ -598,7 +598,7 @@ class AssetsView extends GetView<AssetsController> {
                         } else if (value == 3) {
                           controller.scanQrCode();
                         }else if (value == 4) {
-                          controller.saveReport(context);
+                          // controller.saveReport(context);
                         }
                       },
                       itemBuilder: (BuildContext context) =>
@@ -636,17 +636,17 @@ class AssetsView extends GetView<AssetsController> {
                             Text('Scan QR Code'),
                           ]),
                         ),
-                        const PopupMenuItem<int>(
-                          value: 4,
-                          child: Row(children: [
-                            Icon(
-                              Icons.print,
-                              size: 24,
-                            ),
-                            SizedBox(height: 1, width: 8),
-                            Text('Ekspor aset'),
-                          ]),
-                        ),
+                        // const PopupMenuItem<int>(
+                        //   value: 4,
+                        //   child: Row(children: [
+                        //     Icon(
+                        //       Icons.print,
+                        //       size: 24,
+                        //     ),
+                        //     SizedBox(height: 1, width: 8),
+                        //     Text('Ekspor aset'),
+                        //   ]),
+                        // ),
                       ],
                     ),
                   ),
