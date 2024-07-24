@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:path_provider/path_provider.dart';
 
 class AssetsController extends GetxController {
   late AssetsModel asset;
@@ -152,59 +150,6 @@ class AssetsController extends GetxController {
       }
     } catch (e) {
       print("ExceptionPS5: $e");
-    }
-  }
-
-  Future<void> saveReport(BuildContext context) async {
-    try {
-      if (!(await Permission.storage.isGranted) || !(await Permission.manageExternalStorage.isGranted)) {
-        await Permission.storage.request();
-        await Permission.manageExternalStorage.request(); // for android above 11
-      }
-
-      if (await Permission.manageExternalStorage.isGranted || await Permission.storage.isGranted) {
-        Dio dio = Dio();
-        Map<String, dynamic> headers = {
-          HttpHeaders.authorizationHeader:
-              'Bearer ${Storage.read("authToken")}',
-          HttpHeaders.contentTypeHeader: 'application/json',
-        };
-        var response = await dio.get(
-          '${AppConfig.baseUrl}/api/${asset.name}-reports/export/excel',
-          options: Options(
-            headers: headers,
-            responseType:
-                ResponseType.bytes, // Menanggapi sebagai byte untuk file
-          ),
-        );
-
-        String fileName = response.headers.value('Content-Disposition')!;
-        fileName = fileName.replaceAll('attachment; filename="', "");
-        fileName = fileName.replaceAll('"', "");
-
-        // String downloadsPath = '/storage/emulated/0/Download';
-        Directory? downloadsDirectory;
-        downloadsDirectory = await getExternalStorageDirectory();
-        String downloadsPath = '${downloadsDirectory?.path.split('Android')[0]}Download';
-        print(downloadsPath);
-        // return;
-        String filePath = '$downloadsPath/$fileName';
-        print(filePath.toString());
-        File fileDef = File(filePath.toString());
-        try {
-          await fileDef.create(recursive: true);
-          File file = File(filePath.toString());
-          await file.writeAsBytes(response.data as List<int>);
-          Alert.success("Success", "File downloaded at $filePath");
-        } catch (e) {
-          Alert.error("Error", "Gagal menyimpan file: $e");
-        }
-      } else {
-        Alert.error("Error", "Izin storage ditolak");
-      }
-    } catch (e) {
-      print("ExceptionPS1: $e");
-      Alert.error("Error", "ExceptionPS1: $e");
     }
   }
 }
