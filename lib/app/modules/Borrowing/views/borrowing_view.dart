@@ -559,36 +559,31 @@ class BorrowingView extends GetView<BorrowingController> {
                         ),
                       ),
                       const SizedBox(width: 7), // Jarak antara dua tombol
-                      GestureDetector(
-                        onTap: () async {
-                          await Get.toNamed("/page-list?next=borrowing-add");
+                      SizedBox(
+                        width: 46, // Ukuran button lebih kecil
+                        height: 46, // Ukuran button lebih kecil
+                        child: ElevatedButton(
+                          onPressed: () async {
+                             await Get.toNamed("/page-list?next=borrowing-add");
                           controller.loadDataList();
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF3D77D2),
-                              borderRadius:
-                                  BorderRadius.circular(15), // Sudut tumpul
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 1,
-                              ),
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: const Color(0xFF3D77D2),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: const BorderSide(
+                                  color: Colors.white, width: 1),
                             ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.add,
-                                color: Color(0xFFFFFFFF),
-                                size: 30,
-                              ),
-                            ),
+                            padding: EdgeInsets
+                                .zero, // Menghilangkan padding default
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            color: Color(0xFFFFFFFF),
+                            size: 24, // Ukuran icon lebih kecil
                           ),
                         ),
-                      )
+                      ),
                     ]))
               ],
             ),
