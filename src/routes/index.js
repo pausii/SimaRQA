@@ -20,6 +20,7 @@ const maintenanceTransactionRoutes = require('./maintenanceTransactionRoutes');
 const borrowedReturnTransactionRoutes = require('./borrowedReturnTransactionRoutes');
 
 const statisticDataRoutes = require('./statisticRoutes');
+const requestRepairRoutes = require('./requestRepairRoutes');
 
 route.use('/api/auth', authLogin);
 
@@ -41,5 +42,6 @@ route.use('/api/utilitas-reports', reportAssetUtilitasRoutes);
 
 route.use('/api/maintenance', maintenanceTransactionRoutes);
 route.use('/api/borrowed-return', borrowedReturnTransactionRoutes);
+route.use('/api/request-repair', requestRepairRoutes);
 
 module.exports = route;

@@ -10,17 +10,17 @@ const {
     getCountUtilitasAssets
  } = require('../controllers/assetRuangUtilitasController');
 
-const { tokenVerified, adminOrDivision } = require('../middlewares/token');
+const { tokenVerified, forDivision } = require('../middlewares/token');
 
 const route = express.Router();
 
-route.get('/', [tokenVerified, adminOrDivision], getAllUtilitasAssets);
-route.get('/search', [tokenVerified, adminOrDivision], searchAsset);
-route.get('/:id', [tokenVerified, adminOrDivision], getUtilitasAssetById);
-route.post('/', [tokenVerified, adminOrDivision], createUtilitasAsset);
-route.put('/:id', [tokenVerified, adminOrDivision], updateUtilitasAsset);
-route.delete('/:id', [tokenVerified, adminOrDivision], deleteUtilitasAsset);
-route.get('/:id/qrcode', [tokenVerified, adminOrDivision], generateQRCode);
+route.get('/', [tokenVerified, forDivision], getAllUtilitasAssets);
+route.get('/search', [tokenVerified, forDivision], searchAsset);
+route.get('/:id', [tokenVerified, forDivision], getUtilitasAssetById);
+route.post('/', [tokenVerified, forDivision], createUtilitasAsset);
+route.put('/:id', [tokenVerified, forDivision], updateUtilitasAsset);
+route.delete('/:id', [tokenVerified, forDivision], deleteUtilitasAsset);
+route.get('/:id/qrcode', [tokenVerified, forDivision], generateQRCode);
 
 
 module.exports = route;

@@ -10,17 +10,17 @@ const {
     getCountMushollaAssets
  } = require('../controllers/assetRuangMushollaController');
 
-const { tokenVerified, adminOrDivision } = require('../middlewares/token');
+const { tokenVerified, forDivision } = require('../middlewares/token');
 
 const route = express.Router();
 
-route.get('/', [tokenVerified, adminOrDivision], getAllMushollaAssets);
-route.get('/search', [tokenVerified, adminOrDivision], searchAsset);
-route.get('/:id', [tokenVerified, adminOrDivision], getMushollaAssetById);
-route.post('/', [tokenVerified, adminOrDivision], createMushollaAsset);
-route.put('/:id', [tokenVerified, adminOrDivision], updateMushollaAsset);
-route.delete('/:id', [tokenVerified, adminOrDivision], deleteMushollaAsset);
-route.get('/:id/qrcode', [tokenVerified, adminOrDivision], generateQRCode);
+route.get('/', [tokenVerified, forDivision], getAllMushollaAssets);
+route.get('/search', [tokenVerified, forDivision], searchAsset);
+route.get('/:id', [tokenVerified, forDivision], getMushollaAssetById);
+route.post('/', [tokenVerified, forDivision], createMushollaAsset);
+route.put('/:id', [tokenVerified, forDivision], updateMushollaAsset);
+route.delete('/:id', [tokenVerified, forDivision], deleteMushollaAsset);
+route.get('/:id/qrcode', [tokenVerified, forDivision], generateQRCode);
 
 
 module.exports = route;

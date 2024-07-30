@@ -10,17 +10,17 @@ const {
     getCountPerpustakaanAssets
  } = require('../controllers/assetRuangPerpustakaanController');
 
-const { tokenVerified, adminOrDivision } = require('../middlewares/token');
+const { tokenVerified, forDivision } = require('../middlewares/token');
 
 const route = express.Router();
 
-route.get('/', [tokenVerified, adminOrDivision], getAllPerpustakaanAssets);
-route.get('/search', [tokenVerified, adminOrDivision], searchAsset);
-route.get('/:id', [tokenVerified, adminOrDivision], getPerpustakaanAssetById);
-route.post('/', [tokenVerified, adminOrDivision], createPerpustakaanAsset);
-route.put('/:id', [tokenVerified, adminOrDivision], updatePerpustakaanAsset);
-route.delete('/:id', [tokenVerified, adminOrDivision], deletePerpustakaanAsset);
-route.get('/:id/qrcode', [tokenVerified, adminOrDivision], generateQRCode);
+route.get('/', [tokenVerified, forDivision], getAllPerpustakaanAssets);
+route.get('/search', [tokenVerified, forDivision], searchAsset);
+route.get('/:id', [tokenVerified, forDivision], getPerpustakaanAssetById);
+route.post('/', [tokenVerified, forDivision], createPerpustakaanAsset);
+route.put('/:id', [tokenVerified, forDivision], updatePerpustakaanAsset);
+route.delete('/:id', [tokenVerified, forDivision], deletePerpustakaanAsset);
+route.get('/:id/qrcode', [tokenVerified, forDivision], generateQRCode);
 
 
 module.exports = route;

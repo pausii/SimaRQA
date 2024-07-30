@@ -7,18 +7,25 @@ const {
     updateMaintenanceTransaction,
     exportMaintenanceTransactionToExcel,
     searchMaintenanceTransaction,
-    getCountMaintenanceTransaction,
 } = require('../controllers/maintenanceTransactionController');
 
-const { tokenVerified, adminOrDivision } = require('../middlewares/token');
+const {
+    startMaintenanceSchedule,
+    stopMaintenanceSchedule
+} = require('../controllers/notificationController');
+
+const { tokenVerified, forDivision } = require('../middlewares/token');
 
 const route = express.Router();
 
-route.get('/', [tokenVerified, adminOrDivision], getAllMaintenanceTransaction);
-route.get('/search', [tokenVerified, adminOrDivision], searchMaintenanceTransaction);
-route.get('/:id', [tokenVerified, adminOrDivision], getMaintenanceTransactionById);
-route.post('/', [tokenVerified, adminOrDivision], createMaintenanceTransaction);
-route.put('/:id', [tokenVerified, adminOrDivision], updateMaintenanceTransaction);
-route.get('/export/excel', exportMaintenanceTransactionToExcel);
+route.get('/', [tokenVerified, forDivision], getAllMaintenanceTransaction);
+route.get('/search', [tokenVerified, forDivision], searchMaintenanceTransaction);
+route.get('/:id', [tokenVerified, forDivision], getMaintenanceTransactionById);
+route.post('/', [tokenVerified, forDivision], createMaintenanceTransaction);
+route.put('/:id', [tokenVerified, forDivision], updateMaintenanceTransaction);
+route.get('/export/excel', [tokenVerified, forDivision], exportMaintenanceTransactionToExcel);
+
+route.post('/schedule/start', [tokenVerified, forDivision], startMaintenanceSchedule);
+route.post('/schedule/stop', [tokenVerified, forDivision], stopMaintenanceSchedule);
 
 module.exports = route;
