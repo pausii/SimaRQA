@@ -13,6 +13,7 @@ module.exports = {
         asset_condition: 'Berfungsi Baik',
         asset_type: 'Tidak Dapat Dipindahkan',
         last_maintenance_date: new Date('2024-01-15'),
+        maintenance_internal_days: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -25,6 +26,7 @@ module.exports = {
         asset_condition: 'Berfungsi Baik',
         asset_type: 'Tidak Dapat Dipindahkan',
         last_maintenance_date: new Date('2024-01-15'),
+        maintenance_internal_days: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -37,6 +39,7 @@ module.exports = {
         asset_condition: 'Berfungsi Baik',
         asset_type: 'Tidak Dapat Dipindahkan',
         last_maintenance_date: new Date('2024-01-15'),
+        maintenance_internal_days: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -49,6 +52,7 @@ module.exports = {
         asset_condition: 'Perlu Pemeliharaan',
         asset_type: 'Tidak Dapat Dipindahkan',
         last_maintenance_date: new Date('2022-01-15'),
+        maintenance_internal_days: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -61,6 +65,7 @@ module.exports = {
         asset_condition: 'Berfungsi Baik',
         asset_type: 'Tidak Dapat Dipindahkan',
         last_maintenance_date: new Date('2023-01-15'),
+        maintenance_internal_days: 5,
         createdAt: new Date(),
         updatedAt: new Date()
       },
