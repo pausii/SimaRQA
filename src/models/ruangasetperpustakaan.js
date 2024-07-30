@@ -55,6 +55,11 @@ module.exports = (sequelize, DataTypes) => {
     last_maintenance_date: {
       type: DataTypes.DATE,
       allowNull: true // Biarkan null karena tidak semua aset memiliki tanggal pemeliharaan terakhir
+    },
+    maintenance_internal_days: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 30
     }
   }, {
     sequelize,
