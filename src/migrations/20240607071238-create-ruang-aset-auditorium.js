@@ -47,6 +47,11 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true
       },
+      maintenance_internal_days: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 30
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
