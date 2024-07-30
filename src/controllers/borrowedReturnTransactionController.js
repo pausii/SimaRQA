@@ -67,7 +67,7 @@ const tambahPeminjamanAsset = async (req, res) => {
       const asset = await assetModel.findOne({ where: { asset_code: borrowed_asset_code, asset_type: 'Dapat Dipindahkan' } });
 
       if (!asset) {
-          return res.status(404).json({ message: "Aset Tidak Ditemukan." });
+          return res.status(404).json({ message: "Bukan aset yang dapat dipinjam." });
       }
 
       const isBorrowed = await PeminjamanPengembalianAsset.findOne({
@@ -96,7 +96,7 @@ const tambahPeminjamanAsset = async (req, res) => {
           data: transaction
         });
       } else {
-        return res.status(400).json({ message: "Asset tidak dapat dipinjam karena jenis yang tidak dikenal"})
+        return res.status(400).json({ message: "Asset tidak dapat dipinjam karena bukan asset yang dapat dipindahkan"})
       }
   } catch (error) {
       sendErrorResponse(res, 500, "Gagal menambahkan peminjaman aset", error);
