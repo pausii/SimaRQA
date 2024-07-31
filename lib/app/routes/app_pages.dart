@@ -26,6 +26,10 @@ import '../modules/OnboardingScreen/bindings/onboarding_screen_binding.dart';
 import '../modules/OnboardingScreen/views/onboarding_screen_view.dart';
 import '../modules/PageList/bindings/page_list_binding.dart';
 import '../modules/PageList/views/page_list_view.dart';
+import '../modules/RepairRequest/bindings/repair_request_binding.dart';
+import '../modules/RepairRequest/views/repair_request_view.dart';
+import '../modules/RepairRequestAdd/bindings/repair_request_add_binding.dart';
+import '../modules/RepairRequestAdd/views/repair_request_add_view.dart';
 import '../modules/Report/bindings/report_binding.dart';
 import '../modules/Report/views/report_view.dart';
 import '../modules/Returns/bindings/returns_binding.dart';
@@ -136,6 +140,16 @@ class AppPages {
       name: _Paths.SPLASH_SCREEN,
       page: () => const SplashScreenView(),
       binding: SplashScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPAIR_REQUEST,
+      page: () => const RepairRequestView(),
+      binding: RepairRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPAIR_REQUEST_ADD,
+      page: () => const RepairRequestAddView(),
+      binding: RepairRequestAddBinding(),
     ),
   ];
 }

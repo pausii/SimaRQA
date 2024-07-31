@@ -23,6 +23,8 @@ abstract class Routes {
   static const RETURNS = _Paths.RETURNS;
   static const REPORT = _Paths.REPORT;
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
+  static const REPAIR_REQUEST = _Paths.REPAIR_REQUEST;
+  static const REPAIR_REQUEST_ADD = _Paths.REPAIR_REQUEST_ADD;
 }
 
 abstract class _Paths {
@@ -47,4 +49,6 @@ abstract class _Paths {
   static const RETURNS = '/returns';
   static const REPORT = '/report';
   static const SPLASH_SCREEN = '/splash-screen';
+  static const REPAIR_REQUEST = '/repair-request';
+  static const REPAIR_REQUEST_ADD = '/repair-request-add';
 }

@@ -271,7 +271,7 @@ class _SidebarState extends State<Sidebar> {
                           ),
                         ),
                         Visibility(
-                          visible: widget.role.value != "administrator",
+                          // visible: widget.role.value != "administrator",
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 5, 8, 5, 3),
@@ -303,6 +303,49 @@ class _SidebarState extends State<Sidebar> {
                             ),
                           ),
                         ),
+                        Visibility(
+                          // visible: widget.role.value != "administrator",
+                          child: MouseRegion(
+                            opaque: false,
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.offNamed('/repair-request');
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.easeInOut,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 2, 0, 5),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 12, bottom: 3),
+                                          child: Text(
+                                            'Permohonan Perbaikan Aset',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  letterSpacing: 0,
+                                                  fontSize: 15,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        
                         Visibility(
                           visible: widget.role.value != "administrator",
                           child: MouseRegion(
