@@ -179,15 +179,14 @@ class RepairRequestAddView extends GetView<RepairRequestAddController> {
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                       child: FlutterFlowDropDown(
-                        options: const [
-                          // TODO:
-                          "Sedang Dikonfirmasi",
-                          "Sudah Dikonfirmasi",
-                        ],
+                        options: controller.statusList
+                            .map((category) =>
+                                category as String)
+                            .toList(),
                         onChanged: (val) {
-                          if (controller.readonly == true) {
-                            return;
-                          }
+                          // if (controller.readonly == true) {
+                          //   return;
+                          // }
                           controller.hintTextStatus.value = val.toString();
                         },
                         width: 407,
@@ -287,7 +286,9 @@ class RepairRequestAddView extends GetView<RepairRequestAddController> {
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                   child: Visibility(
-                      visible: controller.readonly == true ? false : true,
+                      visible: controller.readonly.value == true ? 
+                                  controller.edit.value == true ? true : false 
+                              : true,
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(9, 0, 9, 0),

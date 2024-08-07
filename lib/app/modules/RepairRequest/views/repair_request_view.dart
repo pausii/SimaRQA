@@ -118,8 +118,9 @@ class RepairRequestView extends GetView<RepairRequestController> {
                                                   '');
                                       int id = controller.dataList[index]
                                           ["request_id"];
-                                      Get.toNamed(
+                                      await Get.toNamed(
                                           '/repair-request-add?name=$name&id=$id&action=viewDetail');
+                                      controller.loadData();
                                     },
                                     child: Container(
                                       width: double.infinity,
@@ -325,22 +326,86 @@ class RepairRequestView extends GetView<RepairRequestController> {
                                                               ),
                                                         ),
                                                       ),
-                                                      Text(
-                                                        ': ${controller.dataList[index]["status_confirmation"] ?? ''}',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Montserrat',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                  letterSpacing:
-                                                                      0,
+                                                      Row(
+                                                            children: [
+                                                              Text(
+                                                                ": ",
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Montserrat',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryBackground,
+                                                                      letterSpacing:
+                                                                          0,
+                                                                    ),
+                                                              ),
+                                                              Container(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        top: 2,
+                                                                        bottom:
+                                                                            2,
+                                                                        left: 5,
+                                                                        right:
+                                                                            5),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: controller.dataList[index]["status_confirmation"] ==
+                                                                          "Sedang Dikonfirmasi"
+                                                                      ? const Color
+                                                                          .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          0,
+                                                                          0)
+                                                                      : const Color.fromARGB(
+                                                                          255,
+                                                                          32,
+                                                                          182,
+                                                                          32),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              7), // Border radius
                                                                 ),
-                                                      ),
+                                                                child: Text(
+                                                                  '${controller.dataList[index]["status_confirmation"]}',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Montserrat',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                        letterSpacing:
+                                                                            0,
+                                                                      ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          )
+                                                      // Text(
+                                                      //   ': ${controller.dataList[index]["status_confirmation"] ?? ''}',
+                                                      //   style:
+                                                      //       FlutterFlowTheme.of(
+                                                      //               context)
+                                                      //           .bodyMedium
+                                                      //           .override(
+                                                      //             fontFamily:
+                                                      //                 'Montserrat',
+                                                      //             color: FlutterFlowTheme.of(
+                                                      //                     context)
+                                                      //                 .secondaryBackground,
+                                                      //             letterSpacing:
+                                                      //                 0,
+                                                      //           ),
+                                                      // ),
                                                     ],
                                                   ),
                                                 ],

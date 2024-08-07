@@ -8,7 +8,7 @@ import 'package:sima_rqa/app/utils/alert.dart';
 import 'package:sima_rqa/app/utils/storage.dart';
 
 class RepairRequestAddController extends GetxController {
- late AssetsModel asset;
+  late AssetsModel asset;
   final inputDamageDate = TextEditingController();
   final inputDetails = TextEditingController();
   var hintTextAssetCode = "Pilih Aset".obs;
@@ -16,15 +16,17 @@ class RepairRequestAddController extends GetxController {
   var assetList = <dynamic>[].obs;
   String id = "";
   var readonly = false.obs;
+  var edit = false.obs;
   String action = "";
   String userRole = "";
   var title = "".obs;
+  var statusList = <dynamic>["Sedang Dikonfirmasi", "Sudah Dikonfirmasi"].obs;
 
   @override
   void onInit() {
     super.onInit();
     userRole = Storage.read("role");
-    
+
     var parameters = Get.parameters;
     String? name = parameters['name'];
     if (name == 'musholla') {
@@ -41,7 +43,9 @@ class RepairRequestAddController extends GetxController {
     action = parameters['action'] ?? '';
     if (action == 'viewDetail') {
       readonly.value = true;
-    } else if (action == 'edit') {}
+    } else if (action == 'edit') {
+      readonly.value = true;
+    }
   }
 
   @override
@@ -53,7 +57,9 @@ class RepairRequestAddController extends GetxController {
       title.value = 'Permintaan Perbaikan Aset ${asset.name.capitalize}';
       loadDataById(id);
     } else if (action == 'edit') {
-      title.value =  'Edit Permintaan Perbaikan Aset ${asset.name.capitalize}';
+      readonly.value = true;
+      title.value = 'Konfirmasi Permintaan Perbaikan Aset ${asset.name.capitalize}';
+      edit.value = true;
       loadDataById(id);
     } else {
       loadAssetList();
@@ -65,18 +71,33 @@ class RepairRequestAddController extends GetxController {
       Dio dio = Dio();
       dio.options.headers['Authorization'] =
           'Bearer ${Storage.read("authToken")}';
-      var response = await dio.get('${AppConfig.baseUrl}/api/request-repair/$id');
+      var response =
+          await dio.get('${AppConfig.baseUrl}/api/request-repair/$id');
       if (response.statusCode == 200) {
         inputDetails.text = response.data['data']['notes'];
         hintTextAssetCode.value =
             "${response.data['data']['request_asset_code']} - ${response.data['data']['request_asset_name']}";
         inputDamageDate.text = DateFormat('yyyy-MM-dd')
             .format(DateTime.parse(response.data['data']['damage_date']));
-        
-        assetList.assignAll([{
-          "asset_code": response.data['data']['request_asset_code'],
-          "asset_name": response.data['data']['request_asset_name'],
-        }]);
+
+        assetList.assignAll([
+          {
+            "asset_code": response.data['data']['request_asset_code'],
+            "asset_name": response.data['data']['request_asset_name'],
+          }
+        ]);
+
+        if (edit.value) {
+          if (response.data['data']['status_confirmation'] == "Sedang Dikonfirmasi") {
+            statusList.assignAll(["Sedang Dikonfirmasi", "Sudah Dikonfirmasi"]);
+          }else{
+            statusList.assignAll(["Sudah Dikonfirmasi"]);
+          }
+        } else {
+          statusList.assignAll([
+            response.data['data']['status_confirmation'],
+          ]);
+        }
 
         hintTextStatus.value = response.data['data']['status_confirmation'];
       }
@@ -137,9 +158,9 @@ class RepairRequestAddController extends GetxController {
             await dio.post('${AppConfig.baseUrl}/api/request-repair/', data: {
           "request_asset_code": hintTextAssetCode.value.split(" ")[0],
           "damage_date": inputDamageDate.text,
-          "status_confirmation": "Sedang Dikonfirmasi", // TODO: status may change
-          "notes":
-              inputDetails.text.isEmpty ? "" : inputDetails.text
+          "status_confirmation":
+              "Sedang Dikonfirmasi", // TODO: status may change
+          "notes": inputDetails.text.isEmpty ? "" : inputDetails.text
         });
         if (response.statusCode == 201) {
           Get.back(closeOverlays: true, result: true);
